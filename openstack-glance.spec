@@ -1,5 +1,5 @@
-%define bzrtag 987
-%define snaptag ~d4~20110815.%{bzrtag}
+%define bzrtag 992
+%define snaptag ~rc~20110823.%{bzrtag}
 
 Name:             openstack-glance
 Version:          2011.3
@@ -173,7 +173,8 @@ fi
 %doc doc/build/html
 
 %changelog
-* Wed Aug 24 2011 Mark McLoughlin <markmc@redhat.com> - 2011.3-0.4.987bzr
+* Wed Aug 24 2011 Mark McLoughlin <markmc@redhat.com> - 2011.3-0.4.992bzr
+- Update to latest upstream
 - Use statically assigned uid:gid 161:161 (#732687)
 
 * Mon Aug 22 2011 Mark McLoughlin <markmc@redhat.com> - 2011.3-0.3.987bzr
