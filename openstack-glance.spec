@@ -3,7 +3,7 @@
 
 Name:             openstack-glance
 Version:          2011.3
-Release:          0.3.%{bzrtag}bzr%{?dist}
+Release:          0.4.%{bzrtag}bzr%{?dist}
 Summary:          OpenStack Image Service
 
 Group:            Applications/System
@@ -125,9 +125,9 @@ install -d -m 755 %{buildroot}%{_localstatedir}/run/glance
 install -d -m 755 %{buildroot}%{_localstatedir}/log/glance
 
 %pre
-getent group glance >/dev/null || groupadd -r glance
+getent group glance >/dev/null || groupadd -r glance -g 161
 getent passwd glance >/dev/null || \
-useradd -r -g glance -d %{_sharedstatedir}/glance -s /sbin/nologin \
+useradd -u 161 -r -g glance -d %{_sharedstatedir}/glance -s /sbin/nologin \
 -c "OpenStack Glance Daemons" glance
 exit 0
 
@@ -173,6 +173,9 @@ fi
 %doc doc/build/html
 
 %changelog
+* Wed Aug 24 2011 Mark McLoughlin <markmc@redhat.com> - 2011.3-0.4.987bzr
+- Use statically assigned uid:gid 161:161 (#732687)
+
 * Mon Aug 22 2011 Mark McLoughlin <markmc@redhat.com> - 2011.3-0.3.987bzr
 - Re-instate python2-devel BR (#731966)
 
