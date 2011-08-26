@@ -1,17 +1,17 @@
-%define bzrtag 992
-%define snaptag ~rc~20110823.%{bzrtag}
+%global milestone d4
 
 Name:             openstack-glance
 Version:          2011.3
-Release:          0.4.%{bzrtag}bzr%{?dist}
+Release:          0.5.%{milestone}%{dist}
 Summary:          OpenStack Image Service
 
 Group:            Applications/System
 License:          ASL 2.0
 URL:              http://glance.openstack.org
-Source0:          http://glance.openstack.org/tarballs/glance-%{version}%{snaptag}.tar.gz
+Source0:          http://launchpad.net/glance/diablo/diablo-4/+download/glance-%{version}~%{milestone}.tar.gz
 Source1:          openstack-glance-api.init
 Source2:          openstack-glance-registry.init
+Source3:          openstack-glance.logrotate
 
 BuildArch:        noarch
 BuildRequires:    python2-devel
@@ -118,6 +118,9 @@ install -p -D -m 644 etc/glance-registry.conf %{buildroot}%{_sysconfdir}/glance/
 install -p -D -m 755 %{SOURCE1} %{buildroot}%{_initrddir}/openstack-glance-api
 install -p -D -m 755 %{SOURCE2} %{buildroot}%{_initrddir}/openstack-glance-registry
 
+# Logrotate config
+install -p -D -m 644 %{SOURCE3} %{buildroot}%{_sysconfdir}/logrotate.d/openstack-glance
+
 # Install pid directory
 install -d -m 755 %{buildroot}%{_localstatedir}/run/glance
 
@@ -160,6 +163,7 @@ fi
 %dir %{_sysconfdir}/glance
 %config(noreplace) %{_sysconfdir}/glance/glance-api.conf
 %config(noreplace) %{_sysconfdir}/glance/glance-registry.conf
+%config(noreplace) %{_sysconfdir}/logrotate.d/openstack-glance
 %dir %attr(0755, glance, nobody) %{_sharedstatedir}/glance
 %dir %attr(0755, glance, nobody) %{_localstatedir}/log/glance
 %dir %attr(0755, glance, nobody) %{_localstatedir}/run/glance
@@ -173,6 +177,10 @@ fi
 %doc doc/build/html
 
 %changelog
+* Fri Aug 26 2011 Mark McLoughlin <markmc@redhat.com> - 2011.3-0.5.d4
+- Update to diablo4 milestone
+- Add logrotate config (#732691)
+
 * Wed Aug 24 2011 Mark McLoughlin <markmc@redhat.com> - 2011.3-0.4.992bzr
 - Update to latest upstream
 - Use statically assigned uid:gid 161:161 (#732687)
