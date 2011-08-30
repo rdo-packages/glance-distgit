@@ -2,24 +2,24 @@
 
 Name:             openstack-glance
 Version:          2011.3
-Release:          0.5.%{milestone}%{dist}
+Release:          0.6.%{milestone}%{dist}
 Summary:          OpenStack Image Service
 
 Group:            Applications/System
 License:          ASL 2.0
 URL:              http://glance.openstack.org
 Source0:          http://launchpad.net/glance/diablo/diablo-4/+download/glance-%{version}~%{milestone}.tar.gz
-Source1:          openstack-glance-api.init
-Source2:          openstack-glance-registry.init
+Source1:          openstack-glance-api.service
+Source2:          openstack-glance-registry.service
 Source3:          openstack-glance.logrotate
 
 BuildArch:        noarch
 BuildRequires:    python2-devel
 BuildRequires:    python-setuptools
 
-Requires(post):   chkconfig
-Requires(preun):  initscripts
-Requires(preun):  chkconfig
+Requires(post):   systemd-units
+Requires(preun):  systemd-units
+Requires(postun): systemd-units
 Requires(pre):    shadow-utils
 Requires:         python-glance = %{version}-%{release}
 
@@ -65,6 +65,7 @@ Group:            Documentation
 
 Requires:         %{name} = %{version}-%{release}
 
+BuildRequires:    systemd-units
 BuildRequires:    python-sphinx
 BuildRequires:    graphviz
 
@@ -115,8 +116,8 @@ install -p -D -m 644 etc/glance-api.conf %{buildroot}%{_sysconfdir}/glance/glanc
 install -p -D -m 644 etc/glance-registry.conf %{buildroot}%{_sysconfdir}/glance/glance-registry.conf
 
 # Initscripts
-install -p -D -m 755 %{SOURCE1} %{buildroot}%{_initrddir}/openstack-glance-api
-install -p -D -m 755 %{SOURCE2} %{buildroot}%{_initrddir}/openstack-glance-registry
+install -p -D -m 755 %{SOURCE1} %{buildroot}%{_unitdir}/openstack-glance-api.service
+install -p -D -m 755 %{SOURCE2} %{buildroot}%{_unitdir}/openstack-glance-registry.service
 
 # Logrotate config
 install -p -D -m 644 %{SOURCE3} %{buildroot}%{_sysconfdir}/logrotate.d/openstack-glance
@@ -135,15 +136,27 @@ useradd -u 161 -r -g glance -d %{_sharedstatedir}/glance -s /sbin/nologin \
 exit 0
 
 %post
-/sbin/chkconfig --add openstack-glance-api
-/sbin/chkconfig --add openstack-glance-registry
+if [ $1 -eq 1 ] ; then
+    # Initial installation
+    /bin/systemctl daemon-reload >/dev/null 2>&1 || :
+fi
+
 
 %preun
-if [ $1 = 0 ] ; then
-    /sbin/service openstack-glance-api stop >/dev/null 2>&1
-    /sbin/chkconfig --del openstack-glance-api
-    /sbin/service openstack-glance-registry stop >/dev/null 2>&1
-    /sbin/chkconfig --del openstack-glance-registry
+if [ $1 -eq 0 ] ; then
+    # Package removal, not upgrade
+    /bin/systemctl --no-reload disable openstack-glance-api.service > /dev/null 2>&1 || :
+    /bin/systemctl --no-reload disable openstack-glance-registry.service > /dev/null 2>&1 || :
+    /bin/systemctl stop openstack-glance-api.service > /dev/null 2>&1 || :
+    /bin/systemctl stop openstack-glance-registry.service > /dev/null 2>&1 || :
+fi
+
+%postun
+/bin/systemctl daemon-reload >/dev/null 2>&1 || :
+if [ $1 -ge 1 ] ; then
+    # Package upgrade, not uninstall
+    /bin/systemctl try-restart openstack-glance-api.service >/dev/null 2>&1 || :
+    /bin/systemctl try-restart openstack-glance-registry.service >/dev/null 2>&1 || :
 fi
 
 %files
@@ -158,8 +171,8 @@ fi
 %{_bindir}/glance-cache-pruner
 %{_bindir}/glance-cache-reaper
 %{_bindir}/glance-scrubber
-%{_initrddir}/openstack-glance-api
-%{_initrddir}/openstack-glance-registry
+%{_unitdir}/openstack-glance-api.service
+%{_unitdir}/openstack-glance-registry.service
 %dir %{_sysconfdir}/glance
 %config(noreplace) %{_sysconfdir}/glance/glance-api.conf
 %config(noreplace) %{_sysconfdir}/glance/glance-registry.conf
@@ -177,6 +190,9 @@ fi
 %doc doc/build/html
 
 %changelog
+* Tue Aug 30 2011 Angus Salkeld <asalkeld@redhat.com> - 2011.3-0.6.d4
+- Change from LSB scripts to systemd service files (#732689).
+
 * Fri Aug 26 2011 Mark McLoughlin <markmc@redhat.com> - 2011.3-0.5.d4
 - Update to diablo4 milestone
 - Add logrotate config (#732691)
