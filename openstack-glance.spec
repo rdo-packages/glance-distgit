@@ -2,7 +2,7 @@
 
 Name:             openstack-glance
 Version:          2011.3
-Release:          0.6.%{milestone}%{dist}
+Release:          0.7.%{milestone}%{dist}
 Summary:          OpenStack Image Service
 
 Group:            Applications/System
@@ -103,10 +103,17 @@ rm -fr %{buildroot}%{python_sitelib}/tests
 export PYTHONPATH="$( pwd ):$PYTHONPATH"
 pushd doc
 sphinx-build -b html source build/html
+sphinx-build -b man source build/man
+
+mkdir -p %{buildroot}%{_mandir}/man1
+install -p -D -m 644 build/man/*.1 %{buildroot}%{_mandir}/man1/
 popd
 
 # Fix hidden-file-or-dir warnings
 rm -fr doc/build/html/.doctrees doc/build/html/.buildinfo
+rm -f %{buildroot}%{_sysconfdir}/glance*.conf
+rm -f %{buildroot}%{_sysconfdir}/logging.cnf.sample
+rm -f %{buildroot}/usr/share/doc/glance/README
 
 # Setup directories
 install -d -m 755 %{buildroot}%{_sharedstatedir}/glance/images
@@ -116,8 +123,8 @@ install -p -D -m 644 etc/glance-api.conf %{buildroot}%{_sysconfdir}/glance/glanc
 install -p -D -m 644 etc/glance-registry.conf %{buildroot}%{_sysconfdir}/glance/glance-registry.conf
 
 # Initscripts
-install -p -D -m 755 %{SOURCE1} %{buildroot}%{_unitdir}/openstack-glance-api.service
-install -p -D -m 755 %{SOURCE2} %{buildroot}%{_unitdir}/openstack-glance-registry.service
+install -p -D -m 644 %{SOURCE1} %{buildroot}%{_unitdir}/openstack-glance-api.service
+install -p -D -m 644 %{SOURCE2} %{buildroot}%{_unitdir}/openstack-glance-registry.service
 
 # Logrotate config
 install -p -D -m 644 %{SOURCE3} %{buildroot}%{_sysconfdir}/logrotate.d/openstack-glance
@@ -173,6 +180,7 @@ fi
 %{_bindir}/glance-scrubber
 %{_unitdir}/openstack-glance-api.service
 %{_unitdir}/openstack-glance-registry.service
+%{_mandir}/man1/glance-*.1.gz
 %dir %{_sysconfdir}/glance
 %config(noreplace) %{_sysconfdir}/glance/glance-api.conf
 %config(noreplace) %{_sysconfdir}/glance/glance-registry.conf
@@ -190,6 +198,11 @@ fi
 %doc doc/build/html
 
 %changelog
+* Wed Aug 31 2011 Angus Salkeld <asalkeld@redhat.com> - 2011.3-0.7.d4
+- Use the available man pages
+- don't make service files executable
+- delete unused files
+
 * Tue Aug 30 2011 Angus Salkeld <asalkeld@redhat.com> - 2011.3-0.6.d4
 - Change from LSB scripts to systemd service files (#732689).
 
