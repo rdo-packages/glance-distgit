@@ -68,6 +68,7 @@ Requires:         %{name} = %{version}-%{release}
 BuildRequires:    systemd-units
 BuildRequires:    python-sphinx
 BuildRequires:    graphviz
+BuildRequires:    python-distutils-extra
 
 # Required to build module documents
 BuildRequires:    python-boto
@@ -202,6 +203,7 @@ fi
 - Use the available man pages
 - don't make service files executable
 - delete unused files
+- add BR: python-distutils-extra (#733610)
 
 * Tue Aug 30 2011 Angus Salkeld <asalkeld@redhat.com> - 2011.3-0.6.d4
 - Change from LSB scripts to systemd service files (#732689).
