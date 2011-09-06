@@ -2,7 +2,7 @@
 
 Name:             openstack-glance
 Version:          2011.3
-Release:          0.7.%{milestone}%{dist}
+Release:          0.8.%{milestone}%{dist}
 Summary:          OpenStack Image Service
 
 Group:            Applications/System
@@ -16,6 +16,8 @@ Source3:          openstack-glance.logrotate
 BuildArch:        noarch
 BuildRequires:    python2-devel
 BuildRequires:    python-setuptools
+BuildRequires:    python-distutils-extra
+BuildRequires:    intltool
 
 Requires(post):   systemd-units
 Requires(preun):  systemd-units
@@ -68,7 +70,6 @@ Requires:         %{name} = %{version}-%{release}
 BuildRequires:    systemd-units
 BuildRequires:    python-sphinx
 BuildRequires:    graphviz
-BuildRequires:    python-distutils-extra
 
 # Required to build module documents
 BuildRequires:    python-boto
@@ -199,12 +200,15 @@ fi
 %doc doc/build/html
 
 %changelog
+* Tue Sep  6 2011 Mark McLoughlin <markmc@redhat.com> - 2011.3-0.8.d4
+- fix DB path in config
+- add BR: intltool for distutils-extra
+
 * Wed Aug 31 2011 Angus Salkeld <asalkeld@redhat.com> - 2011.3-0.7.d4
 - Use the available man pages
 - don't make service files executable
 - delete unused files
 - add BR: python-distutils-extra (#733610)
-- fix DB path in config
 
 * Tue Aug 30 2011 Angus Salkeld <asalkeld@redhat.com> - 2011.3-0.6.d4
 - Change from LSB scripts to systemd service files (#732689).
