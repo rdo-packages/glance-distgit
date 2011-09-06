@@ -88,7 +88,7 @@ This package contains documentation files for glance.
 %prep
 %setup -q -n glance-%{version}
 
-sed -i 's|\(sql_connection = sqlite://\)\(/glance.sqlite\)|\1%{_sharedstatedir}/glance\2|' etc/glance-registry.conf
+sed -i 's|\(sql_connection = sqlite:///\)\(glance.sqlite\)|\1%{_sharedstatedir}/glance/\2|' etc/glance-registry.conf
 
 sed -i '/\/usr\/bin\/env python/d' glance/common/config.py glance/registry/db/migrate_repo/manage.py
 
@@ -204,6 +204,7 @@ fi
 - don't make service files executable
 - delete unused files
 - add BR: python-distutils-extra (#733610)
+- fix DB path in config
 
 * Tue Aug 30 2011 Angus Salkeld <asalkeld@redhat.com> - 2011.3-0.6.d4
 - Change from LSB scripts to systemd service files (#732689).
