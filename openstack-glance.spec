@@ -1,14 +1,13 @@
-%global milestone d4
 
 Name:             openstack-glance
 Version:          2011.3
-Release:          0.8.%{milestone}%{dist}
+Release:          1%{dist}
 Summary:          OpenStack Image Service
 
 Group:            Applications/System
 License:          ASL 2.0
 URL:              http://glance.openstack.org
-Source0:          http://launchpad.net/glance/diablo/diablo-4/+download/glance-%{version}~%{milestone}.tar.gz
+Source0:          http://launchpad.net/glance/diablo/%{version}/+download/glance-%{version}.tar.gz
 Source1:          openstack-glance-api.service
 Source2:          openstack-glance-registry.service
 Source3:          openstack-glance.logrotate
@@ -200,6 +199,9 @@ fi
 %doc doc/build/html
 
 %changelog
+* Tue Sep 27 2011 Mark McLoughlin <markmc@redhat.com> - 2011.3-1
+- Update to Diablo final
+
 * Tue Sep  6 2011 Mark McLoughlin <markmc@redhat.com> - 2011.3-0.8.d4
 - fix DB path in config
 - add BR: intltool for distutils-extra
