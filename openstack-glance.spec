@@ -1,7 +1,7 @@
 
 Name:             openstack-glance
 Version:          2011.3
-Release:          1%{dist}
+Release:          1%{?dist}
 Summary:          OpenStack Image Service
 
 Group:            Applications/System
