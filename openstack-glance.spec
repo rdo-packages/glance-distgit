@@ -43,6 +43,7 @@ Group:            Applications/System
 
 Requires:         python-eventlet
 Requires:         python-kombu
+Requires:         python-paste-deploy
 Requires:         python-routes
 Requires:         python-sqlalchemy
 Requires:         python-webob
@@ -206,6 +207,7 @@ fi
 * Tue Nov 22 2011 Pádraig Brady <P@draigBrady.com> - 2011.3-2
 - Ensure the docs aren't built with the system glance module
 - Ensure we don't access the net when building docs
+- Depend on python-paste-deploy (#759512)
 
 * Tue Sep 27 2011 Mark McLoughlin <markmc@redhat.com> - 2011.3-1
 - Update to Diablo final
