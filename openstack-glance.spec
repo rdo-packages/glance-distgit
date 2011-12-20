@@ -1,7 +1,7 @@
 
 Name:             openstack-glance
 Version:          2011.3
-Release:          2%{?dist}
+Release:          3%{?dist}
 Summary:          OpenStack Image Service
 
 Group:            Applications/System
@@ -47,6 +47,7 @@ Requires:         python-paste-deploy
 Requires:         python-routes
 Requires:         python-sqlalchemy
 Requires:         python-webob
+Requires:         python-httplib2
 
 #
 # The image cache requires this http://pypi.python.org/pypi/xattr
@@ -204,6 +205,9 @@ fi
 %doc doc/build/html
 
 %changelog
+* Tue Dec 20 2011 David Busby <oneiroi@fedoraproject.org> - 2011.3-3
+- Depend on python-httplib2
+
 * Tue Nov 22 2011 Pádraig Brady <P@draigBrady.com> - 2011.3-2
 - Ensure the docs aren't built with the system glance module
 - Ensure we don't access the net when building docs
