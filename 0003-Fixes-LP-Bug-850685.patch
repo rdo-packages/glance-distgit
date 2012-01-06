@@ -1,0 +1,158 @@
+From e6aa08ceb5589448511315e4b9cacfd78d40ecf8 Mon Sep 17 00:00:00 2001
+From: Jay Pipes <jaypipes@gmail.com>
+Date: Fri, 23 Sep 2011 17:28:50 -0400
+Subject: [PATCH] Fixes LP Bug #850685
+
+Handle 300 Multiple Choices gracefully in client
+
+This patch adds a new exception MultipleChoices that
+is now raised when the client encounters a 300 from the
+server, with a helpful error message indicating the likely
+cause is that the caller has forgotten to include a version
+string in the request URI.
+
+(cherry picked from commit 1bb0600efb444fa4d8a27e876a8c002324746c1e)
+
+Change-Id: I3ccc2686bea30a770751fde605c78a3b7c5930b6
+---
+ glance/common/client.py            |    2 ++
+ glance/common/exception.py         |    6 ++++++
+ glance/tests/stubs.py              |    7 ++++++-
+ glance/tests/unit/test_clients.py  |    4 ++--
+ glance/tests/unit/test_versions.py |   23 +++++++++++++++++++++--
+ 5 files changed, 37 insertions(+), 5 deletions(-)
+
+diff --git a/glance/common/client.py b/glance/common/client.py
+index ddf7453..be3b15a 100644
+--- a/glance/common/client.py
++++ b/glance/common/client.py
+@@ -228,6 +228,8 @@ class BaseClient(object):
+                 raise exception.Duplicate(res.read())
+             elif status_code == httplib.BAD_REQUEST:
+                 raise exception.Invalid(res.read())
++            elif status_code == httplib.MULTIPLE_CHOICES:
++                raise exception.MultipleChoices(body=res.read())
+             elif status_code == httplib.INTERNAL_SERVER_ERROR:
+                 raise Exception("Internal Server error: %s" % res.read())
+             else:
+diff --git a/glance/common/exception.py b/glance/common/exception.py
+index be3523f..5d9bf19 100644
+--- a/glance/common/exception.py
++++ b/glance/common/exception.py
+@@ -152,6 +152,12 @@ class GlanceException(Exception):
+         return self._error_string
+ 
+ 
++class MultipleChoices(GlanceException):
++    message = _("The request returned a 302 Multiple Choices. This generally "
++                "means that you have not included a version indicator in a "
++                "request URI.\n\nThe body of response returned:\n%(body)s")
++
++
+ class InvalidContentType(GlanceException):
+     message = _("Invalid content type %(content_type)s")
+ 
+diff --git a/glance/tests/stubs.py b/glance/tests/stubs.py
+index e90cc48..8fa0ec7 100644
+--- a/glance/tests/stubs.py
++++ b/glance/tests/stubs.py
+@@ -33,6 +33,7 @@ from glance.common import context
+ from glance.common import exception
+ from glance.registry import server as rserver
+ from glance.api import v1 as server
++from glance.api.middleware import version_negotiation
+ import glance.store
+ import glance.store.filesystem
+ import glance.store.http
+@@ -156,11 +157,15 @@ def stub_out_registry_and_store_server(stubs):
+         def getresponse(self):
+             options = {'verbose': VERBOSE,
+                        'debug': DEBUG,
++                       'bind_host': '0.0.0.0',
++                       'bind_port': '9999999',
+                        'registry_host': '0.0.0.0',
+                        'registry_port': '9191',
+                        'default_store': 'file',
+                        'filesystem_store_datadir': FAKE_FILESYSTEM_ROOTDIR}
+-            api = context.ContextMiddleware(server.API(options), options)
++            api = version_negotiation.VersionNegotiationFilter(
++                context.ContextMiddleware(server.API(options), options),
++                options)
+             res = self.req.get_response(api)
+ 
+             # httplib.Response has a read() method...fake it out
+diff --git a/glance/tests/unit/test_clients.py b/glance/tests/unit/test_clients.py
+index 5e30358..57ee6a5 100644
+--- a/glance/tests/unit/test_clients.py
++++ b/glance/tests/unit/test_clients.py
+@@ -18,10 +18,10 @@
+ import datetime
+ import json
+ import os
+-import stubout
+ import StringIO
+ import unittest
+ 
++import stubout
+ import webob
+ 
+ from glance import client
+@@ -977,7 +977,7 @@ class TestClient(unittest.TestCase):
+         stubs.stub_out_registry_and_store_server(self.stubs)
+         stubs.stub_out_filesystem_backend()
+         db_api.configure_db(OPTIONS)
+-        self.client = client.Client("0.0.0.0", doc_root="")
++        self.client = client.Client("0.0.0.0")
+         self.FIXTURES = [
+             {'id': 1,
+              'name': 'fake image #1',
+diff --git a/glance/tests/unit/test_versions.py b/glance/tests/unit/test_versions.py
+index ce56131..cdf2591 100644
+--- a/glance/tests/unit/test_versions.py
++++ b/glance/tests/unit/test_versions.py
+@@ -18,17 +18,30 @@
+ import json
+ import unittest
+ 
++import stubout
+ import webob
+ 
++from glance import client
++from glance.common import exception
+ from glance.api import versions
++from glance.tests import stubs
+ 
+ 
+ class VersionsTest(unittest.TestCase):
++
++    """
++    Test the version information returned from
++    the API service
++    """
++
+     def setUp(self):
+-        super(VersionsTest, self).setUp()
++        """Establish a clean test environment"""
++        self.stubs = stubout.StubOutForTesting()
++        stubs.stub_out_registry_and_store_server(self.stubs)
+ 
+     def tearDown(self):
+-        super(VersionsTest, self).tearDown()
++        """Clear the test environment"""
++        self.stubs.UnsetAll()
+ 
+     def test_get_version_list(self):
+         req = webob.Request.blank('/')
+@@ -55,3 +68,9 @@ class VersionsTest(unittest.TestCase):
+                         "rel": "self",
+                         "href": "http://0.0.0.0:9292/v1/"}]}]
+         self.assertEqual(results, expected)
++
++    def test_client_handles_versions(self):
++        api_client = client.Client("0.0.0.0", doc_root="")
++
++        self.assertRaises(exception.MultipleChoices,
++                          api_client.get_images)
+-- 
+1.7.6.5
+

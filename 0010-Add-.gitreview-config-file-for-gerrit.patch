@@ -1,0 +1,26 @@
+From 9620d00097f131d2babd64cef77e6dd2c2daeaba Mon Sep 17 00:00:00 2001
+From: "James E. Blair" <james.blair@rackspace.com>
+Date: Thu, 20 Oct 2011 13:44:58 -0400
+Subject: [PATCH] Add .gitreview config file for gerrit.
+
+(cherry picked from commit 17b79b0220ab5de9e8ba4911764fe0d59d843a5f)
+
+Change-Id: I61524c310738b77df8809495ce5b7822e76562f1
+---
+ .gitreview |    4 ++++
+ 1 files changed, 4 insertions(+), 0 deletions(-)
+ create mode 100644 .gitreview
+
+diff --git a/.gitreview b/.gitreview
+new file mode 100644
+index 0000000..31aa568
+--- /dev/null
++++ b/.gitreview
+@@ -0,0 +1,4 @@
++[gerrit]
++host=review.openstack.org
++port=29418
++project=openstack/glance.git
+-- 
+1.7.6.5
+

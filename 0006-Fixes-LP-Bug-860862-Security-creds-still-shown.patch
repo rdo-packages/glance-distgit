@@ -1,0 +1,202 @@
+From c308c9abe79037fee7ee42638369b553655e7c34 Mon Sep 17 00:00:00 2001
+From: Jay Pipes <jaypipes@gmail.com>
+Date: Thu, 29 Sep 2011 16:00:44 -0400
+Subject: [PATCH] Fixes LP Bug#860862 - Security creds still shown
+
+This removes the X-Image-Meta-Location entirely from
+GET /images/<ID> and HEAD /images/<ID>
+
+Previous fix only removed from GET /images and GET /images/detail.
+
+Doh.
+
+(cherry picked from commit 25e2ba4e6a60956cfd7f8ca9457698fd0f4d3747)
+
+Change-Id: Ib6c124e196688a77a3a0090bf9174a1daffb78bb
+---
+ glance/api/v1/images.py               |    5 ++++-
+ glance/tests/functional/test_swift.py |   27 ++++++++++++++++-----------
+ glance/tests/unit/test_api.py         |   30 ++++++++++++++++++++++++++++++
+ glance/tests/unit/test_clients.py     |    4 ++++
+ 4 files changed, 54 insertions(+), 12 deletions(-)
+
+diff --git a/glance/api/v1/images.py b/glance/api/v1/images.py
+index b80a164..5d177e1 100644
+--- a/glance/api/v1/images.py
++++ b/glance/api/v1/images.py
+@@ -194,8 +194,10 @@ class Controller(api.BaseController):
+ 
+         :raises HTTPNotFound if image metadata is not available to user
+         """
++        image_meta = self.get_image_meta_or_404(req, id)
++        del image_meta['location']
+         return {
+-            'image_meta': self.get_image_meta_or_404(req, id),
++            'image_meta': image_meta
+         }
+ 
+     def show(self, req, id):
+@@ -271,6 +273,7 @@ class Controller(api.BaseController):
+                          " from store"), id)
+             image_iterator = get_from_store(image)
+ 
++        del image['location']
+         return {
+             'image_iterator': image_iterator,
+             'image_meta': image,
+diff --git a/glance/tests/functional/test_swift.py b/glance/tests/functional/test_swift.py
+index c5571f6..69aba86 100644
+--- a/glance/tests/functional/test_swift.py
++++ b/glance/tests/functional/test_swift.py
+@@ -44,6 +44,7 @@ from glance.store.location import get_location_from_uri
+ from glance.tests.functional import test_api
+ from glance.tests.utils import execute, skip_if_disabled
+ 
++FIVE_KB = 5 * 1024
+ FIVE_MB = 5 * 1024 * 1024
+ 
+ 
+@@ -399,7 +400,7 @@ class TestSwift(test_api.TestApi):
+         registry_port = self.registry_port
+ 
+         # POST /images with public image named Image1
+-        image_data = "*" * FIVE_MB
++        image_data = "*" * FIVE_KB
+         headers = {'Content-Type': 'application/octet-stream',
+                    'X-Image-Meta-Name': 'Image1',
+                    'X-Image-Meta-Is-Public': 'True'}
+@@ -411,7 +412,7 @@ class TestSwift(test_api.TestApi):
+         data = json.loads(content)
+         self.assertEqual(data['image']['checksum'],
+                          hashlib.md5(image_data).hexdigest())
+-        self.assertEqual(data['image']['size'], FIVE_MB)
++        self.assertEqual(data['image']['size'], FIVE_KB)
+         self.assertEqual(data['image']['name'], "Image1")
+         self.assertEqual(data['image']['is_public'], True)
+ 
+@@ -420,20 +421,24 @@ class TestSwift(test_api.TestApi):
+         http = httplib2.Http()
+         response, content = http.request(path, 'GET')
+         self.assertEqual(response.status, 200)
+-        self.assertEqual(response['content-length'], str(FIVE_MB))
++        self.assertEqual(response['content-length'], str(FIVE_KB))
+ 
+-        self.assertEqual(content, "*" * FIVE_MB)
++        self.assertEqual(content, "*" * FIVE_KB)
+         self.assertEqual(hashlib.md5(content).hexdigest(),
+-                         hashlib.md5("*" * FIVE_MB).hexdigest())
++                         hashlib.md5("*" * FIVE_KB).hexdigest())
+ 
+-        # GET /images/1 from registry in order to find Swift location
++        # Find the location that was just added and use it as
++        # the remote image location for the next image
+         path = "http://%s:%d/images/1" % ("0.0.0.0", self.registry_port)
+         http = httplib2.Http()
+         response, content = http.request(path, 'GET')
+-        swift_location = json.loads(content)['image']['location']
++        self.assertEqual(response.status, 200)
++        data = json.loads(content)
++        self.assertTrue('location' in data['image'].keys())
++        swift_location = data['image']['location']
+ 
+         # POST /images with public image named Image1 without uploading data
+-        image_data = "*" * FIVE_MB
++        image_data = "*" * FIVE_KB
+         headers = {'Content-Type': 'application/octet-stream',
+                    'X-Image-Meta-Name': 'Image1',
+                    'X-Image-Meta-Is-Public': 'True',
+@@ -453,11 +458,11 @@ class TestSwift(test_api.TestApi):
+         http = httplib2.Http()
+         response, content = http.request(path, 'GET')
+         self.assertEqual(response.status, 200)
+-        self.assertEqual(response['content-length'], str(FIVE_MB))
++        self.assertEqual(response['content-length'], str(FIVE_KB))
+ 
+-        self.assertEqual(content, "*" * FIVE_MB)
++        self.assertEqual(content, "*" * FIVE_KB)
+         self.assertEqual(hashlib.md5(content).hexdigest(),
+-                         hashlib.md5("*" * FIVE_MB).hexdigest())
++                         hashlib.md5("*" * FIVE_KB).hexdigest())
+ 
+         # DELETE /images/1 and /image/2
+         # Verify image and all chunks are gone...
+diff --git a/glance/tests/unit/test_api.py b/glance/tests/unit/test_api.py
+index 756f07d..f867d10 100644
+--- a/glance/tests/unit/test_api.py
++++ b/glance/tests/unit/test_api.py
+@@ -1981,6 +1981,36 @@ class TestGlanceAPI(unittest.TestCase):
+         self.assertEquals(int(images[1]['id']), 2)
+         self.assertEquals(int(images[2]['id']), 4)
+ 
++    def test_store_location_not_revealed(self):
++        """
++        Test that the internal store location is NOT revealed
++        through the API server
++        """
++        # Check index and details...
++        for url in ('/images', '/images/detail'):
++            req = webob.Request.blank(url)
++            res = req.get_response(self.api)
++            self.assertEquals(res.status_int, 200)
++            res_dict = json.loads(res.body)
++
++            images = res_dict['images']
++            num_locations = sum([1 for record in images
++                                if 'location' in record.keys()])
++            self.assertEquals(0, num_locations, images)
++
++        # Check GET
++        req = webob.Request.blank("/images/2")
++        res = req.get_response(self.api)
++        self.assertEqual(res.status_int, 200)
++        self.assertFalse('X-Image-Meta-Location' in res.headers)
++
++        # Check HEAD
++        req = webob.Request.blank("/images/2")
++        req.method = 'HEAD'
++        res = req.get_response(self.api)
++        self.assertEqual(res.status_int, 200)
++        self.assertFalse('X-Image-Meta-Location' in res.headers)
++
+     def test_image_is_checksummed(self):
+         """Test that the image contents are checksummed properly"""
+         fixture_headers = {'x-image-meta-store': 'file',
+diff --git a/glance/tests/unit/test_clients.py b/glance/tests/unit/test_clients.py
+index 57ee6a5..dd2e871 100644
+--- a/glance/tests/unit/test_clients.py
++++ b/glance/tests/unit/test_clients.py
+@@ -1377,6 +1377,7 @@ class TestClient(unittest.TestCase):
+         # Test all other attributes set
+         data = self.client.get_image_meta(3)
+ 
++        del fixture['location']
+         for k, v in fixture.items():
+             self.assertEquals(v, data[k])
+ 
+@@ -1415,6 +1416,7 @@ class TestClient(unittest.TestCase):
+         # Test all other attributes set
+         data = self.client.get_image_meta(3)
+ 
++        del fixture['location']
+         for k, v in fixture.items():
+             self.assertEquals(v, data[k])
+ 
+@@ -1441,6 +1443,7 @@ class TestClient(unittest.TestCase):
+         # Test all other attributes set
+         data = self.client.get_image_meta(3)
+ 
++        del fixture['location']
+         for k, v in fixture.items():
+             self.assertEquals(v, data[k])
+ 
+@@ -1467,6 +1470,7 @@ class TestClient(unittest.TestCase):
+         # Test all other attributes set
+         data = self.client.get_image_meta(3)
+ 
++        del fixture['location']
+         for k, v in fixture.items():
+             self.assertEquals(v, data[k])
+ 
+-- 
+1.7.6.5
+
