@@ -1,13 +1,16 @@
 
+%global revno 1062
+%global snapshot ~20120116.%{revno}
+
 Name:             openstack-glance
-Version:          2011.3
-Release:          4%{?dist}
+Version:          2011.3.1
+Release:          0.1.%{revno}%{?dist}
 Summary:          OpenStack Image Service
 
 Group:            Applications/System
 License:          ASL 2.0
 URL:              http://glance.openstack.org
-Source0:          http://launchpad.net/glance/diablo/%{version}/+download/glance-%{version}.tar.gz
+Source0:          http://launchpad.net/glance/diablo/%{version}/+download/glance-%{version}%{snapshot}.tar.gz
 Source1:          openstack-glance-api.service
 Source2:          openstack-glance-registry.service
 Source3:          openstack-glance.logrotate
@@ -15,34 +18,17 @@ Source3:          openstack-glance.logrotate
 #
 # Patches managed here: https://github.com/markmc/glance/tree/fedora-patches
 #
-#   $> git format-patch -N 2011.3
+#   $> git format-patch -N 2011.3.1-20120116.1062
 #   $> for p in 00*.patch; do filterdiff -x '*/.gitignore' -x '*/.mailmap' -x '*/Authors' -x '*/.bzrignore' $p | sponge $p; done
 #   $> for p in 00*.patch; do echo "Patch${p:2:2}:          $p"; done
 #   $> for p in 00*.patch; do echo "%patch${p:2:2} -p1"; done
 #
 
 # These are from stable/diablo
-Patch01:          0001-Point-tools-rfc.sh-at-the-correct-branch.patch
-Patch02:          0002-Fixes-LP-Bug-845788.patch
-Patch03:          0003-Fixes-LP-Bug-850685.patch
-Patch04:          0004-Make-remote-swift-image-streaming-functional.patch
-Patch05:          0005-Returning-functionality-of-s3-backend-to-stream-remo.patch
-Patch06:          0006-Fixes-LP-Bug-860862-Security-creds-still-shown.patch
-Patch07:          0007-Fixes-LP-Bug-872276-small-typo-in-error-message.patch
-Patch08:          0008-Better-document-using-Glance-with-Keystone.patch
-Patch09:          0009-Fixes-LP-Bug-844618-SQLAlchemy-errors-not-logged.patch
-Patch10:          0010-Add-.gitreview-config-file-for-gerrit.patch
-Patch11:          0011-Removed-mox-0.5.0-and-replaced-with-just-mox-in-tool.patch
-Patch12:          0012-Remove-location-from-POST-PUT-image-responses.patch
-Patch13:          0013-Fix-Keystone-API-skew-issue-with-Glance-client.patch
-Patch14:          0014-load-gettext-in-__init__-to-fix-_-is-not-defined.patch
-Patch15:          0015-Update-glance-show-to-print-a-valid-URI.-Fixes-bug-8.patch
-Patch16:          0016-Using-Keystone-s-new-port-number-35357.patch
-Patch17:          0017-Making-prefetcher-call-create_stores.patch
-Patch18:          0018-Add-a-LICENSE-file.patch
-Patch19:          0019-Rename-.glance-venv-to-.venv.patch
-Patch20:          0020-Always-reference-the-glance-module-from-the-package-.patch
-Patch21:          0021-Don-t-access-the-net-while-building-docs.patch
+
+# These are fedora specific
+Patch01:          0001-Always-reference-the-glance-module-from-the-package-.patch
+Patch02:          0002-Don-t-access-the-net-while-building-docs.patch
 
 BuildArch:        noarch
 BuildRequires:    python2-devel
@@ -124,25 +110,6 @@ This package contains documentation files for glance.
 
 %patch01 -p1
 %patch02 -p1
-%patch03 -p1
-%patch04 -p1
-%patch05 -p1
-%patch06 -p1
-%patch07 -p1
-%patch08 -p1
-%patch09 -p1
-%patch10 -p1
-%patch11 -p1
-%patch12 -p1
-%patch13 -p1
-%patch14 -p1
-%patch15 -p1
-%patch16 -p1
-%patch17 -p1
-%patch18 -p1
-%patch19 -p1
-%patch20 -p1
-%patch21 -p1
 
 sed -i 's|\(sql_connection = sqlite:///\)\(glance.sqlite\)|\1%{_sharedstatedir}/glance/\2|' etc/glance-registry.conf
 
@@ -255,6 +222,10 @@ fi
 %doc doc/build/html
 
 %changelog
+* Tue Jan 17 2012 Mark McLoughlin <markmc@redhat.com> - 2011.3.1-0.1.1062%{?dist}
+- Update to 2011.3.1 release candidate
+- Includes 6 new patches from upstream
+
 * Fri Jan  6 2012 Mark McLoughlin <markmc@redhat.com> - 2011.3-4
 - Rebase to latest upstream stable/diablo branch adding ~20 patches
 

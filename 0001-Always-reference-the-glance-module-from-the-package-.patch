@@ -1,4 +1,4 @@
-From 2ad33c2b49116a4765325e42ed5c8b8a9d07ea10 Mon Sep 17 00:00:00 2001
+From 2d25a47018e8d015cc7dfbce05b5bd4392f36776 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?P=C3=A1draig=20Brady?= <pbrady@redhat.com>
 Date: Fri, 6 Jan 2012 17:11:12 +0000
 Subject: [PATCH] Always reference the glance module from the package we're
