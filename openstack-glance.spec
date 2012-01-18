@@ -1,10 +1,10 @@
 
-%global revno 1062
-%global snapshot ~20120116.%{revno}
+%global revno 1063
+%global snapshot ~20120117.%{revno}
 
 Name:             openstack-glance
 Version:          2011.3.1
-Release:          0.1.%{revno}%{?dist}
+Release:          0.2.%{revno}%{?dist}
 Summary:          OpenStack Image Service
 
 Group:            Applications/System
@@ -18,7 +18,7 @@ Source3:          openstack-glance.logrotate
 #
 # Patches managed here: https://github.com/markmc/glance/tree/fedora-patches
 #
-#   $> git format-patch -N 2011.3.1-20120116.1062
+#   $> git format-patch -N 2011.3.1-20120117.1063
 #   $> for p in 00*.patch; do filterdiff -x '*/.gitignore' -x '*/.mailmap' -x '*/Authors' -x '*/.bzrignore' $p | sponge $p; done
 #   $> for p in 00*.patch; do echo "Patch${p:2:2}:          $p"; done
 #   $> for p in 00*.patch; do echo "%patch${p:2:2} -p1"; done
@@ -222,6 +222,9 @@ fi
 %doc doc/build/html
 
 %changelog
+* Wed Jan 18 2012 Mark McLoughlin <markmc@redhat.com> - 2011.3.1-0.2.1063%{?dist}
+- Update to latest 2011.3.1 release candidate
+
 * Tue Jan 17 2012 Mark McLoughlin <markmc@redhat.com> - 2011.3.1-0.1.1062%{?dist}
 - Update to 2011.3.1 release candidate
 - Includes 6 new patches from upstream
