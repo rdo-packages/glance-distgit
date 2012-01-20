@@ -1,16 +1,12 @@
-
-%global revno 1063
-%global snapshot ~20120117.%{revno}
-
 Name:             openstack-glance
 Version:          2011.3.1
-Release:          0.2.%{revno}%{?dist}
+Release:          1%{?dist}
 Summary:          OpenStack Image Service
 
 Group:            Applications/System
 License:          ASL 2.0
 URL:              http://glance.openstack.org
-Source0:          http://launchpad.net/glance/diablo/%{version}/+download/glance-%{version}%{snapshot}.tar.gz
+Source0:          http://launchpad.net/glance/diablo/%{version}/+download/glance-%{version}.tar.gz
 Source1:          openstack-glance-api.service
 Source2:          openstack-glance-registry.service
 Source3:          openstack-glance.logrotate
@@ -18,7 +14,7 @@ Source3:          openstack-glance.logrotate
 #
 # Patches managed here: https://github.com/markmc/glance/tree/fedora-patches
 #
-#   $> git format-patch -N 2011.3.1-20120117.1063
+#   $> git format-patch -N 2011.3.1
 #   $> for p in 00*.patch; do filterdiff -x '*/.gitignore' -x '*/.mailmap' -x '*/Authors' -x '*/.bzrignore' $p | sponge $p; done
 #   $> for p in 00*.patch; do echo "Patch${p:2:2}:          $p"; done
 #   $> for p in 00*.patch; do echo "%patch${p:2:2} -p1"; done
@@ -222,6 +218,9 @@ fi
 %doc doc/build/html
 
 %changelog
+* Fri Jan 20 2012 Pádraig Brady <P@draigBrady.com> - 2011.3.1-1
+- Update to 2011.3.1 final
+
 * Wed Jan 18 2012 Mark McLoughlin <markmc@redhat.com> - 2011.3.1-0.2.1063%{?dist}
 - Update to latest 2011.3.1 release candidate
 
