@@ -1,30 +1,29 @@
 Name:             openstack-glance
-Version:          2011.3.1
-Release:          2%{?dist}
+Version:          2012.1
+Release:          0.1.e3%{?dist}
 Summary:          OpenStack Image Service
 
 Group:            Applications/System
 License:          ASL 2.0
 URL:              http://glance.openstack.org
-Source0:          http://launchpad.net/glance/diablo/%{version}/+download/glance-%{version}.tar.gz
+Source0:          http://launchpad.net/glance/essex/essex-3/+download/glance-2012.1~e3.tar.gz
 Source1:          openstack-glance-api.service
 Source2:          openstack-glance-registry.service
 Source3:          openstack-glance.logrotate
 
 #
-# Patches managed here: https://github.com/markmc/glance/tree/fedora-patches
+# Patches managed here: https://github.com/russellb/glance/tree/fedora-patches-essex
 #
-#   $> git format-patch -N 2011.3.1
+#   $> git format-patch -N essex-3
 #   $> for p in 00*.patch; do filterdiff -x '*/.gitignore' -x '*/.mailmap' -x '*/Authors' -x '*/.bzrignore' $p | sponge $p; done
 #   $> for p in 00*.patch; do echo "Patch${p:2:2}:          $p"; done
 #   $> for p in 00*.patch; do echo "%patch${p:2:2} -p1"; done
 #
 
-# These are from stable/diablo
+# These are from master
 
 # These are fedora specific
-Patch01:          0001-Always-reference-the-glance-module-from-the-package-.patch
-Patch02:          0002-Don-t-access-the-net-while-building-docs.patch
+Patch01:          0001-Don-t-access-the-net-while-building-docs.patch
 
 BuildArch:        noarch
 BuildRequires:    python2-devel
@@ -106,7 +105,6 @@ This package contains documentation files for glance.
 %setup -q -n glance-%{version}
 
 %patch01 -p1
-%patch02 -p1
 
 sed -i 's|\(sql_connection = sqlite:///\)\(glance.sqlite\)|\1%{_sharedstatedir}/glance/\2|' etc/glance-registry.conf
 
@@ -133,7 +131,9 @@ popd
 # Fix hidden-file-or-dir warnings
 rm -fr doc/build/html/.doctrees doc/build/html/.buildinfo
 rm -f %{buildroot}%{_sysconfdir}/glance*.conf
+rm -f %{buildroot}%{_sysconfdir}/glance*.ini
 rm -f %{buildroot}%{_sysconfdir}/logging.cnf.sample
+rm -f %{buildroot}%{_sysconfdir}/policy.json
 rm -f %{buildroot}/usr/share/doc/glance/README
 
 # Setup directories
@@ -141,7 +141,10 @@ install -d -m 755 %{buildroot}%{_sharedstatedir}/glance/images
 
 # Config file
 install -p -D -m 644 etc/glance-api.conf %{buildroot}%{_sysconfdir}/glance/glance-api.conf
+install -p -D -m 644 etc/glance-api-paste.ini %{buildroot}%{_sysconfdir}/glance/glance-api-paste.ini
 install -p -D -m 644 etc/glance-registry.conf %{buildroot}%{_sysconfdir}/glance/glance-registry.conf
+install -p -D -m 644 etc/glance-registry-paste.ini %{buildroot}%{_sysconfdir}/glance/glance-registry-paste.ini
+install -p -D -m 644 etc/policy.json %{buildroot}%{_sysconfdir}/glance/policy.json
 
 # Initscripts
 install -p -D -m 644 %{SOURCE1} %{buildroot}%{_unitdir}/openstack-glance-api.service
@@ -194,17 +197,21 @@ fi
 %{_bindir}/glance-control
 %{_bindir}/glance-manage
 %{_bindir}/glance-registry
-%{_bindir}/glance-upload
+%{_bindir}/glance-cache-cleaner
+%{_bindir}/glance-cache-manage
 %{_bindir}/glance-cache-prefetcher
 %{_bindir}/glance-cache-pruner
-%{_bindir}/glance-cache-reaper
+%{_bindir}/glance-cache-queue-image
 %{_bindir}/glance-scrubber
 %{_unitdir}/openstack-glance-api.service
 %{_unitdir}/openstack-glance-registry.service
-%{_mandir}/man1/glance-*.1.gz
+%{_mandir}/man1/glance*.1.gz
 %dir %{_sysconfdir}/glance
 %config(noreplace) %{_sysconfdir}/glance/glance-api.conf
+%config(noreplace) %{_sysconfdir}/glance/glance-api-paste.ini
 %config(noreplace) %{_sysconfdir}/glance/glance-registry.conf
+%config(noreplace) %{_sysconfdir}/glance/glance-registry-paste.ini
+%config(noreplace) %{_sysconfdir}/glance/policy.json
 %config(noreplace) %{_sysconfdir}/logrotate.d/openstack-glance
 %dir %attr(0755, glance, nobody) %{_sharedstatedir}/glance
 %dir %attr(0755, glance, nobody) %{_localstatedir}/log/glance
@@ -219,6 +226,9 @@ fi
 %doc doc/build/html
 
 %changelog
+* Thu Jan 26 2012 Russell Bryant <rbryant@redhat.com> - 2012.1-0.1.e3
+- Update to essex-3 milestone
+
 * Thu Jan 26 2012 Russell Bryant <rbryant@redhat.com> - 2011.3.1-2
 - Add python-migrate dependency to python-glance (rhbz#784891)
 
