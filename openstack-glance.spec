@@ -60,6 +60,7 @@ Requires:         python-routes
 Requires:         python-sqlalchemy
 Requires:         python-webob
 Requires:         python-httplib2
+Requires:         python-migrate
 
 #
 # The image cache requires this http://pypi.python.org/pypi/xattr
@@ -218,6 +219,9 @@ fi
 %doc doc/build/html
 
 %changelog
+* Thu Jan 26 2012 Russell Bryant <rbryant@redhat.com> - 2011.3.1-2
+- Add python-migrate dependency to python-glance (rhbz#784891)
+
 * Fri Jan 20 2012 Pádraig Brady <P@draigBrady.com> - 2011.3.1-1
 - Update to 2011.3.1 final
 
