@@ -1,6 +1,6 @@
 Name:             openstack-glance
 Version:          2012.1
-Release:          0.1.e3%{?dist}
+Release:          0.2.e3%{?dist}
 Summary:          OpenStack Image Service
 
 Group:            Applications/System
@@ -14,7 +14,7 @@ Source3:          openstack-glance.logrotate
 #
 # patches_base=essex-3
 #
-Patch01:          0001-Don-t-access-the-net-while-building-docs.patch
+Patch0001: 0001-Don-t-access-the-net-while-building-docs.patch
 
 BuildArch:        noarch
 BuildRequires:    python2-devel
@@ -95,7 +95,7 @@ This package contains documentation files for glance.
 %prep
 %setup -q -n glance-%{version}
 
-%patch01 -p1
+%patch0001 -p1
 
 sed -i 's|\(sql_connection = sqlite:///\)\(glance.sqlite\)|\1%{_sharedstatedir}/glance/\2|' etc/glance-registry.conf
 
@@ -217,6 +217,9 @@ fi
 %doc doc/build/html
 
 %changelog
+* Mon Jan 30 2012 Russell Bryant <rbryant@redhat.com> - 2012.1-0.2.e3
+- Update how patches are managed to use update_patches.sh script
+
 * Thu Jan 26 2012 Russell Bryant <rbryant@redhat.com> - 2012.1-0.1.e3
 - Update to essex-3 milestone
 
