@@ -12,17 +12,8 @@ Source2:          openstack-glance-registry.service
 Source3:          openstack-glance.logrotate
 
 #
-# Patches managed here: https://github.com/russellb/glance/tree/fedora-patches-essex
+# patches_base=essex-3
 #
-#   $> git format-patch -N essex-3
-#   $> for p in 00*.patch; do filterdiff -x '*/.gitignore' -x '*/.mailmap' -x '*/Authors' -x '*/.bzrignore' $p | sponge $p; done
-#   $> for p in 00*.patch; do echo "Patch${p:2:2}:          $p"; done
-#   $> for p in 00*.patch; do echo "%patch${p:2:2} -p1"; done
-#
-
-# These are from master
-
-# These are fedora specific
 Patch01:          0001-Don-t-access-the-net-while-building-docs.patch
 
 BuildArch:        noarch
