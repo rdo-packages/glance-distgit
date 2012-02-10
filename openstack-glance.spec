@@ -1,6 +1,6 @@
 Name:             openstack-glance
 Version:          2012.1
-Release:          0.2.e3%{?dist}
+Release:          0.3.e3%{?dist}
 Summary:          OpenStack Image Service
 
 Group:            Applications/System
@@ -217,6 +217,9 @@ fi
 %doc doc/build/html
 
 %changelog
+* Thu Feb 09 2012 Russell Bryant <rbryant@redhat.com> - 2012.1-0.3.e3
+- Set PrivateTmp=true in glance systemd unit files. (rhbz#782505)
+
 * Mon Jan 30 2012 Russell Bryant <rbryant@redhat.com> - 2012.1-0.2.e3
 - Update how patches are managed to use update_patches.sh script
 

@@ -6,6 +6,7 @@ After=syslog.target network.target
 Type=simple
 User=glance
 ExecStart=/usr/bin/glance-registry --config-file /etc/glance/glance-registry.conf
+PrivateTmp=true
 
 [Install]
 WantedBy=multi-user.target
