@@ -51,6 +51,7 @@ Requires:         python-sqlalchemy
 Requires:         python-webob
 Requires:         python-httplib2
 Requires:         python-migrate
+Requires:         python-crypto
 
 #
 # The image cache requires this http://pypi.python.org/pypi/xattr
@@ -217,8 +218,9 @@ fi
 %doc doc/build/html
 
 %changelog
-* Thu Feb 09 2012 Russell Bryant <rbryant@redhat.com> - 2012.1-0.3.e3
+* Mon Feb 13 2012 Russell Bryant <rbryant@redhat.com> - 2012.1-0.3.e3
 - Set PrivateTmp=true in glance systemd unit files. (rhbz#782505)
+- Add dependency on python-crypto. (rhbz#789943)
 
 * Mon Jan 30 2012 Russell Bryant <rbryant@redhat.com> - 2012.1-0.2.e3
 - Update how patches are managed to use update_patches.sh script
