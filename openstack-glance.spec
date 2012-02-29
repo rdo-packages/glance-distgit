@@ -212,7 +212,7 @@ fi
 
 %changelog
 * ...
-- Cange python-xattr depdendency to pyxattr.
+- Change python-xattr depdendency to pyxattr.
 - Add pysendfile dependency.
 
 * Mon Feb 13 2012 Russell Bryant <rbryant@redhat.com> - 2012.1-0.3.e3
