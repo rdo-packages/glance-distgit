@@ -52,15 +52,8 @@ Requires:         python-webob
 Requires:         python-httplib2
 Requires:         python-migrate
 Requires:         python-crypto
-
-#
-# The image cache requires this http://pypi.python.org/pypi/xattr
-# but Fedora's python-xattr is http://pyxattr.sourceforge.net/
-#
-# The cache is disabled by default, so it's only an issue if you
-# enabled it
-#
-Requires:         python-xattr
+Requires:         pyxattr
+Requires:         pysendfile
 
 %description -n   python-glance
 OpenStack Image Service (code-named Glance) provides discovery, registration,
@@ -218,6 +211,10 @@ fi
 %doc doc/build/html
 
 %changelog
+* ...
+- Cange python-xattr depdendency to pyxattr.
+- Add pysendfile dependency.
+
 * Mon Feb 13 2012 Russell Bryant <rbryant@redhat.com> - 2012.1-0.3.e3
 - Set PrivateTmp=true in glance systemd unit files. (rhbz#782505)
 - Add dependency on python-crypto. (rhbz#789943)
