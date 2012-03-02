@@ -1,6 +1,6 @@
 Name:             openstack-glance
 Version:          2012.1
-Release:          0.4.e4%{?dist}
+Release:          0.5.e4%{?dist}
 Summary:          OpenStack Image Service
 
 Group:            Applications/System
@@ -43,17 +43,18 @@ This package contains the API and registry servers.
 Summary:          Glance Python libraries
 Group:            Applications/System
 
+Requires:         pysendfile
 Requires:         python-eventlet
+Requires:         python-httplib2
+Requires:         python-iso8601
 Requires:         python-kombu
+Requires:         python-migrate
 Requires:         python-paste-deploy
 Requires:         python-routes
 Requires:         python-sqlalchemy
 Requires:         python-webob
-Requires:         python-httplib2
-Requires:         python-migrate
 Requires:         python-crypto
 Requires:         pyxattr
-Requires:         pysendfile
 
 %description -n   python-glance
 OpenStack Image Service (code-named Glance) provides discovery, registration,
@@ -211,6 +212,9 @@ fi
 %doc doc/build/html
 
 %changelog
+* Fri Mar 2 2012 Russell Bryant <rbryant@redhat.com> - 2012.1-0.5.e4
+- Add python-iso8601 dependency.
+
 * Fri Mar 2 2012 Russell Bryant <rbryant@redhat.com> - 2012.1-0.4.e4
 - Update to essex-4 milestone.
 - Change python-xattr depdendency to pyxattr.
