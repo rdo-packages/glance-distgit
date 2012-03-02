@@ -1,18 +1,18 @@
 Name:             openstack-glance
 Version:          2012.1
-Release:          0.3.e3%{?dist}
+Release:          0.4.e4%{?dist}
 Summary:          OpenStack Image Service
 
 Group:            Applications/System
 License:          ASL 2.0
 URL:              http://glance.openstack.org
-Source0:          http://launchpad.net/glance/essex/essex-3/+download/glance-2012.1~e3.tar.gz
+Source0:          http://launchpad.net/glance/essex/essex-4/+download/glance-2012.1~e4.tar.gz
 Source1:          openstack-glance-api.service
 Source2:          openstack-glance-registry.service
 Source3:          openstack-glance.logrotate
 
 #
-# patches_base=essex-3
+# patches_base=essex-4
 #
 Patch0001: 0001-Don-t-access-the-net-while-building-docs.patch
 
@@ -119,7 +119,7 @@ rm -f %{buildroot}%{_sysconfdir}/glance*.conf
 rm -f %{buildroot}%{_sysconfdir}/glance*.ini
 rm -f %{buildroot}%{_sysconfdir}/logging.cnf.sample
 rm -f %{buildroot}%{_sysconfdir}/policy.json
-rm -f %{buildroot}/usr/share/doc/glance/README
+rm -f %{buildroot}/usr/share/doc/glance/README.rst
 
 # Setup directories
 install -d -m 755 %{buildroot}%{_sharedstatedir}/glance/images
@@ -176,7 +176,7 @@ if [ $1 -ge 1 ] ; then
 fi
 
 %files
-%doc README
+%doc README.rst
 %{_bindir}/glance
 %{_bindir}/glance-api
 %{_bindir}/glance-control
@@ -203,7 +203,7 @@ fi
 %dir %attr(0755, glance, nobody) %{_localstatedir}/run/glance
 
 %files -n python-glance
-%doc README
+%doc README.rst
 %{python_sitelib}/glance
 %{python_sitelib}/glance-%{version}-*.egg-info
 
@@ -211,7 +211,8 @@ fi
 %doc doc/build/html
 
 %changelog
-* ...
+* Fri Mar 2 2012 Russell Bryant <rbryant@redhat.com> - 2012.1-0.4.e4
+- Update to essex-4 milestone.
 - Change python-xattr depdendency to pyxattr.
 - Add pysendfile dependency.
 
