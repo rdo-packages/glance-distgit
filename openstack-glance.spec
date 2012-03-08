@@ -130,6 +130,10 @@ install -p -D -m 644 etc/glance-api.conf %{buildroot}%{_sysconfdir}/glance/glanc
 install -p -D -m 644 etc/glance-api-paste.ini %{buildroot}%{_sysconfdir}/glance/glance-api-paste.ini
 install -p -D -m 644 etc/glance-registry.conf %{buildroot}%{_sysconfdir}/glance/glance-registry.conf
 install -p -D -m 644 etc/glance-registry-paste.ini %{buildroot}%{_sysconfdir}/glance/glance-registry-paste.ini
+install -p -D -m 644 etc/glance-cache.conf %{buildroot}%{_sysconfdir}/glance/glance-cache.conf
+install -p -D -m 644 etc/glance-cache-paste.ini %{buildroot}%{_sysconfdir}/glance/glance-cache-paste.ini
+install -p -D -m 644 etc/glance-scrubber.conf %{buildroot}%{_sysconfdir}/glance/glance-scrubber.conf
+install -p -D -m 644 etc/glance-scrubber-paste.ini %{buildroot}%{_sysconfdir}/glance/glance-scrubber-paste.ini
 install -p -D -m 644 etc/policy.json %{buildroot}%{_sysconfdir}/glance/policy.json
 
 # Initscripts
@@ -197,6 +201,10 @@ fi
 %config(noreplace) %{_sysconfdir}/glance/glance-api-paste.ini
 %config(noreplace) %{_sysconfdir}/glance/glance-registry.conf
 %config(noreplace) %{_sysconfdir}/glance/glance-registry-paste.ini
+%config(noreplace) %{_sysconfdir}/glance/glance-cache.conf
+%config(noreplace) %{_sysconfdir}/glance/glance-cache-paste.ini
+%config(noreplace) %{_sysconfdir}/glance/glance-scrubber.conf
+%config(noreplace) %{_sysconfdir}/glance/glance-scrubber-paste.ini
 %config(noreplace) %{_sysconfdir}/glance/policy.json
 %config(noreplace) %{_sysconfdir}/logrotate.d/openstack-glance
 %dir %attr(0755, glance, nobody) %{_sharedstatedir}/glance
@@ -212,6 +220,9 @@ fi
 %doc doc/build/html
 
 %changelog
+* Thu Mar 8 2012 Dan Prince <dprince@redhat.com> - 2012.1-0.5.e4
+- Include config files for cache and scrubber.
+
 * Fri Mar 2 2012 Russell Bryant <rbryant@redhat.com> - 2012.1-0.5.e4
 - Add python-iso8601 dependency.
 
