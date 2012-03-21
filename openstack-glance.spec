@@ -1,6 +1,6 @@
 Name:             openstack-glance
 Version:          2012.1
-Release:          0.6.e4%{?dist}
+Release:          0.7.rc1%{?dist}
 Summary:          OpenStack Image Service
 
 Group:            Applications/System
@@ -12,7 +12,7 @@ Source2:          openstack-glance-registry.service
 Source3:          openstack-glance.logrotate
 
 #
-# patches_base=essex-4
+# patches_base=essex-rc1
 #
 Patch0001: 0001-Don-t-access-the-net-while-building-docs.patch
 
@@ -220,6 +220,9 @@ fi
 %doc doc/build/html
 
 %changelog
+* Wed Mar 21 2012 Russell Bryant <rbryant@redhat.com> - 2012.1-0.7.rc1
+- Update to essex rc1
+
 * Thu Mar 8 2012 Dan Prince <dprince@redhat.com> - 2012.1-0.6.e4
 - Include config files for cache and scrubber.
 
