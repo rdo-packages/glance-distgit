@@ -6,12 +6,11 @@ Summary:          OpenStack Image Service
 Group:            Applications/System
 License:          ASL 2.0
 URL:              http://glance.openstack.org
-Source0:          http://launchpad.net/glance/essex/essex-4/+download/glance-2012.1~e4.tar.gz
+Source0:          http://launchpad.net/glance/essex/essex-4/+download/glance-2012.1~rc1.tar.gz
 Source1:          openstack-glance-api.service
 Source2:          openstack-glance-registry.service
 Source3:          openstack-glance.logrotate
 
-%define _default_patch_fuzz 2
 #
 # patches_base=essex-rc1
 #
