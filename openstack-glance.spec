@@ -191,7 +191,6 @@ fi
 %{_bindir}/glance-cache-manage
 %{_bindir}/glance-cache-prefetcher
 %{_bindir}/glance-cache-pruner
-%{_bindir}/glance-cache-queue-image
 %{_bindir}/glance-scrubber
 %{_unitdir}/openstack-glance-api.service
 %{_unitdir}/openstack-glance-registry.service
