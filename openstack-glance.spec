@@ -1,12 +1,12 @@
 Name:             openstack-glance
 Version:          2012.1
-Release:          0.7.rc1%{?dist}
+Release:          0.8.rc1%{?dist}
 Summary:          OpenStack Image Service
 
 Group:            Applications/System
 License:          ASL 2.0
 URL:              http://glance.openstack.org
-Source0:          http://launchpad.net/glance/essex/essex-4/+download/glance-2012.1~rc1.tar.gz
+Source0:          http://launchpad.net/glance/essex/essex-rc1/+download/glance-2012.1~rc1.tar.gz
 Source1:          openstack-glance-api.service
 Source2:          openstack-glance-registry.service
 Source3:          openstack-glance.logrotate
@@ -219,6 +219,9 @@ fi
 %doc doc/build/html
 
 %changelog
+* Wed Mar 21 2012 Russell Bryant <rbryant@redhat.com> - 2012.1-0.8.rc1
+- Fix source URL for essex rc1
+
 * Wed Mar 21 2012 Russell Bryant <rbryant@redhat.com> - 2012.1-0.7.rc1
 - Update to essex rc1
 
