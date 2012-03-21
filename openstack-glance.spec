@@ -11,6 +11,7 @@ Source1:          openstack-glance-api.service
 Source2:          openstack-glance-registry.service
 Source3:          openstack-glance.logrotate
 
+%define _default_patch_fuzz 2
 #
 # patches_base=essex-rc1
 #

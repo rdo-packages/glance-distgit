@@ -1,4 +1,4 @@
-From b180f5fce162e2e933624b95279edd53de0d08c7 Mon Sep 17 00:00:00 2001
+From d03de70f57d4f35f4877b891681dcc64422dafae Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?P=C3=A1draig=20Brady?= <pbrady@redhat.com>
 Date: Fri, 6 Jan 2012 17:12:54 +0000
 Subject: [PATCH] Don't access the net while building docs
@@ -12,7 +12,7 @@ Change-Id: I42c6e3a5062db209a0abe00cebc04d383c79cbcb
  1 files changed, 0 insertions(+), 1 deletions(-)
 
 diff --git a/doc/source/conf.py b/doc/source/conf.py
-index 5b02862..34816e5 100644
+index a6a3c35..670e4f3 100644
 --- a/doc/source/conf.py
 +++ b/doc/source/conf.py
 @@ -45,7 +45,6 @@ sys.path = [os.path.abspath('../../glance'),
@@ -21,5 +21,5 @@ index 5b02862..34816e5 100644
                'sphinx.ext.ifconfig',
 -              'sphinx.ext.intersphinx',
                'sphinx.ext.pngmath',
-               'sphinx.ext.graphviz',
-               'sphinx.ext.todo']
+               'sphinx.ext.graphviz']
+ 
