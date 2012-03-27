@@ -1,6 +1,6 @@
 Name:             openstack-glance
 Version:          2012.1
-Release:          0.8.rc1%{?dist}
+Release:          0.9.rc1%{?dist}
 Summary:          OpenStack Image Service
 
 Group:            Applications/System
@@ -10,6 +10,7 @@ Source0:          http://launchpad.net/glance/essex/essex-rc1/+download/glance-2
 Source1:          openstack-glance-api.service
 Source2:          openstack-glance-registry.service
 Source3:          openstack-glance.logrotate
+Source4:          openstack-glance-db-setup
 
 #
 # patches_base=essex-rc1
@@ -43,6 +44,7 @@ This package contains the API and registry servers.
 Summary:          Glance Python libraries
 Group:            Applications/System
 
+Requires:         MySQL-python
 Requires:         pysendfile
 Requires:         python-eventlet
 Requires:         python-httplib2
@@ -92,7 +94,7 @@ This package contains documentation files for glance.
 
 %patch0001 -p1
 
-sed -i 's|\(sql_connection = sqlite:///\)\(glance.sqlite\)|\1%{_sharedstatedir}/glance/\2|' etc/glance-registry.conf
+sed -i 's|\(sql_connection = \)sqlite:///glance.sqlite|\1mysql://glance:glance@localhost/glance|' etc/glance-registry.conf
 
 sed -i '/\/usr\/bin\/env python/d' glance/common/config.py glance/registry/db/migrate_repo/manage.py
 
@@ -149,6 +151,9 @@ install -d -m 755 %{buildroot}%{_localstatedir}/run/glance
 # Install log directory
 install -d -m 755 %{buildroot}%{_localstatedir}/log/glance
 
+# Install database setup helper script.
+install -p -D -m 755 %{SOURCE4} %{buildroot}%{_bindir}/openstack-glance-db-setup
+
 %pre
 getent group glance >/dev/null || groupadd -r glance -g 161
 getent passwd glance >/dev/null || \
@@ -192,6 +197,7 @@ fi
 %{_bindir}/glance-cache-prefetcher
 %{_bindir}/glance-cache-pruner
 %{_bindir}/glance-scrubber
+%{_bindir}/openstack-glance-db-setup
 %{_unitdir}/openstack-glance-api.service
 %{_unitdir}/openstack-glance-registry.service
 %{_mandir}/man1/glance*.1.gz
@@ -219,6 +225,10 @@ fi
 %doc doc/build/html
 
 %changelog
+* Tue Mar 27 2012 Russell Bryant <rbryant@redhat.com> - 2012-.1-0.9.rc1
+- Use MySQL by default.
+- Add openstack-glance-db-setup script.
+
 * Wed Mar 21 2012 Russell Bryant <rbryant@redhat.com> - 2012.1-0.8.rc1
 - Fix source URL for essex rc1
 
