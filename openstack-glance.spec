@@ -1,6 +1,6 @@
 Name:             openstack-glance
 Version:          2012.1
-Release:          0.9.rc1%{?dist}
+Release:          0.10.rc1%{?dist}
 Summary:          OpenStack Image Service
 
 Group:            Applications/System
@@ -130,7 +130,8 @@ install -d -m 755 %{buildroot}%{_sharedstatedir}/glance/images
 # Config file
 install -p -D -m 644 etc/glance-api.conf %{buildroot}%{_sysconfdir}/glance/glance-api.conf
 install -p -D -m 644 etc/glance-api-paste.ini %{buildroot}%{_sysconfdir}/glance/glance-api-paste.ini
-install -p -D -m 644 etc/glance-registry.conf %{buildroot}%{_sysconfdir}/glance/glance-registry.conf
+# glance-registry.conf contains a db password
+install -p -D -m 640 etc/glance-registry.conf %{buildroot}%{_sysconfdir}/glance/glance-registry.conf
 install -p -D -m 644 etc/glance-registry-paste.ini %{buildroot}%{_sysconfdir}/glance/glance-registry-paste.ini
 install -p -D -m 644 etc/glance-cache.conf %{buildroot}%{_sysconfdir}/glance/glance-cache.conf
 install -p -D -m 644 etc/glance-cache-paste.ini %{buildroot}%{_sysconfdir}/glance/glance-cache-paste.ini
@@ -202,16 +203,16 @@ fi
 %{_unitdir}/openstack-glance-registry.service
 %{_mandir}/man1/glance*.1.gz
 %dir %{_sysconfdir}/glance
-%config(noreplace) %{_sysconfdir}/glance/glance-api.conf
-%config(noreplace) %{_sysconfdir}/glance/glance-api-paste.ini
-%config(noreplace) %{_sysconfdir}/glance/glance-registry.conf
-%config(noreplace) %{_sysconfdir}/glance/glance-registry-paste.ini
-%config(noreplace) %{_sysconfdir}/glance/glance-cache.conf
-%config(noreplace) %{_sysconfdir}/glance/glance-cache-paste.ini
-%config(noreplace) %{_sysconfdir}/glance/glance-scrubber.conf
-%config(noreplace) %{_sysconfdir}/glance/glance-scrubber-paste.ini
-%config(noreplace) %{_sysconfdir}/glance/policy.json
-%config(noreplace) %{_sysconfdir}/logrotate.d/openstack-glance
+%config(noreplace) %attr(-, root, glance) %{_sysconfdir}/glance/glance-api.conf
+%config(noreplace) %attr(-, root, glance) %{_sysconfdir}/glance/glance-api-paste.ini
+%config(noreplace) %attr(-, root, glance) %{_sysconfdir}/glance/glance-registry.conf
+%config(noreplace) %attr(-, root, glance) %{_sysconfdir}/glance/glance-registry-paste.ini
+%config(noreplace) %attr(-, root, glance) %{_sysconfdir}/glance/glance-cache.conf
+%config(noreplace) %attr(-, root, glance) %{_sysconfdir}/glance/glance-cache-paste.ini
+%config(noreplace) %attr(-, root, glance) %{_sysconfdir}/glance/glance-scrubber.conf
+%config(noreplace) %attr(-, root, glance) %{_sysconfdir}/glance/glance-scrubber-paste.ini
+%config(noreplace) %attr(-, root, glance) %{_sysconfdir}/glance/policy.json
+%config(noreplace) %attr(-, root, glance) %{_sysconfdir}/logrotate.d/openstack-glance
 %dir %attr(0755, glance, nobody) %{_sharedstatedir}/glance
 %dir %attr(0755, glance, nobody) %{_localstatedir}/log/glance
 %dir %attr(0755, glance, nobody) %{_localstatedir}/run/glance
@@ -225,7 +226,12 @@ fi
 %doc doc/build/html
 
 %changelog
-* Tue Mar 27 2012 Russell Bryant <rbryant@redhat.com> - 2012-.1-0.9.rc1
+* Wed Mar 28 2012 Russell Bryant <rbryant@redhat.com> - 2012.1-0.10.rc1
+- Update openstack-glance-db-setup to common script from openstack-keystone package.
+- Change permissions of glance-registry.conf to 0640.
+- Set group on all config files to glance.
+
+* Tue Mar 27 2012 Russell Bryant <rbryant@redhat.com> - 2012.1-0.9.rc1
 - Use MySQL by default.
 - Add openstack-glance-db-setup script.
 

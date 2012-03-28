@@ -2,6 +2,7 @@
 #
 # Copyright (C) 2011 - 2012, Red Hat, Inc.
 # Russell Bryant <rbryant@redhat.com>
+# Alan Pevec <apevec@redhat.com>
 #
 # Licensed under the Apache License, Version 2.0 (the "License"); you may
 # not use this file except in compliance with the License. You may obtain
@@ -19,23 +20,28 @@
 #
 # Print --help output and exit.
 #
+
+# TODO put it in common place for all openstack service
+#      (nova, glance and keystone) to use
+APP=glance
+
 usage() {
 
 cat << EOF
-Set up a local MySQL database for use with openstack-glance.
-This script will create a 'glance' database that is accessible
-only on localhost by user 'glance' with password 'glance'.
+Set up a local MySQL database for use with openstack-$APP.
+This script will create a '$APP' database that is accessible
+only on localhost by user '$APP' with password '$APP'.
 The setup of MySQL with a multi-server OpenStack installation
 is outside of the scope of this simple helper script.
 
-Usage: openstack-glance-db-setup [options]
+Usage: openstack-$APP-db-setup [options]
 Options:
 	--help        | -h
 		Print usage information.
-	--glancepw <pw> | -n <pw>
-		Specify the password for the 'glance' MySQL user that glance will
-		use to connect to the 'glance' MySQL database.  By default,
-		the password 'glance' will be used.
+	--password <pw> | -p <pw>
+		Specify the password for the '$APP' MySQL user that $APP will
+		use to connect to the '$APP' MySQL database.  By default,
+		the password '$APP' will be used.
 	--rootpw <pw> | -r <pw>
 		Specify the root MySQL password.  If the script installs
 		the MySQL server, it will set the root password to this value
@@ -64,9 +70,13 @@ start_mysql_server() {
 	systemctl start mysqld.service
 }
 
-MYSQL_GLANCE_PW_DEFAULT="glance"
-MYSQL_GLANCE_PW=${MYSQL_GLANCE_PW_DEFAULT}
-GLANCE_CONFIG="/etc/glance/glance.conf"
+MYSQL_APP_PW_DEFAULT="$APP"
+MYSQL_APP_PW=${MYSQL_APP_PW_DEFAULT}
+if [ "${APP}" = "glance" ]; then
+	APP_CONFIG="/etc/glance/glance-registry.conf"
+else
+	APP_CONFIG="/etc/$APP/$APP.conf"
+fi
 ASSUME_YES=""
 
 while [ $# -gt 0 ]
@@ -75,9 +85,9 @@ do
 		-h|--help)
 			usage
 			;;
-		-n|--glancepw)
+		-p|--password)
 			shift
-			MYSQL_GLANCE_PW=${1}
+			MYSQL_APP_PW=${1}
 			;;
 		-r|--rootpw)
 			shift
@@ -202,37 +212,41 @@ echo "Verified connectivity to MySQL."
 
 # Now create the db.
 
-echo "Creating 'glance' database."
+echo "Creating '$APP' database."
 cat << EOF | mysql -u root ${MYSQL_ROOT_PW_ARG}
-CREATE DATABASE glance;
-CREATE USER 'glance'@'localhost' IDENTIFIED BY '${MYSQL_GLANCE_PW}';
-CREATE USER 'glance'@'%' IDENTIFIED BY '${MYSQL_GLANCE_PW}';
-GRANT ALL ON glance.* TO 'glance'@'localhost';
-GRANT ALL ON glance.* TO 'glance'@'%';
+CREATE DATABASE $APP;
+CREATE USER '$APP'@'localhost' IDENTIFIED BY '${MYSQL_APP_PW}';
+CREATE USER '$APP'@'%' IDENTIFIED BY '${MYSQL_APP_PW}';
+GRANT ALL ON $APP.* TO '$APP'@'localhost';
+GRANT ALL ON $APP.* TO '$APP'@'%';
 flush privileges;
 EOF
 
 
-# Make sure glance configuration has the right MySQL password.
+# Make sure $APP configuration has the right MySQL password.
 
-if [ "${MYSQL_GLANCE_PW}" != "${MYSQL_GLANCE_PW_DEFAULT}" ] ; then
-	echo "Updating 'glance' database password in ${GLANCE_CONFIG}"
-	sed -i -e "s/mysql:\/\/glance:\(.*\)@/mysql:\/\/glance:${MYSQL_GLANCE_PW}@/" ${GLANCE_CONFIG}
+if [ "${MYSQL_APP_PW}" != "${MYSQL_APP_PW_DEFAULT}" ] ; then
+	echo "Updating '$APP' database password in ${APP_CONFIG}"
+	sed -i -e "s/mysql:\/\/$APP:\(.*\)@/mysql:\/\/$APP:${MYSQL_APP_PW}@/" ${APP_CONFIG}
 fi
 
 
-# Ask openstack-glance to sync the db.
+# Ask openstack-$APP to sync the db.
 
-echo "Asking openstack-glance to sync the database."
-glance-manage db_sync
-
+echo "Asking openstack-$APP to sync the database."
+if [ "${APP}" = "nova" ]; then
+	nova-manage db sync
+else
+	# glance and keystone
+	$APP-manage db_sync
+fi
 
 # Do a final sanity check on the database.
 
-echo "SELECT * FROM migrate_version;" | mysql -u glance --password=${MYSQL_GLANCE_PW} glance > /dev/null
+echo "SELECT * FROM migrate_version;" | mysql -u $APP --password=${MYSQL_APP_PW} $APP > /dev/null
 if ! [ $? -eq 0 ]
 then
-	echo "Final sanity check failed.  File a bug report on bugzilla.redhat.com against the openstack-glance package."
+	echo "Final sanity check failed.  File a bug report on bugzilla.redhat.com against the openstack-$APP package."
 	exit 1
 fi
 
