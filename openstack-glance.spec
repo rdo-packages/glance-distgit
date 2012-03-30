@@ -1,19 +1,19 @@
 Name:             openstack-glance
 Version:          2012.1
-Release:          0.10.rc1%{?dist}
+Release:          0.11.rc2%{?dist}
 Summary:          OpenStack Image Service
 
 Group:            Applications/System
 License:          ASL 2.0
 URL:              http://glance.openstack.org
-Source0:          http://launchpad.net/glance/essex/essex-rc1/+download/glance-2012.1~rc1.tar.gz
+Source0:          http://launchpad.net/glance/essex/essex-rc2/+download/glance-2012.1~rc2.tar.gz
 Source1:          openstack-glance-api.service
 Source2:          openstack-glance-registry.service
 Source3:          openstack-glance.logrotate
 Source4:          openstack-glance-db-setup
 
 #
-# patches_base=essex-rc1
+# patches_base=essex-rc2
 #
 Patch0001: 0001-Don-t-access-the-net-while-building-docs.patch
 
@@ -226,6 +226,9 @@ fi
 %doc doc/build/html
 
 %changelog
+* Fri Mar 30 2012 Russell Bryant <rbryant@redhat.com> - 2012.1-0.11.rc2
+- Update to Essex rc2
+
 * Wed Mar 28 2012 Russell Bryant <rbryant@redhat.com> - 2012.1-0.10.rc1
 - Update openstack-glance-db-setup to common script from openstack-keystone package.
 - Change permissions of glance-registry.conf to 0640.
