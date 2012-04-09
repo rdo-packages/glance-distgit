@@ -21,6 +21,8 @@
 # Print --help output and exit.
 #
 
+systemctl --version >/dev/null 2>&1 && systemctl=1
+
 # TODO put it in common place for all openstack service
 #      (nova, glance and keystone) to use
 APP=glance
@@ -66,8 +68,20 @@ install_mysql_server() {
 	fi
 }
 
-start_mysql_server() {
-	systemctl start mysqld.service
+start_service() {
+    if test "$systemctl"; then
+        systemctl start $1.service
+    else
+        service $1 start
+    fi
+}
+
+service_running() {
+    if test "$systemctl"; then
+        systemctl status $1.service >/dev/null
+    else
+        service $1 status >/dev/null
+    fi
 }
 
 MYSQL_APP_PW_DEFAULT="$APP"
@@ -133,8 +147,7 @@ fi
 
 # Make sure mysqld is running.
 
-if ! systemctl status mysqld.service > /dev/null
-then
+if ! service_running mysqld; then
 	if [ -z "${ASSUME_YES}" ] ; then
 		printf "mysqld is not running.  Would you like to start it now? (y/n): "
 		read response
@@ -151,7 +164,7 @@ then
 		esac
 	fi
 
-	start_mysql_server
+	start_service 'mysql'
 
 	# If we both installed and started, ensure it starts at boot
 	[ $NEW_MYSQL_INSTALL -eq 1 ] && chkconfig mysqld on
