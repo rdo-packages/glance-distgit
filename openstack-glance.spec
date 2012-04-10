@@ -1,6 +1,6 @@
 Name:             openstack-glance
 Version:          2012.1
-Release:          1%{?dist}
+Release:          2%{?dist}
 Summary:          OpenStack Image Service
 
 Group:            Applications/System
@@ -226,6 +226,9 @@ fi
 %doc doc/build/html
 
 %changelog
+* Tue Apr 10 2012 Pádraig Brady <P@draigBrady.com> - 2012.1-2
+- Fix startup failure due to a file ownership issue (#811130)
+
 * Mon Apr  9 2012 Pádraig Brady <P@draigBrady.com> - 2012.1-1
 - Update to Essex final
 

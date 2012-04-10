@@ -247,12 +247,10 @@ fi
 # Ask openstack-$APP to sync the db.
 
 echo "Asking openstack-$APP to sync the database."
-if [ "${APP}" = "nova" ]; then
-	nova-manage db sync
-else
-	# glance and keystone
-	$APP-manage db_sync
-fi
+[ "${APP}" = "nova" ] && db_sync='db sync' || db_sync='db_sync'
+# Run as $APP user so any newly created (log) files have correct ownership
+runuser -s /bin/sh $APP -c "$APP-manage $db_sync"
+
 
 # Do a final sanity check on the database.
 
