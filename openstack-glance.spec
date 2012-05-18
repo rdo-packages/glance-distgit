@@ -1,6 +1,6 @@
 Name:             openstack-glance
 Version:          2012.1
-Release:          4%{?dist}
+Release:          5%{?dist}
 Summary:          OpenStack Image Service
 
 Group:            Applications/System
@@ -22,7 +22,6 @@ Patch0003: 0003-Don-t-access-the-net-while-building-docs.patch
 BuildArch:        noarch
 BuildRequires:    python2-devel
 BuildRequires:    python-setuptools
-BuildRequires:    python-distutils-extra
 BuildRequires:    intltool
 
 Requires(post):   systemd-units
@@ -51,7 +50,6 @@ Requires:         pysendfile
 Requires:         python-eventlet
 Requires:         python-httplib2
 Requires:         python-iso8601
-Requires:         python-kombu
 Requires:         python-migrate
 Requires:         python-paste-deploy
 Requires:         python-routes
@@ -230,6 +228,9 @@ fi
 %doc doc/build/html
 
 %changelog
+* Fri May 18 2012 Alan Pevec <apevec@redhat.com> - 2012.1-5
+- Drop hard dep on python-kombu, notifications are configurable
+
 * Wed Apr 25 2012 Pádraig Brady <P@draigBrady.com> - 2012.1-4
 - Fix leak of swift objects on deletion
 
