@@ -11,6 +11,7 @@ Source1:          openstack-glance-api.service
 Source2:          openstack-glance-registry.service
 Source3:          openstack-glance.logrotate
 Source4:          openstack-glance-db-setup
+Source5:          glance-registry.conf
 
 #
 # patches_base=2012.1
@@ -141,7 +142,7 @@ install -d -m 755 %{buildroot}%{_sharedstatedir}/glance/images
 install -p -D -m 644 etc/glance-api.conf %{buildroot}%{_sysconfdir}/glance/glance-api.conf
 install -p -D -m 644 etc/glance-api-paste.ini %{buildroot}%{_sysconfdir}/glance/glance-api-paste.ini
 # glance-registry.conf contains a db password
-install -p -D -m 640 etc/glance-registry.conf %{buildroot}%{_sysconfdir}/glance/glance-registry.conf
+install -p -D -m 640 %{SOURCE5} %{buildroot}%{_sysconfdir}/glance/glance-registry.conf
 install -p -D -m 644 etc/glance-registry-paste.ini %{buildroot}%{_sysconfdir}/glance/glance-registry-paste.ini
 install -p -D -m 644 etc/glance-cache.conf %{buildroot}%{_sysconfdir}/glance/glance-cache.conf
 install -p -D -m 644 etc/glance-cache-paste.ini %{buildroot}%{_sysconfdir}/glance/glance-cache-paste.ini
@@ -238,6 +239,7 @@ fi
 %changelog
 * Mon May 21 2012 Pádraig Brady <P@draigBrady.com> - 2012.1-6
 - Sync with essex stable
+- Don't auto create database on service start
 
 * Fri May 18 2012 Alan Pevec <apevec@redhat.com> - 2012.1-5
 - Drop hard dep on python-kombu, notifications are configurable
