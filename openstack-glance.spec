@@ -10,7 +10,6 @@ Source0:          https://launchpad.net/glance/essex/2012.1/+download/glance-%{v
 Source1:          openstack-glance-api.service
 Source2:          openstack-glance-registry.service
 Source3:          openstack-glance.logrotate
-Source4:          openstack-glance-db-setup
 Source5:          glance-registry.conf
 
 #
@@ -34,6 +33,7 @@ Requires(preun):  systemd-units
 Requires(postun): systemd-units
 Requires(pre):    shadow-utils
 Requires:         python-glance = %{version}-%{release}
+Requires:         openstack-utils
 
 %description
 OpenStack Image Service (code-named Glance) provides discovery, registration,
@@ -163,9 +163,6 @@ install -d -m 755 %{buildroot}%{_localstatedir}/run/glance
 # Install log directory
 install -d -m 755 %{buildroot}%{_localstatedir}/log/glance
 
-# Install database setup helper script.
-install -p -D -m 755 %{SOURCE4} %{buildroot}%{_bindir}/openstack-glance-db-setup
-
 %pre
 getent group glance >/dev/null || groupadd -r glance -g 161
 getent passwd glance >/dev/null || \
@@ -209,7 +206,6 @@ fi
 %{_bindir}/glance-cache-prefetcher
 %{_bindir}/glance-cache-pruner
 %{_bindir}/glance-scrubber
-%{_bindir}/openstack-glance-db-setup
 %{_unitdir}/openstack-glance-api.service
 %{_unitdir}/openstack-glance-registry.service
 %{_mandir}/man1/glance*.1.gz
@@ -240,6 +236,7 @@ fi
 * Mon May 21 2012 Pádraig Brady <P@draigBrady.com> - 2012.1-6
 - Sync with essex stable
 - Don't auto create database on service start
+- Remove openstack-glance-db-setup. use openstack-db instead
 
 * Fri May 18 2012 Alan Pevec <apevec@redhat.com> - 2012.1-5
 - Drop hard dep on python-kombu, notifications are configurable
