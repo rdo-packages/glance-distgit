@@ -1,6 +1,6 @@
 Name:             openstack-glance
 Version:          2012.1
-Release:          5%{?dist}
+Release:          6%{?dist}
 Summary:          OpenStack Image Service
 
 Group:            Applications/System
@@ -17,7 +17,11 @@ Source4:          openstack-glance-db-setup
 #
 Patch0001: 0001-Ensure-swift-auth-URL-includes-trailing-slash.patch
 Patch0002: 0002-search-for-logger-in-PATH.patch
-Patch0003: 0003-Don-t-access-the-net-while-building-docs.patch
+Patch0003: 0003-Fix-content-type-for-qpid-notifier.patch
+Patch0004: 0004-Omit-Content-Length-on-chunked-transfer.patch
+Patch0005: 0005-Fix-i18n-in-glance.notifier.notify_kombu.patch
+Patch0006: 0006-Don-t-access-the-net-while-building-docs.patch
+Patch0007: 0007-Support-DB-auto-create-suppression.patch
 
 BuildArch:        noarch
 BuildRequires:    python2-devel
@@ -95,6 +99,10 @@ This package contains documentation files for glance.
 %patch0001 -p1
 %patch0002 -p1
 %patch0003 -p1
+%patch0004 -p1
+%patch0005 -p1
+%patch0006 -p1
+%patch0007 -p1
 
 sed -i 's|\(sql_connection = \)sqlite:///glance.sqlite|\1mysql://glance:glance@localhost/glance|' etc/glance-registry.conf
 
@@ -228,6 +236,9 @@ fi
 %doc doc/build/html
 
 %changelog
+* Mon May 21 2012 Pádraig Brady <P@draigBrady.com> - 2012.1-6
+- Sync with essex stable
+
 * Fri May 18 2012 Alan Pevec <apevec@redhat.com> - 2012.1-5
 - Drop hard dep on python-kombu, notifications are configurable
 
