@@ -1,4 +1,4 @@
-From 9d152280184780f8d7eb547c9b08fabd196cf19d Mon Sep 17 00:00:00 2001
+From d44afa05c270335d6c9812913f35d75669f0886a Mon Sep 17 00:00:00 2001
 From: Eoghan Glynn <eglynn@redhat.com>
 Date: Fri, 18 May 2012 14:23:41 +0100
 Subject: [PATCH] Support DB auto-create suppression.
@@ -28,14 +28,15 @@ Conflicts:
 	glance/tests/functional/v2/test_images.py
 ---
  bin/glance-manage                             |   10 +-
- glance/registry/db/api.py                     |   19 +-
+ etc/glance-registry.conf                      |    4 +
+ glance/registry/db/api.py                     |   26 +-
  glance/tests/functional/__init__.py           |   58 +-
  glance/tests/functional/test_bin_glance.py    |    3 -
  glance/tests/functional/test_glance_manage.py |   77 ++
  glance/tests/functional/test_sqlite.py        |    1 -
  glance/tests/functional/v1/test_api.py        | 1357 +++++++++++++++++++++++++
  glance/tests/functional/v2/test_images.py     |  468 +++++++++
- 8 files changed, 1954 insertions(+), 39 deletions(-)
+ 9 files changed, 1964 insertions(+), 40 deletions(-)
  create mode 100644 glance/tests/functional/test_glance_manage.py
  create mode 100644 glance/tests/functional/v1/test_api.py
  create mode 100644 glance/tests/functional/v2/test_images.py
@@ -68,8 +69,23 @@ index 3a50c11..aeee4fd 100755
      version = args.pop(0) if args else None
      current_version = args.pop(0) if args else None
      glance.registry.db.migration.db_sync(conf, version, current_version)
+diff --git a/etc/glance-registry.conf b/etc/glance-registry.conf
+index 8597411..37d71ff 100644
+--- a/etc/glance-registry.conf
++++ b/etc/glance-registry.conf
+@@ -23,6 +23,10 @@ backlog = 4096
+ # See: http://www.sqlalchemy.org/docs/05/reference/sqlalchemy/connections.html#sqlalchemy.create_engine
+ sql_connection = sqlite:///glance.sqlite
+ 
++# Whether the glance service creates the database tables
++# automatically at startup, or explicitly with db_sync
++db_auto_create = True
++
+ # Period in seconds after which SQLAlchemy should reestablish its connection
+ # to the database.
+ #
 diff --git a/glance/registry/db/api.py b/glance/registry/db/api.py
-index 04fe2e5..608b435 100644
+index 04fe2e5..b2e3c00 100644
 --- a/glance/registry/db/api.py
 +++ b/glance/registry/db/api.py
 @@ -68,7 +68,8 @@ db_opts = [
@@ -82,7 +98,21 @@ index 04fe2e5..608b435 100644
      ]
  
  
-@@ -131,12 +132,16 @@ def configure_db(conf):
+@@ -102,7 +103,12 @@ def configure_db(conf):
+     """
+     global _ENGINE, sa_logger, logger, _MAX_RETRIES, _RETRY_INTERVAL
+     if not _ENGINE:
+-        conf.register_opts(db_opts)
++        for opt in db_opts:
++            # avoid duplicate registration
++            try:
++                getattr(conf, opt.name)
++            except cfg.NoSuchOptError:
++                conf.register_opt(opt)
+         sql_connection = conf.sql_connection
+         _MAX_RETRIES = conf.sql_max_retries
+         _RETRY_INTERVAL = conf.sql_retry_interval
+@@ -131,12 +137,16 @@ def configure_db(conf):
          elif conf.verbose:
              sa_logger.setLevel(logging.INFO)
  
