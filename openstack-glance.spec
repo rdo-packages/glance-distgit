@@ -1,6 +1,6 @@
 Name:             openstack-glance
 Version:          2012.2
-Release:          1%{?dist}
+Release:          0.1.f1%{?dist}
 Summary:          OpenStack Image Service
 
 Group:            Applications/System
@@ -227,7 +227,7 @@ fi
 %doc doc/build/html
 
 %changelog
-* Tue May 28 2012 Pádraig Brady <P@draigBrady.com> - 2012.2-1
+* Tue May 28 2012 Pádraig Brady <P@draigBrady.com> - 2012.2-0.1.f1
 - Update to Folsom milestone 1
 
 * Tue May 22 2012 Pádraig Brady <P@draigBrady.com> - 2012.1-8
