@@ -1,26 +1,21 @@
 Name:             openstack-glance
-Version:          2012.1
-Release:          8%{?dist}
+Version:          2012.2
+Release:          1%{?dist}
 Summary:          OpenStack Image Service
 
 Group:            Applications/System
 License:          ASL 2.0
 URL:              http://glance.openstack.org
-Source0:          https://launchpad.net/glance/essex/2012.1/+download/glance-%{version}.tar.gz
+Source0:          https://launchpad.net/glance/folsom/folsom-1/+download/glance-%{version}~f1.tar.gz
 Source1:          openstack-glance-api.service
 Source2:          openstack-glance-registry.service
 Source3:          openstack-glance.logrotate
 
 #
-# patches_base=2012.1
+# patches_base=folsom-1
 #
-Patch0001: 0001-Ensure-swift-auth-URL-includes-trailing-slash.patch
-Patch0002: 0002-search-for-logger-in-PATH.patch
-Patch0003: 0003-Fix-content-type-for-qpid-notifier.patch
-Patch0004: 0004-Omit-Content-Length-on-chunked-transfer.patch
-Patch0005: 0005-Fix-i18n-in-glance.notifier.notify_kombu.patch
-Patch0006: 0006-Don-t-access-the-net-while-building-docs.patch
-Patch0007: 0007-Support-DB-auto-create-suppression.patch
+Patch0001: 0001-Don-t-access-the-net-while-building-docs.patch
+Patch0002: 0002-improve-DB-auto-create-suppression-config-presentati.patch
 
 BuildArch:        noarch
 BuildRequires:    python2-devel
@@ -55,6 +50,7 @@ Requires:         pysendfile
 Requires:         python-eventlet
 Requires:         python-httplib2
 Requires:         python-iso8601
+Requires:         python-jsonschema
 Requires:         python-migrate
 Requires:         python-paste-deploy
 Requires:         python-routes
@@ -99,11 +95,6 @@ This package contains documentation files for glance.
 
 %patch0001 -p1
 %patch0002 -p1
-%patch0003 -p1
-%patch0004 -p1
-%patch0005 -p1
-%patch0006 -p1
-%patch0007 -p1
 
 sed -i '/\/usr\/bin\/env python/d' glance/common/config.py glance/registry/db/migrate_repo/manage.py
 
@@ -236,6 +227,9 @@ fi
 %doc doc/build/html
 
 %changelog
+* Tue May 28 2012 Pádraig Brady <P@draigBrady.com> - 2012.2-1
+- Update to Folsom milestone 1
+
 * Tue May 22 2012 Pádraig Brady <P@draigBrady.com> - 2012.1-8
 - Fix an issue with glance-manage db_sync (#823702)
 

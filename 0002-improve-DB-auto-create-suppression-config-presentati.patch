@@ -1,0 +1,27 @@
+From 21919c82bcbcf4bbd41e2ca5df3728ed672fa57e Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?P=C3=A1draig=20Brady?= <pbrady@redhat.com>
+Date: Fri, 18 May 2012 14:23:41 +0100
+Subject: [PATCH] improve DB auto-create suppression config presentation
+
+Add the default option (matching upstream),
+so that we can provide comments in the config file,
+and also position the option close to related ones.
+---
+ etc/glance-registry.conf |    4 ++++
+ 1 files changed, 4 insertions(+), 0 deletions(-)
+
+diff --git a/etc/glance-registry.conf b/etc/glance-registry.conf
+index 8597411..37d71ff 100644
+--- a/etc/glance-registry.conf
++++ b/etc/glance-registry.conf
+@@ -23,6 +23,10 @@ backlog = 4096
+ # See: http://www.sqlalchemy.org/docs/05/reference/sqlalchemy/connections.html#sqlalchemy.create_engine
+ sql_connection = sqlite:///glance.sqlite
+ 
++# Whether the glance service creates the database tables
++# automatically at startup, or explicitly with db_sync
++db_auto_create = True
++
+ # Period in seconds after which SQLAlchemy should reestablish its connection
+ # to the database.
+ #
