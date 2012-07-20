@@ -1,6 +1,6 @@
 Name:             openstack-glance
 Version:          2012.2
-Release:          0.1.f1%{?dist}
+Release:          0.2.f1%{?dist}
 Summary:          OpenStack Image Service
 
 Group:            Applications/System
@@ -226,6 +226,9 @@ fi
 %doc doc/build/html
 
 %changelog
+* Fri Jul 20 2012 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 2012.2-0.2.f1
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_18_Mass_Rebuild
+
 * Tue May 28 2012 Pádraig Brady <P@draigBrady.com> - 2012.2-0.1.f1
 - Update to Folsom milestone 1
 
