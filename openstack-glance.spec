@@ -228,6 +228,7 @@ fi
 %changelog
 * Fri Jul 20 2012 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 2012.2-0.2.f1
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_18_Mass_Rebuild
+- Remove world readable bit on sensitive config files
 
 * Tue May 28 2012 Pádraig Brady <P@draigBrady.com> - 2012.2-0.1.f1
 - Update to Folsom milestone 1
