@@ -77,9 +77,7 @@ BuildRequires:    graphviz
 
 # Required to build module documents
 BuildRequires:    python-boto
-BuildRequires:    python-daemon
 BuildRequires:    python-eventlet
-BuildRequires:    python-gflags
 BuildRequires:    python-routes
 BuildRequires:    python-sqlalchemy
 BuildRequires:    python-webob
