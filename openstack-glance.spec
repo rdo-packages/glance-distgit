@@ -1,18 +1,21 @@
+#
+# This is 2012.2 folsom-3 milestone
+#
 Name:             openstack-glance
 Version:          2012.2
-Release:          0.2.f1%{?dist}
+Release:          0.3.f3%{?dist}
 Summary:          OpenStack Image Service
 
 Group:            Applications/System
 License:          ASL 2.0
 URL:              http://glance.openstack.org
-Source0:          https://launchpad.net/glance/folsom/folsom-1/+download/glance-%{version}~f1.tar.gz
+Source0:          https://launchpad.net/glance/folsom/folsom-3/+download/glance-%{version}~f3.tar.gz
 Source1:          openstack-glance-api.service
 Source2:          openstack-glance-registry.service
 Source3:          openstack-glance.logrotate
 
 #
-# patches_base=folsom-1
+# patches_base=folsom-3
 #
 Patch0001: 0001-Don-t-access-the-net-while-building-docs.patch
 Patch0002: 0002-improve-DB-auto-create-suppression-config-presentati.patch
@@ -27,6 +30,7 @@ Requires(preun):  systemd-units
 Requires(postun): systemd-units
 Requires(pre):    shadow-utils
 Requires:         python-glance = %{version}-%{release}
+Requires:         python-glanceclient > 1:0.4.1
 Requires:         openstack-utils
 BuildRequires:    openstack-utils
 
@@ -58,6 +62,12 @@ Requires:         python-sqlalchemy
 Requires:         python-webob
 Requires:         python-crypto
 Requires:         pyxattr
+Requires:         python-swiftclient
+
+#test deps: python-mox python-nose python-requests
+#test and optional store:
+#ceph - glance.store.rdb
+#python-boto - glance.store.s3
 
 %description -n   python-glance
 OpenStack Image Service (code-named Glance) provides discovery, registration,
@@ -94,7 +104,11 @@ This package contains documentation files for glance.
 %patch0001 -p1
 %patch0002 -p1
 
-sed -i '/\/usr\/bin\/env python/d' glance/common/config.py glance/registry/db/migrate_repo/manage.py
+# Remove bundled egg-info
+rm -rf glance.egg-info
+sed -i '/\/usr\/bin\/env python/d' glance/common/config.py glance/common/crypt.py glance/db/sqlalchemy/migrate_repo/manage.py
+# versioninfo is missing in f3 tarball
+echo %{version} > glance/versioninfo
 
 %build
 
@@ -109,6 +123,10 @@ openstack-config --set etc/glance-registry.conf DEFAULT db_auto_create False
 
 # Delete tests
 rm -fr %{buildroot}%{python_sitelib}/tests
+
+# Drop old glance CLI it has been deprecated
+# and replaced glanceclient
+rm -f %{buildroot}%{_bindir}/glance
 
 export PYTHONPATH="$( pwd ):$PYTHONPATH"
 pushd doc
@@ -136,9 +154,7 @@ install -p -D -m 640 etc/glance-api-paste.ini %{buildroot}%{_sysconfdir}/glance/
 install -p -D -m 640 etc/glance-registry.conf %{buildroot}%{_sysconfdir}/glance/glance-registry.conf
 install -p -D -m 640 etc/glance-registry-paste.ini %{buildroot}%{_sysconfdir}/glance/glance-registry-paste.ini
 install -p -D -m 640 etc/glance-cache.conf %{buildroot}%{_sysconfdir}/glance/glance-cache.conf
-install -p -D -m 640 etc/glance-cache-paste.ini %{buildroot}%{_sysconfdir}/glance/glance-cache-paste.ini
 install -p -D -m 640 etc/glance-scrubber.conf %{buildroot}%{_sysconfdir}/glance/glance-scrubber.conf
-install -p -D -m 640 etc/glance-scrubber-paste.ini %{buildroot}%{_sysconfdir}/glance/glance-scrubber-paste.ini
 install -p -D -m 640 etc/policy.json %{buildroot}%{_sysconfdir}/glance/policy.json
 
 # Initscripts
@@ -187,7 +203,6 @@ fi
 
 %files
 %doc README.rst
-%{_bindir}/glance
 %{_bindir}/glance-api
 %{_bindir}/glance-control
 %{_bindir}/glance-manage
@@ -197,6 +212,8 @@ fi
 %{_bindir}/glance-cache-prefetcher
 %{_bindir}/glance-cache-pruner
 %{_bindir}/glance-scrubber
+%{_bindir}/glance-replicator
+
 %{_unitdir}/openstack-glance-api.service
 %{_unitdir}/openstack-glance-registry.service
 %{_mandir}/man1/glance*.1.gz
@@ -206,9 +223,7 @@ fi
 %config(noreplace) %attr(-, root, glance) %{_sysconfdir}/glance/glance-registry.conf
 %config(noreplace) %attr(-, root, glance) %{_sysconfdir}/glance/glance-registry-paste.ini
 %config(noreplace) %attr(-, root, glance) %{_sysconfdir}/glance/glance-cache.conf
-%config(noreplace) %attr(-, root, glance) %{_sysconfdir}/glance/glance-cache-paste.ini
 %config(noreplace) %attr(-, root, glance) %{_sysconfdir}/glance/glance-scrubber.conf
-%config(noreplace) %attr(-, root, glance) %{_sysconfdir}/glance/glance-scrubber-paste.ini
 %config(noreplace) %attr(-, root, glance) %{_sysconfdir}/glance/policy.json
 %config(noreplace) %attr(-, root, glance) %{_sysconfdir}/logrotate.d/openstack-glance
 %dir %attr(0755, glance, nobody) %{_sharedstatedir}/glance
@@ -220,10 +235,15 @@ fi
 %{python_sitelib}/glance
 %{python_sitelib}/glance-%{version}-*.egg-info
 
+
 %files doc
 %doc doc/build/html
 
 %changelog
+* Thu Aug 23 2012 Alan Pevec <apevec@redhat.com> 2012.2-0.3.f3
+- Update to folsom-3 milestone
+- Drop old glance CLI, deprecated by python-glanceclient
+
 * Fri Jul 20 2012 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 2012.2-0.2.f1
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_18_Mass_Rebuild
 - Remove world readable bit on sensitive config files
