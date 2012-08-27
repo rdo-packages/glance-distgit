@@ -30,7 +30,7 @@ Requires(preun):  systemd-units
 Requires(postun): systemd-units
 Requires(pre):    shadow-utils
 Requires:         python-glance = %{version}-%{release}
-Requires:         python-glanceclient > 1:0.4.1
+Requires:         python-glanceclient >= 1:0
 Requires:         openstack-utils
 BuildRequires:    openstack-utils
 
