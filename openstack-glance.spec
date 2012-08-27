@@ -3,7 +3,7 @@
 #
 Name:             openstack-glance
 Version:          2012.2
-Release:          0.3.f3%{?dist}
+Release:          0.4.f3%{?dist}
 Summary:          OpenStack Image Service
 
 Group:            Applications/System
@@ -115,6 +115,8 @@ echo %{version} > glance/versioninfo
 # Change the default config
 openstack-config --set etc/glance-registry.conf DEFAULT sql_connection mysql://glance:glance@localhost/glance
 openstack-config --set etc/glance-registry.conf DEFAULT db_auto_create False
+openstack-config --set etc/glance-api.conf DEFAULT sql_connection mysql://glance:glance@localhost/glance
+openstack-config --set etc/glance-api.conf DEFAULT db_auto_create False
 
 %{__python} setup.py build
 
@@ -243,7 +245,7 @@ fi
 %doc doc/build/html
 
 %changelog
-* Thu Aug 23 2012 Alan Pevec <apevec@redhat.com> 2012.2-0.3.f3
+* Thu Aug 23 2012 Alan Pevec <apevec@redhat.com> 2012.2-0.4.f3
 - Update to folsom-3 milestone
 - Drop old glance CLI, deprecated by python-glanceclient
 
