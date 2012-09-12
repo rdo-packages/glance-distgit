@@ -117,6 +117,33 @@ openstack-config --set etc/glance-registry.conf DEFAULT sql_connection mysql://g
 openstack-config --set etc/glance-registry.conf DEFAULT db_auto_create False
 openstack-config --set etc/glance-api.conf DEFAULT sql_connection mysql://glance:glance@localhost/glance
 openstack-config --set etc/glance-api.conf DEFAULT db_auto_create False
+# Move authtoken configuration out of paste.ini
+openstack-config --del etc/glance-api-paste.ini filter:authtoken admin_tenant_name
+openstack-config --del etc/glance-api-paste.ini filter:authtoken admin_user
+openstack-config --del etc/glance-api-paste.ini filter:authtoken admin_password
+openstack-config --del etc/glance-api-paste.ini filter:authtoken auth_host
+openstack-config --del etc/glance-api-paste.ini filter:authtoken auth_port
+openstack-config --del etc/glance-api-paste.ini filter:authtoken auth_protocol
+#openstack-config --set etc/glance-api.conf paste_deploy flavor keystone
+openstack-config --set etc/glance-api.conf keystone_authtoken admin_tenant_name %%SERVICE_TENANT_NAME%%
+openstack-config --set etc/glance-api.conf keystone_authtoken admin_user %SERVICE_USER%
+openstack-config --set etc/glance-api.conf keystone_authtoken admin_password %SERVICE_PASSWORD%
+openstack-config --set etc/glance-api.conf keystone_authtoken auth_host 127.0.0.1
+openstack-config --set etc/glance-api.conf keystone_authtoken auth_port 35357
+openstack-config --set etc/glance-api.conf keystone_authtoken auth_protocol http
+openstack-config --del etc/glance-registry-paste.ini filter:authtoken admin_tenant_name
+openstack-config --del etc/glance-registry-paste.ini filter:authtoken admin_user
+openstack-config --del etc/glance-registry-paste.ini filter:authtoken admin_password
+openstack-config --del etc/glance-registry-paste.ini filter:authtoken auth_host
+openstack-config --del etc/glance-registry-paste.ini filter:authtoken auth_port
+openstack-config --del etc/glance-registry-paste.ini filter:authtoken auth_protocol
+#openstack-config --set etc/glance-registry.conf paste_deploy flavor keystone
+openstack-config --set etc/glance-registry.conf keystone_authtoken admin_tenant_name %%SERVICE_TENANT_NAME%%
+openstack-config --set etc/glance-registry.conf keystone_authtoken admin_user %SERVICE_USER%
+openstack-config --set etc/glance-registry.conf keystone_authtoken admin_password %SERVICE_PASSWORD%
+openstack-config --set etc/glance-registry.conf keystone_authtoken auth_host 127.0.0.1
+openstack-config --set etc/glance-registry.conf keystone_authtoken auth_port 35357
+openstack-config --set etc/glance-registry.conf keystone_authtoken auth_protocol http
 
 %{__python} setup.py build
 
