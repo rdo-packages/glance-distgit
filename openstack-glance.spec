@@ -18,7 +18,6 @@ Source3:          openstack-glance.logrotate
 # patches_base=folsom-rc2
 #
 Patch0001: 0001-Don-t-access-the-net-while-building-docs.patch
-Patch0002: 0002-improve-DB-auto-create-suppression-config-presentati.patch
 
 BuildArch:        noarch
 BuildRequires:    python2-devel
@@ -102,7 +101,6 @@ This package contains documentation files for glance.
 %setup -q -n glance-%{version}
 
 %patch0001 -p1
-%patch0002 -p1
 
 # Remove bundled egg-info
 rm -rf glance.egg-info
@@ -114,9 +112,7 @@ echo %{version} > glance/versioninfo
 
 # Change the default config
 openstack-config --set etc/glance-registry.conf DEFAULT sql_connection mysql://glance:glance@localhost/glance
-openstack-config --set etc/glance-registry.conf DEFAULT db_auto_create False
 openstack-config --set etc/glance-api.conf DEFAULT sql_connection mysql://glance:glance@localhost/glance
-openstack-config --set etc/glance-api.conf DEFAULT db_auto_create False
 # Move authtoken configuration out of paste.ini
 openstack-config --del etc/glance-api-paste.ini filter:authtoken admin_tenant_name
 openstack-config --del etc/glance-api-paste.ini filter:authtoken admin_user
