@@ -1,4 +1,4 @@
-From ad4abfc06e8adf64ca7ce4926a31caf20da02d93 Mon Sep 17 00:00:00 2001
+From b8026b2d3d4d92a91b6bbb54681b58c953fea815 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?P=C3=A1draig=20Brady?= <pbrady@redhat.com>
 Date: Fri, 18 May 2012 14:23:41 +0100
 Subject: [PATCH] improve DB auto-create suppression config presentation

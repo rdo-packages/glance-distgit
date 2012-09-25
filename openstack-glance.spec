@@ -1,21 +1,21 @@
 #
-# This is 2012.2 folsom RC1
+# This is 2012.2 folsom RC2
 #
 Name:             openstack-glance
 Version:          2012.2
-Release:          0.5.rc1%{?dist}
+Release:          0.6.rc2%{?dist}
 Summary:          OpenStack Image Service
 
 Group:            Applications/System
 License:          ASL 2.0
 URL:              http://glance.openstack.org
-Source0:          https://launchpad.net/glance/folsom/folsom-rc1/+download/glance-%{version}~rc1.tar.gz
+Source0:          https://launchpad.net/glance/folsom/folsom-rc2/+download/glance-%{version}~rc2.tar.gz
 Source1:          openstack-glance-api.service
 Source2:          openstack-glance-registry.service
 Source3:          openstack-glance.logrotate
 
 #
-# patches_base=folsom-rc1
+# patches_base=folsom-rc2
 #
 Patch0001: 0001-Don-t-access-the-net-while-building-docs.patch
 Patch0002: 0002-improve-DB-auto-create-suppression-config-presentati.patch
@@ -272,6 +272,9 @@ fi
 %doc doc/build/html
 
 %changelog
+* Tue Sep 25 2012 Alan Pevec <apevec@redhat.com> 2012.2-0.6.rc2
+- Update to Folsom rc2
+
 * Fri Sep 14 2012 Alan Pevec <apevec@redhat.com> 2012.2-0.5.rc1
 - Update to Folsom rc1
 
