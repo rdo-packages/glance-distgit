@@ -1,21 +1,21 @@
 #
-# This is 2012.2 folsom RC3
+# This is 2012.2 folsom release
 #
 Name:             openstack-glance
 Version:          2012.2
-Release:          0.7.rc3%{?dist}
+Release:          1%{?dist}
 Summary:          OpenStack Image Service
 
 Group:            Applications/System
 License:          ASL 2.0
 URL:              http://glance.openstack.org
-Source0:          https://launchpad.net/glance/folsom/folsom-rc3/+download/glance-%{version}~rc3.tar.gz
+Source0:          https://launchpad.net/glance/folsom/%{version}/+download/glance-%{version}.tar.gz
 Source1:          openstack-glance-api.service
 Source2:          openstack-glance-registry.service
 Source3:          openstack-glance.logrotate
 
 #
-# patches_base=folsom-rc3
+# patches_base=2012.2
 #
 Patch0001: 0001-Don-t-access-the-net-while-building-docs.patch
 
@@ -268,6 +268,9 @@ fi
 %doc doc/build/html
 
 %changelog
+* Thu Sep 27 2012 Alan Pevec <apevec@redhat.com> 2012.2-1
+- Update to folsom final
+
 * Wed Sep 26 2012 Alan Pevec <apevec@redhat.com> 2012.2-0.7.rc3
 - Update to Folsom rc3
 
