@@ -3,7 +3,7 @@
 #
 Name:             openstack-glance
 Version:          2012.2
-Release:          1%{?dist}
+Release:          2%{?dist}
 Summary:          OpenStack Image Service
 
 Group:            Applications/System
@@ -268,7 +268,7 @@ fi
 %doc doc/build/html
 
 %changelog
-* Thu Sep 27 2012 Alan Pevec <apevec@redhat.com> 2012.2-1
+* Thu Sep 27 2012 Alan Pevec <apevec@redhat.com> 2012.2-2
 - Update to folsom final
 
 * Wed Sep 26 2012 Alan Pevec <apevec@redhat.com> 2012.2-0.7.rc3
