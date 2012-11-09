@@ -1,0 +1,14 @@
+From ac223e243736ba98a0ec480d3f80e39a555d3343 Mon Sep 17 00:00:00 2001
+From: Mark McLoughlin <markmc@redhat.com>
+Date: Sat, 13 Oct 2012 22:44:12 +0100
+Subject: [PATCH] Set defaultbranch in .gitreview to stable/folsom
+
+This allows people run git-review without any arguments.
+
+Change-Id: I2b2488ffffd783b64e5c760324e7d4a00d5a39db
+---
+ .gitreview |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+
+diff --git a/.gitreview b/.gitreview
+index 31aa568..6d7d086 100644

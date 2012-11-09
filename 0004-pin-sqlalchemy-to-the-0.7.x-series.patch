@@ -1,0 +1,29 @@
+From ddad2752b3afb480f5be1352cd2ef56739d3cdad Mon Sep 17 00:00:00 2001
+From: Sean Dague <sdague@linux.vnet.ibm.com>
+Date: Wed, 31 Oct 2012 11:38:47 -0400
+Subject: [PATCH] pin sqlalchemy to the 0.7.x series
+
+sqlalchemy 0.8beta is now out and has internal changes
+which mean it's not an in place seemless upgrade. This pins
+sqlalchemy to the 0.7.x series to avoid those breaks.
+
+Fixes bug #1073569
+
+Change-Id: Ia8976843a7e0a132fe38e80f2bcb01a16e12b8de
+---
+ tools/pip-requires |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/tools/pip-requires b/tools/pip-requires
+index e873537..549f6e5 100644
+--- a/tools/pip-requires
++++ b/tools/pip-requires
+@@ -3,7 +3,7 @@
+ # package to get the right headers...
+ greenlet>=0.3.1
+ 
+-SQLAlchemy>=0.7
++SQLAlchemy>=0.7,<=0.7.9
+ anyjson
+ eventlet>=0.9.12
+ PasteDeploy
