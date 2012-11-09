@@ -3,7 +3,7 @@
 #
 Name:             openstack-glance
 Version:          2012.2
-Release:          3%{?dist}
+Release:          4%{?dist}
 Summary:          OpenStack Image Service
 
 Group:            Applications/System
@@ -17,10 +17,10 @@ Source3:          openstack-glance.logrotate
 #
 # patches_base=2012.2
 #
-Patch0001: 0001-Bump-next-version-to-2012.2.1.patch
-Patch0002: 0002-Set-defaultbranch-in-.gitreview-to-stable-folsom.patch
-Patch0003: 0003-Pass-empty-args-to-test-config-parser.patch
-Patch0004: 0004-pin-sqlalchemy-to-the-0.7.x-series.patch
+#Patch0001: 0001-Bump-next-version-to-2012.2.1.patch
+#Patch0002: 0002-Set-defaultbranch-in-.gitreview-to-stable-folsom.patch
+#Patch0003: 0003-Pass-empty-args-to-test-config-parser.patch
+#Patch0004: 0004-pin-sqlalchemy-to-the-0.7.x-series.patch
 Patch0005: 0005-FakeAuth-not-always-admin.patch
 Patch0006: 0006-Delete-from-store-after-registry-delete.patch
 Patch0007: 0007-Ensure-authorization-before-deleting-from-store.patch
@@ -111,7 +111,7 @@ This package contains documentation files for glance.
 #%patch0002 -p1
 #%patch0003 -p1
 #%patch0004 -p1
-#%patch0005 -p1
+%patch0005 -p1
 %patch0006 -p1
 %patch0007 -p1
 %patch0008 -p1
@@ -282,7 +282,7 @@ fi
 %doc doc/build/html
 
 %changelog
-* Fri Nov  9 2012 Pádraig Brady <P@draigBrady.com> 2012.2-3
+* Fri Nov  9 2012 Pádraig Brady <P@draigBrady.com> 2012.2-4
 - Fix Glance Authentication bypass for image deletion (CVE-2012-4573)
 
 * Thu Sep 27 2012 Alan Pevec <apevec@redhat.com> 2012.2-2
