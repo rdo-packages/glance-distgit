@@ -1,6 +1,6 @@
 Name:             openstack-glance
 Version:          2013.1
-Release:          0.2.g2%{?dist}
+Release:          0.3.g2%{?dist}
 Summary:          OpenStack Image Service
 
 Group:            Applications/System
@@ -15,6 +15,7 @@ Source3:          openstack-glance.logrotate
 # patches_base=grizzly-2
 #
 Patch0001: 0001-Don-t-access-the-net-while-building-docs.patch
+Patch0002: 0002-Backend_password_leak_in_Glance_error_message.patch
 
 BuildArch:        noarch
 BuildRequires:    python2-devel
@@ -98,6 +99,7 @@ This package contains documentation files for glance.
 %setup -q -n glance-%{version}
 
 %patch0001 -p1
+%patch0002 -p1
 
 # Remove bundled egg-info
 rm -rf glance.egg-info
@@ -265,6 +267,9 @@ fi
 %doc doc/build/html
 
 %changelog
+* Tue Jan 29 2013 Nikola Đipanov <ndipanov@redhat.com> 2013.1-0.3.g2
+- Fix backend password leak in Glance error message (CVE-2013-0212)
+
 * Fri Jan 11 2013 Nikola Đipanov <ndipanov@redhat.com> 2013.1-0.2.g2
 - Update to Grizzlt milestone 2
 
