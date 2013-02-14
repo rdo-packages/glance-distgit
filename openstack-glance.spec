@@ -1,6 +1,6 @@
 Name:             openstack-glance
 Version:          2013.1
-Release:          0.3.g2%{?dist}
+Release:          0.4.g2%{?dist}
 Summary:          OpenStack Image Service
 
 Group:            Applications/System
@@ -267,6 +267,9 @@ fi
 %doc doc/build/html
 
 %changelog
+* Thu Feb 14 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 2013.1-0.4.g2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_19_Mass_Rebuild
+
 * Tue Jan 29 2013 Nikola Đipanov <ndipanov@redhat.com> 2013.1-0.3.g2
 - Fix backend password leak in Glance error message (CVE-2013-0212)
 
