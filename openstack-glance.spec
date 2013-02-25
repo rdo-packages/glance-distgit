@@ -1,21 +1,20 @@
 Name:             openstack-glance
 Version:          2013.1
-Release:          0.4.g2%{?dist}
+Release:          0.5.g3%{?dist}
 Summary:          OpenStack Image Service
 
 Group:            Applications/System
 License:          ASL 2.0
 URL:              http://glance.openstack.org
-Source0:          https://launchpad.net/glance/grizzly/grizzly-2/+download/glance-2013.1~g2.tar.gz
+Source0:          https://launchpad.net/glance/grizzly/grizzly-3/+download/glance-2013.1.g3.tar.gz
 Source1:          openstack-glance-api.service
 Source2:          openstack-glance-registry.service
 Source3:          openstack-glance.logrotate
 
 #
-# patches_base=grizzly-2
+# patches_base=2013.1.g3
 #
 Patch0001: 0001-Don-t-access-the-net-while-building-docs.patch
-Patch0002: 0002-Backend_password_leak_in_Glance_error_message.patch
 
 BuildArch:        noarch
 BuildRequires:    python2-devel
@@ -96,10 +95,9 @@ and delivery services for virtual disk images.
 This package contains documentation files for glance.
 
 %prep
-%setup -q -n glance-%{version}
+%setup -q -n glance-%{version}.g3
 
 %patch0001 -p1
-%patch0002 -p1
 
 # Remove bundled egg-info
 rm -rf glance.egg-info
@@ -260,13 +258,16 @@ fi
 %files -n python-glance
 %doc README.rst
 %{python_sitelib}/glance
-%{python_sitelib}/glance-%{version}-*.egg-info
+%{python_sitelib}/glance-%{version}*.egg-info
 
 
 %files doc
 %doc doc/build/html
 
 %changelog
+* Mon Feb 25 2013 Nikola Đipanov <ndipanov@redhat.com> 2013.1-0.3.g2
+- Update to Grizzlt milestone 3
+
 * Thu Feb 14 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 2013.1-0.4.g2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_19_Mass_Rebuild
 
