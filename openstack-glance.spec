@@ -1,6 +1,6 @@
 Name:             openstack-glance
 Version:          2013.1
-Release:          0.5.g3%{?dist}
+Release:          0.6.g3%{?dist}
 Summary:          OpenStack Image Service
 
 Group:            Applications/System
@@ -59,6 +59,7 @@ Requires:         python-webob
 Requires:         python-crypto
 Requires:         pyxattr
 Requires:         python-swiftclient
+Requires:         python-oslo-config
 
 #test deps: python-mox python-nose python-requests
 #test and optional store:
@@ -265,7 +266,10 @@ fi
 %doc doc/build/html
 
 %changelog
-* Mon Feb 25 2013 Nikola Đipanov <ndipanov@redhat.com> 2013.1-0.3.g2
+* Tue Feb 26 2013 Nikola Đipanov <ndipanov@redhat.com> 2013.1-0.6.g3
+- Fix dep issues introduced by the Grizzly-3 update
+
+* Mon Feb 25 2013 Nikola Đipanov <ndipanov@redhat.com> 2013.1-0.5.g3
 - Update to Grizzlt milestone 3
 
 * Thu Feb 14 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 2013.1-0.4.g2
