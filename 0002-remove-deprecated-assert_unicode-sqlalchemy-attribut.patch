@@ -1,4 +1,4 @@
-From 9de86f91b9971108a2d7e1b0901c1d3bf1b974f9 Mon Sep 17 00:00:00 2001
+From 618495020f520d658bd29c929fd3fadb1cfabc51 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?P=C3=A1draig=20Brady?= <pbrady@redhat.com>
 Date: Tue, 2 Apr 2013 14:34:54 +0100
 Subject: [PATCH] remove deprecated assert_unicode sqlalchemy attribute
@@ -9,8 +9,8 @@ http://docs.sqlalchemy.org/en/latest/changelog/changelog_08.html#change-ad44af79
 
 Change-Id: Ia34b38245c6abe1ddb4162eee89459a7130deacb
 ---
- glance/db/sqlalchemy/migrate_repo/schema.py |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
+ glance/db/sqlalchemy/migrate_repo/schema.py | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/glance/db/sqlalchemy/migrate_repo/schema.py b/glance/db/sqlalchemy/migrate_repo/schema.py
 index 1fcf845..54f8808 100644
