@@ -1,6 +1,6 @@
 Name:             openstack-glance
 Version:          2013.1
-Release:          1%{?dist}
+Release:          2%{?dist}
 Summary:          OpenStack Image Service
 
 Group:            Applications/System
@@ -9,7 +9,8 @@ URL:              http://glance.openstack.org
 Source0:          https://launchpad.net/glance/grizzly/2013.1/+download/glance-2013.1.tar.gz
 Source1:          openstack-glance-api.service
 Source2:          openstack-glance-registry.service
-Source3:          openstack-glance.logrotate
+Source3:          openstack-glance-scrubber.service
+Source4:          openstack-glance.logrotate
 
 #
 # patches_base=2013.1
@@ -141,6 +142,7 @@ openstack-config --set etc/glance-registry.conf keystone_authtoken auth_host 127
 openstack-config --set etc/glance-registry.conf keystone_authtoken auth_port 35357
 openstack-config --set etc/glance-registry.conf keystone_authtoken auth_protocol http
 
+
 %{__python} setup.py build
 
 %install
@@ -187,9 +189,10 @@ install -p -D -m 640 etc/schema-image.json %{buildroot}%{_sysconfdir}/glance/sch
 # Initscripts
 install -p -D -m 644 %{SOURCE1} %{buildroot}%{_unitdir}/openstack-glance-api.service
 install -p -D -m 644 %{SOURCE2} %{buildroot}%{_unitdir}/openstack-glance-registry.service
+install -p -D -m 644 %{SOURCE3} %{buildroot}%{_unitdir}/openstack-glance-scrubber.service
 
 # Logrotate config
-install -p -D -m 644 %{SOURCE3} %{buildroot}%{_sysconfdir}/logrotate.d/openstack-glance
+install -p -D -m 644 %{SOURCE4} %{buildroot}%{_sysconfdir}/logrotate.d/openstack-glance
 
 # Install pid directory
 install -d -m 755 %{buildroot}%{_localstatedir}/run/glance
@@ -216,8 +219,10 @@ if [ $1 -eq 0 ] ; then
     # Package removal, not upgrade
     /bin/systemctl --no-reload disable openstack-glance-api.service > /dev/null 2>&1 || :
     /bin/systemctl --no-reload disable openstack-glance-registry.service > /dev/null 2>&1 || :
+    /bin/systemctl --no-reload disable openstack-glance-scrubber.service > /dev/null 2>&1 || :
     /bin/systemctl stop openstack-glance-api.service > /dev/null 2>&1 || :
     /bin/systemctl stop openstack-glance-registry.service > /dev/null 2>&1 || :
+    /bin/systemctl stop openstack-glance-scrubber.service > /dev/null 2>&1 || :
 fi
 
 %postun
@@ -226,6 +231,7 @@ if [ $1 -ge 1 ] ; then
     # Package upgrade, not uninstall
     /bin/systemctl try-restart openstack-glance-api.service >/dev/null 2>&1 || :
     /bin/systemctl try-restart openstack-glance-registry.service >/dev/null 2>&1 || :
+    /bin/systemctl try-restart openstack-glance-scrubber.service >/dev/null 2>&1 || :
 fi
 
 %files
@@ -243,6 +249,7 @@ fi
 
 %{_unitdir}/openstack-glance-api.service
 %{_unitdir}/openstack-glance-registry.service
+%{_unitdir}/openstack-glance-scrubber.service
 %{_mandir}/man1/glance*.1.gz
 %dir %{_sysconfdir}/glance
 %config(noreplace) %attr(-, root, glance) %{_sysconfdir}/glance/glance-api.conf
@@ -268,6 +275,9 @@ fi
 %doc doc/build/html
 
 %changelog
+* Mon May 13 2013 Pádraig Brady <pbrady@redhat.com> 2013.1-2
+- Add the scrubber service for deferred image deletion
+
 * Mon Apr 08 2013 Nikola Đipanov <ndipanov@redhat.com> 2013.1-1
 - Update to Grizzly final
 
