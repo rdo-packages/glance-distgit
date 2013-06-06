@@ -1,19 +1,19 @@
 Name:             openstack-glance
-Version:          2013.1
-Release:          2%{?dist}
+Version:          2013.1.2
+Release:          1%{?dist}
 Summary:          OpenStack Image Service
 
 Group:            Applications/System
 License:          ASL 2.0
 URL:              http://glance.openstack.org
-Source0:          https://launchpad.net/glance/grizzly/2013.1/+download/glance-2013.1.tar.gz
+Source0:          https://launchpad.net/glance/grizzly/2013.1/+download/glance-2013.1.2.tar.gz
 Source1:          openstack-glance-api.service
 Source2:          openstack-glance-registry.service
 Source3:          openstack-glance-scrubber.service
 Source4:          openstack-glance.logrotate
 
 #
-# patches_base=2013.1
+# patches_base=2013.1.2
 #
 Patch0001: 0001-Don-t-access-the-net-while-building-docs.patch
 Patch0002: 0002-remove-deprecated-assert_unicode-sqlalchemy-attribut.patch
@@ -275,6 +275,9 @@ fi
 %doc doc/build/html
 
 %changelog
+* Thu Jun  6 2013 John Bresnahan <jbresnah@redhat.com> 2013.1.2
+- Update to version 2013.1.2
+
 * Mon May 13 2013 Pádraig Brady <pbrady@redhat.com> 2013.1-2
 - Add the scrubber service for deferred image deletion
 
