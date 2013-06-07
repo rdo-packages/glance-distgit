@@ -1,22 +1,20 @@
 Name:             openstack-glance
-Version:          2013.1.2
-Release:          1%{?dist}
+Version:          2013.2
+Release:          0.1.b1%{?dist}
 Summary:          OpenStack Image Service
 
 Group:            Applications/System
 License:          ASL 2.0
 URL:              http://glance.openstack.org
-Source0:          https://launchpad.net/glance/grizzly/2013.1/+download/glance-2013.1.2.tar.gz
+Source0:          https://launchpad.net/glance/havana/havana-1/+download/glance-2013.2.b1.tar.gz
 Source1:          openstack-glance-api.service
 Source2:          openstack-glance-registry.service
 Source3:          openstack-glance-scrubber.service
 Source4:          openstack-glance.logrotate
 
 #
-# patches_base=2013.1.2
+# patches_base=2013.2.b1
 #
-Patch0001: 0001-Don-t-access-the-net-while-building-docs.patch
-Patch0002: 0002-remove-deprecated-assert_unicode-sqlalchemy-attribut.patch
 
 BuildArch:        noarch
 BuildRequires:    python2-devel
@@ -99,9 +97,6 @@ This package contains documentation files for glance.
 
 %prep
 %setup -q -n glance-%{version}
-
-%patch0001 -p1
-%patch0002 -p1
 
 # Remove bundled egg-info
 rm -rf glance.egg-info
@@ -275,6 +270,9 @@ fi
 %doc doc/build/html
 
 %changelog
+* Thu Jun  6 2013 John Bresnahan <jbresnah@redhat.com> 2013.2-0.1b1
+- Update to version 2013.2.b1
+
 * Thu Jun  6 2013 John Bresnahan <jbresnah@redhat.com> 2013.1.2
 - Update to version 2013.1.2
 
