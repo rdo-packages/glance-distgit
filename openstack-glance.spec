@@ -2,7 +2,7 @@
 
 Name:             openstack-glance
 Version:          2013.2
-Release:          0.2.b1%{?dist}
+Release:          0.3.b1%{?dist}
 Summary:          OpenStack Image Service
 
 Group:            Applications/System
@@ -17,6 +17,7 @@ Source4:          openstack-glance.logrotate
 #
 # patches_base=2013.2.b1
 #
+Patch0001: 0001-Don-t-access-the-net-while-building-docs.patch
 
 BuildArch:        noarch
 BuildRequires:    python2-devel
@@ -100,6 +101,7 @@ This package contains documentation files for glance.
 %prep
 %setup -q -n glance-%{version}.b%{milestone}
 sed -i 's/%{version}.b%{milestone}/%{version}/' PKG-INFO
+%patch0001 -p1
 
 # Remove bundled egg-info
 rm -rf glance.egg-info
@@ -273,6 +275,9 @@ fi
 %doc doc/build/html
 
 %changelog
+* Fri Jun  7 2013 John Bresnahan <jbresnah@redhat.com> 2013.2-0.3b1
+- Don't access the net while building docs
+
 * Thu Jun  6 2013 John Bresnahan <jbresnah@redhat.com> 2013.2-0.1b1
 - Update to version 2013.2.b1
 
