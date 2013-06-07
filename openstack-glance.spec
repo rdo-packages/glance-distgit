@@ -1,6 +1,8 @@
+%global milestone 1
+
 Name:             openstack-glance
-Version:          2013.2.b1
-Release:          0.1.b1%{?dist}
+Version:          2013.2
+Release:          0.2.b1%{?dist}
 Summary:          OpenStack Image Service
 
 Group:            Applications/System
@@ -96,7 +98,8 @@ and delivery services for virtual disk images.
 This package contains documentation files for glance.
 
 %prep
-%setup -q -n glance-%{version}
+%setup -q -n glance-%{version}.b%{milestone}
+sed -i 's/%{version}.b%{milestone}/%{version}/' PKG-INFO
 
 # Remove bundled egg-info
 rm -rf glance.egg-info
