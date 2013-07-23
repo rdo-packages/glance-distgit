@@ -1,21 +1,19 @@
-%global milestone 1
-
 Name:             openstack-glance
 Version:          2013.2
-Release:          0.3.b1%{?dist}
+Release:          0.4.b2%{?dist}
 Summary:          OpenStack Image Service
 
 Group:            Applications/System
 License:          ASL 2.0
 URL:              http://glance.openstack.org
-Source0:          https://launchpad.net/glance/havana/havana-1/+download/glance-2013.2.b1.tar.gz
+Source0:          https://launchpad.net/glance/havana/havana-2/+download/glance-2013.2.b2.tar.gz
 Source1:          openstack-glance-api.service
 Source2:          openstack-glance-registry.service
 Source3:          openstack-glance-scrubber.service
 Source4:          openstack-glance.logrotate
 
 #
-# patches_base=2013.2.b1
+# patches_base=2013.2.b2
 #
 Patch0001: 0001-Don-t-access-the-net-while-building-docs.patch
 
@@ -62,6 +60,7 @@ Requires:         python-webob
 Requires:         python-crypto
 Requires:         pyxattr
 Requires:         python-swiftclient
+Requires:         python-cinderclient
 Requires:         python-oslo-config
 
 #test deps: python-mox python-nose python-requests
@@ -99,8 +98,8 @@ and delivery services for virtual disk images.
 This package contains documentation files for glance.
 
 %prep
-%setup -q -n glance-%{version}.b%{milestone}
-sed -i 's/%{version}.b%{milestone}/%{version}/' PKG-INFO
+%setup -q -n glance-%{version}.b2
+sed -i 's/%{version}.b2/%{version}/' PKG-INFO
 %patch0001 -p1
 
 # Remove bundled egg-info
@@ -275,10 +274,13 @@ fi
 %doc doc/build/html
 
 %changelog
-* Fri Jun  7 2013 John Bresnahan <jbresnah@redhat.com> 2013.2-0.3b1
+* Tue Jul 23 2013 Pádraig Brady <pbrady@redhat.com> 2013.2-0.4.b2
+- Update to Havana milestone 2
+
+* Fri Jun  7 2013 John Bresnahan <jbresnah@redhat.com> 2013.2-0.3.b1
 - Don't access the net while building docs
 
-* Thu Jun  6 2013 John Bresnahan <jbresnah@redhat.com> 2013.2-0.1b1
+* Thu Jun  6 2013 John Bresnahan <jbresnah@redhat.com> 2013.2-0.1.b1
 - Update to version 2013.2.b1
 
 * Thu Jun  6 2013 John Bresnahan <jbresnah@redhat.com> 2013.1.2
