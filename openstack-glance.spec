@@ -1,6 +1,6 @@
 Name:             openstack-glance
 Version:          2013.2
-Release:          0.6.b2%{?dist}
+Release:          0.7.b2%{?dist}
 Summary:          OpenStack Image Service
 
 Group:            Applications/System
@@ -279,6 +279,9 @@ fi
 %doc doc/build/html
 
 %changelog
+* Sat Aug 03 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 2013.2-0.7.b2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_20_Mass_Rebuild
+
 * Tue Jul 23 2013 Pádraig Brady <pbrady@redhat.com> 2013.2-0.6.b2
 - Update to Havana milestone 2
 - Depend on python-keystoneclient for auth_token middleware
