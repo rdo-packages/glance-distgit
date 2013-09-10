@@ -16,6 +16,7 @@ Source4:          openstack-glance.logrotate
 # patches_base=2013.2.b3
 #
 Patch0001: 0001-Don-t-access-the-net-while-building-docs.patch
+Patch0002: 0002-Remove-runtime-dep-on-python-pbr.patch
 
 BuildArch:        noarch
 BuildRequires:    python2-devel
@@ -102,6 +103,7 @@ This package contains documentation files for glance.
 %setup -q -n glance-%{version}.b3
 sed -i 's/%{version}.b3/%{version}/' PKG-INFO
 %patch0001 -p1
+%patch0002 -p1
 
 # Remove bundled egg-info
 rm -rf glance.egg-info
@@ -281,6 +283,7 @@ fi
 %changelog
 * Mon Sep  9 2013 John Bresnahan <jbresnah@redhat.com> 2013.2-0.8.b3
 - Update to version 2013.2.b3
+- Remove runtime dep on python pbr
 
 * Sat Aug 03 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 2013.2-0.7.b2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_20_Mass_Rebuild
