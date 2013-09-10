@@ -1,4 +1,4 @@
-From 25ea091172a0d36fb331e3d7a6547f4d49ded61c Mon Sep 17 00:00:00 2001
+From 13ff57ee9c58eb75bbc217d8efbe7e8576e212f9 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?P=C3=A1draig=20Brady?= <pbrady@redhat.com>
 Date: Fri, 6 Jan 2012 17:12:54 +0000
 Subject: [PATCH] Don't access the net while building docs
@@ -8,11 +8,11 @@ Subject: [PATCH] Don't access the net while building docs
 Change-Id: I42c6e3a5062db209a0abe00cebc04d383c79cbcb
 (cherry picked from commit f2b4bb4e45afcc178200966193a7b87401c534d7)
 ---
- doc/source/conf.py |    1 -
- 1 files changed, 0 insertions(+), 1 deletions(-)
+ doc/source/conf.py | 1 -
+ 1 file changed, 1 deletion(-)
 
 diff --git a/doc/source/conf.py b/doc/source/conf.py
-index f926b61..68b9973 100644
+index 04f4ebe..8ceeb43 100644
 --- a/doc/source/conf.py
 +++ b/doc/source/conf.py
 @@ -44,7 +44,6 @@ sys.path = [
@@ -21,5 +21,5 @@ index f926b61..68b9973 100644
                'sphinx.ext.ifconfig',
 -              'sphinx.ext.intersphinx',
                'sphinx.ext.pngmath',
-               'sphinx.ext.graphviz']
- 
+               'sphinx.ext.graphviz',
+               'oslo.sphinx',

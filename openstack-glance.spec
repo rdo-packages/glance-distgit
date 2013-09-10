@@ -1,6 +1,6 @@
 Name:             openstack-glance
 Version:          2013.2
-Release:          0.7.b2%{?dist}
+Release:          0.8.b3%{?dist}
 Summary:          OpenStack Image Service
 
 Group:            Applications/System
@@ -13,7 +13,7 @@ Source3:          openstack-glance-scrubber.service
 Source4:          openstack-glance.logrotate
 
 #
-# patches_base=2013.2.b2
+# patches_base=2013.2.b3
 #
 Patch0001: 0001-Don-t-access-the-net-while-building-docs.patch
 
@@ -99,8 +99,8 @@ and delivery services for virtual disk images.
 This package contains documentation files for glance.
 
 %prep
-%setup -q -n glance-%{version}.b2
-sed -i 's/%{version}.b2/%{version}/' PKG-INFO
+%setup -q -n glance-%{version}.b3
+sed -i 's/%{version}.b3/%{version}/' PKG-INFO
 %patch0001 -p1
 
 # Remove bundled egg-info
@@ -279,6 +279,9 @@ fi
 %doc doc/build/html
 
 %changelog
+* Mon Sep  9 2013 John Bresnahan <jbresnah@redhat.com> 2013.2-0.8.b3
+- Update to version 2013.2.b3
+
 * Sat Aug 03 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 2013.2-0.7.b2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_20_Mass_Rebuild
 
