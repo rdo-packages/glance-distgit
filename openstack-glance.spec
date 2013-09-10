@@ -6,7 +6,7 @@ Summary:          OpenStack Image Service
 Group:            Applications/System
 License:          ASL 2.0
 URL:              http://glance.openstack.org
-Source0:          https://launchpad.net/glance/havana/havana-2/+download/glance-2013.2.b2.tar.gz
+Source0:          https://launchpad.net/glance/havana/havana-3/+download/glance-2013.2.b3.tar.gz
 Source1:          openstack-glance-api.service
 Source2:          openstack-glance-registry.service
 Source3:          openstack-glance-scrubber.service
@@ -17,6 +17,7 @@ Source4:          openstack-glance.logrotate
 #
 Patch0001: 0001-Don-t-access-the-net-while-building-docs.patch
 Patch0002: 0002-Remove-runtime-dep-on-python-pbr.patch
+Patch0003: 0003-Revert-use-oslo.sphinx-and-remove-local-copy-of-doc.patch
 
 BuildArch:        noarch
 BuildRequires:    python2-devel
@@ -31,6 +32,7 @@ Requires:         python-glance = %{version}-%{release}
 Requires:         python-glanceclient >= 1:0
 Requires:         openstack-utils
 BuildRequires:    openstack-utils
+BuildRequires:    python-pbr
 
 %description
 OpenStack Image Service (code-named Glance) provides discovery, registration,
@@ -104,6 +106,7 @@ This package contains documentation files for glance.
 sed -i 's/%{version}.b3/%{version}/' PKG-INFO
 %patch0001 -p1
 %patch0002 -p1
+%patch0003 -p1
 
 # Remove bundled egg-info
 rm -rf glance.egg-info
@@ -284,6 +287,7 @@ fi
 * Mon Sep  9 2013 John Bresnahan <jbresnah@redhat.com> 2013.2-0.8.b3
 - Update to version 2013.2.b3
 - Remove runtime dep on python pbr
+- Revert use oslo.sphinx and remove local copy of doc
 
 * Sat Aug 03 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 2013.2-0.7.b2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_20_Mass_Rebuild
