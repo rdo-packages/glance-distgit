@@ -1,6 +1,6 @@
 Name:             openstack-glance
 Version:          2013.2
-Release:          0.8.b3%{?dist}
+Release:          0.9.b3%{?dist}
 Summary:          OpenStack Image Service
 
 Group:            Applications/System
@@ -113,6 +113,11 @@ rm -rf glance.egg-info
 sed -i '/\/usr\/bin\/env python/d' glance/common/config.py glance/common/crypt.py glance/db/sqlalchemy/migrate_repo/manage.py
 # versioninfo is missing in f3 tarball
 echo %{version} > glance/versioninfo
+
+sed -i '/setuptools_git/d' setup.py
+sed -i '/setup_requires/d; /install_requires/d; /dependency_links/d' setup.py
+sed -i s/REDHATGLANCEVERSION/%{version}/ glance/version.py
+sed -i s/REDHATGLANCERELEASE/%{release}/ glance/version.py
 
 # Remove the requirements file so that pbr hooks don't add it
 # to distutils requiers_dist config
@@ -284,6 +289,9 @@ fi
 %doc doc/build/html
 
 %changelog
+* Fri Sep 20 2013 John Bresnahan <jbresnah@redhat.com> 2013.2-0.9.b3
+- Substitute in the correct version information
+
 * Mon Sep  9 2013 John Bresnahan <jbresnah@redhat.com> 2013.2-0.8.b3
 - Update to version 2013.2.b3
 - Remove runtime dep on python pbr
