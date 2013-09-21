@@ -1,6 +1,6 @@
 Name:             openstack-glance
 Version:          2013.2
-Release:          0.9.b3%{?dist}
+Release:          0.10.b3%{?dist}
 Summary:          OpenStack Image Service
 
 Group:            Applications/System
@@ -11,6 +11,10 @@ Source1:          openstack-glance-api.service
 Source2:          openstack-glance-registry.service
 Source3:          openstack-glance-scrubber.service
 Source4:          openstack-glance.logrotate
+
+Source5:          glance-api-dist.conf
+Source6:          glance-registry-dist.conf
+Source7:          glance-scrubber-dist.conf
 
 #
 # patches_base=2013.2.b3
@@ -126,8 +130,6 @@ rm -rf {test-,}requirements.txt tools/{pip,test}-requires
 %build
 
 # Change the default config
-openstack-config --set etc/glance-registry.conf DEFAULT sql_connection mysql://glance:glance@localhost/glance
-openstack-config --set etc/glance-api.conf DEFAULT sql_connection mysql://glance:glance@localhost/glance
 # Move authtoken configuration out of paste.ini
 openstack-config --del etc/glance-api-paste.ini filter:authtoken admin_tenant_name
 openstack-config --del etc/glance-api-paste.ini filter:authtoken admin_user
@@ -135,26 +137,12 @@ openstack-config --del etc/glance-api-paste.ini filter:authtoken admin_password
 openstack-config --del etc/glance-api-paste.ini filter:authtoken auth_host
 openstack-config --del etc/glance-api-paste.ini filter:authtoken auth_port
 openstack-config --del etc/glance-api-paste.ini filter:authtoken auth_protocol
-#openstack-config --set etc/glance-api.conf paste_deploy flavor keystone
-openstack-config --set etc/glance-api.conf keystone_authtoken admin_tenant_name %%SERVICE_TENANT_NAME%%
-openstack-config --set etc/glance-api.conf keystone_authtoken admin_user %SERVICE_USER%
-openstack-config --set etc/glance-api.conf keystone_authtoken admin_password %SERVICE_PASSWORD%
-openstack-config --set etc/glance-api.conf keystone_authtoken auth_host 127.0.0.1
-openstack-config --set etc/glance-api.conf keystone_authtoken auth_port 35357
-openstack-config --set etc/glance-api.conf keystone_authtoken auth_protocol http
 openstack-config --del etc/glance-registry-paste.ini filter:authtoken admin_tenant_name
 openstack-config --del etc/glance-registry-paste.ini filter:authtoken admin_user
 openstack-config --del etc/glance-registry-paste.ini filter:authtoken admin_password
 openstack-config --del etc/glance-registry-paste.ini filter:authtoken auth_host
 openstack-config --del etc/glance-registry-paste.ini filter:authtoken auth_port
 openstack-config --del etc/glance-registry-paste.ini filter:authtoken auth_protocol
-#openstack-config --set etc/glance-registry.conf paste_deploy flavor keystone
-openstack-config --set etc/glance-registry.conf keystone_authtoken admin_tenant_name %%SERVICE_TENANT_NAME%%
-openstack-config --set etc/glance-registry.conf keystone_authtoken admin_user %SERVICE_USER%
-openstack-config --set etc/glance-registry.conf keystone_authtoken admin_password %SERVICE_PASSWORD%
-openstack-config --set etc/glance-registry.conf keystone_authtoken auth_host 127.0.0.1
-openstack-config --set etc/glance-registry.conf keystone_authtoken auth_port 35357
-openstack-config --set etc/glance-registry.conf keystone_authtoken auth_protocol http
 
 
 %{__python} setup.py build
@@ -192,11 +180,14 @@ install -d -m 755 %{buildroot}%{_sharedstatedir}/glance/images
 
 # Config file
 install -p -D -m 640 etc/glance-api.conf %{buildroot}%{_sysconfdir}/glance/glance-api.conf
+install -p -D -m 640 %{SOURCE5} %{buildroot}%{_datadir}/glance/glance-api-dist.conf
 install -p -D -m 640 etc/glance-api-paste.ini %{buildroot}%{_sysconfdir}/glance/glance-api-paste.ini
 install -p -D -m 640 etc/glance-registry.conf %{buildroot}%{_sysconfdir}/glance/glance-registry.conf
+install -p -D -m 640 %{SOURCE6} %{buildroot}%{_datadir}/glance/glance-registry-dist.conf
 install -p -D -m 640 etc/glance-registry-paste.ini %{buildroot}%{_sysconfdir}/glance/glance-registry-paste.ini
 install -p -D -m 640 etc/glance-cache.conf %{buildroot}%{_sysconfdir}/glance/glance-cache.conf
 install -p -D -m 640 etc/glance-scrubber.conf %{buildroot}%{_sysconfdir}/glance/glance-scrubber.conf
+install -p -D -m 640 %{SOURCE7} %{buildroot}%{_datadir}/glance/glance-scrubber-dist.conf
 install -p -D -m 640 etc/policy.json %{buildroot}%{_sysconfdir}/glance/policy.json
 install -p -D -m 640 etc/schema-image.json %{buildroot}%{_sysconfdir}/glance/schema-image.json
 
@@ -260,6 +251,10 @@ fi
 %{_bindir}/glance-cache-pruner
 %{_bindir}/glance-scrubber
 %{_bindir}/glance-replicator
+
+%{_datadir}/glance/glance-api-dist.conf
+%{_datadir}/glance/glance-registry-dist.conf
+%{_datadir}/glance/glance-scrubber-dist.conf
 
 %{_unitdir}/openstack-glance-api.service
 %{_unitdir}/openstack-glance-registry.service
