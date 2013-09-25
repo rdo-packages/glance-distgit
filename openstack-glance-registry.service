@@ -5,7 +5,7 @@ After=syslog.target network.target
 [Service]
 Type=simple
 User=glance
-ExecStart=/usr/bin/glance-registry --config-file /etc/glance/glance-registry.conf
+ExecStart=/usr/bin/glance-registry
 PrivateTmp=true
 
 [Install]

@@ -1,6 +1,6 @@
 Name:             openstack-glance
 Version:          2013.2
-Release:          0.10.b3%{?dist}
+Release:          0.11.b3%{?dist}
 Summary:          OpenStack Image Service
 
 Group:            Applications/System
@@ -118,8 +118,7 @@ sed -i '/\/usr\/bin\/env python/d' glance/common/config.py glance/common/crypt.p
 # versioninfo is missing in f3 tarball
 echo %{version} > glance/versioninfo
 
-sed -i '/setuptools_git/d' setup.py
-sed -i '/setup_requires/d; /install_requires/d; /dependency_links/d' setup.py
+sed -i '/setuptools_git/d; /setup_requires/d; /install_requires/d; /dependency_links/d' setup.py
 sed -i s/REDHATGLANCEVERSION/%{version}/ glance/version.py
 sed -i s/REDHATGLANCERELEASE/%{release}/ glance/version.py
 
@@ -252,9 +251,9 @@ fi
 %{_bindir}/glance-scrubber
 %{_bindir}/glance-replicator
 
-%{_datadir}/glance/glance-api-dist.conf
-%{_datadir}/glance/glance-registry-dist.conf
-%{_datadir}/glance/glance-scrubber-dist.conf
+%attr(0640, root, glance) %{_datadir}/glance/glance-api-dist.conf
+%attr(0640, root, glance) %{_datadir}/glance/glance-registry-dist.conf
+%attr(0640, root, glance) %{_datadir}/glance/glance-scrubber-dist.conf
 
 %{_unitdir}/openstack-glance-api.service
 %{_unitdir}/openstack-glance-registry.service
@@ -284,6 +283,12 @@ fi
 %doc doc/build/html
 
 %changelog
+* Wed Sep 25 2013 Pádraig Brady <pbrady@redhat.com) 2013.2-0.11.b3
+- Fix up dist.conf issues
+
+* Thu Sep 19 2013 John Bresnahan <jbresnah@redhat.com> 2013.2-0.10.b3
+- Split distribution config to /usr/share/glance/glance*-dist.conf
+
 * Fri Sep 20 2013 John Bresnahan <jbresnah@redhat.com> 2013.2-0.9.b3
 - Substitute in the correct version information
 

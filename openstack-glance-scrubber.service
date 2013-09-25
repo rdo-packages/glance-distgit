@@ -5,7 +5,7 @@ After=syslog.target network.target
 [Service]
 Type=simple
 User=glance
-ExecStart=/usr/bin/glance-scrubber --config-file /etc/glance/glance-scrubber.conf
+ExecStart=/usr/bin/glance-scrubber
 PrivateTmp=true
 
 [Install]
