@@ -187,6 +187,20 @@ install -p -D -m 644 %{SOURCE8} %{buildroot}%{_datadir}/glance/glance-scrubber-d
 install -p -D -m 640 etc/policy.json %{buildroot}%{_sysconfdir}/glance/policy.json
 install -p -D -m 640 etc/schema-image.json %{buildroot}%{_sysconfdir}/glance/schema-image.json
 
+# Initscripts
+install -p -D -m 644 %{SOURCE1} %{buildroot}%{_unitdir}/openstack-glance-api.service
+install -p -D -m 644 %{SOURCE2} %{buildroot}%{_unitdir}/openstack-glance-registry.service
+install -p -D -m 644 %{SOURCE3} %{buildroot}%{_unitdir}/openstack-glance-scrubber.service
+
+# Logrotate config
+install -p -D -m 644 %{SOURCE4} %{buildroot}%{_sysconfdir}/logrotate.d/openstack-glance
+
+# Install pid directory
+install -d -m 755 %{buildroot}%{_localstatedir}/run/glance
+
+# Install log directory
+install -d -m 755 %{buildroot}%{_localstatedir}/log/glance
+
 # Update common config and paramterized config
 openstack-config --set %{buildroot}%{_datadir}/glance/glance-api-dist.conf DEFAULT filesystem_store_datadir %{_localstatedir}/lib/glance/images/
 openstack-config --set %{buildroot}%{_datadir}/glance/glance-api-dist.conf DEFAULT scrubber_datadir %{_localstatedir}/lib/glance/scrubber
@@ -207,19 +221,22 @@ openstack-config --set %{buildroot}%{_datadir}/glance/glance-cache-dist.conf DEF
 openstack-config --set %{buildroot}%{_datadir}/glance/glance-scrubber-dist.conf DEFAULT scrubber_datadir %{_localstatedir}/lib/glance/scrubber
 openstack-config --set %{buildroot}%{_datadir}/glance/glance-scrubber-dist.conf DEFAULT log_file %{_localstatedir}/log/glance/scrubber.log
 
-# Initscripts
-install -p -D -m 644 %{SOURCE1} %{buildroot}%{_unitdir}/openstack-glance-api.service
-install -p -D -m 644 %{SOURCE2} %{buildroot}%{_unitdir}/openstack-glance-registry.service
-install -p -D -m 644 %{SOURCE3} %{buildroot}%{_unitdir}/openstack-glance-scrubber.service
-
-# Logrotate config
-install -p -D -m 644 %{SOURCE4} %{buildroot}%{_sysconfdir}/logrotate.d/openstack-glance
-
-# Install pid directory
-install -d -m 755 %{buildroot}%{_localstatedir}/run/glance
-
-# Install log directory
-install -d -m 755 %{buildroot}%{_localstatedir}/log/glance
+# Programmatically update defaults in sample config
+# which is installed at /etc/$project/$program.conf
+# TODO: Make this more robust
+# Note it only edits the first occurance, so assumes a section ordering in sample
+# and also doesn't support multi-valued variables.
+for svc in api registry cache scrubber; do
+  cfg=%{buildroot}%{_sysconfdir}/glance/glance-$svc.conf
+  test -e $cfg || continue
+  while read name eq value; do
+    test "$name" && test "$value" || continue
+    # Note some values in upstream glance config may not be commented
+    # and if not, they might not match the default value in code.
+    # So we comment out both froms to have dist config take precedence.
+    sed -i "0,/^#* *$name *=/{s!^#* *$name *=.*!#$name=$value!}" $cfg
+  done < %{buildroot}%{_datadir}/glance/glance-$svc-dist.conf
+done
 
 %pre
 getent group glance >/dev/null || groupadd -r glance -g 161
