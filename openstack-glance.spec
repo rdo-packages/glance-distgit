@@ -129,20 +129,13 @@ rm -rf {test-,}requirements.txt tools/{pip,test}-requires
 %build
 
 # Change the default config
-# Move authtoken configuration out of paste.ini
-openstack-config --del etc/glance-api-paste.ini filter:authtoken admin_tenant_name
-openstack-config --del etc/glance-api-paste.ini filter:authtoken admin_user
-openstack-config --del etc/glance-api-paste.ini filter:authtoken admin_password
-openstack-config --del etc/glance-api-paste.ini filter:authtoken auth_host
-openstack-config --del etc/glance-api-paste.ini filter:authtoken auth_port
-openstack-config --del etc/glance-api-paste.ini filter:authtoken auth_protocol
-openstack-config --del etc/glance-registry-paste.ini filter:authtoken admin_tenant_name
-openstack-config --del etc/glance-registry-paste.ini filter:authtoken admin_user
-openstack-config --del etc/glance-registry-paste.ini filter:authtoken admin_password
-openstack-config --del etc/glance-registry-paste.ini filter:authtoken auth_host
-openstack-config --del etc/glance-registry-paste.ini filter:authtoken auth_port
-openstack-config --del etc/glance-registry-paste.ini filter:authtoken auth_protocol
 
+# Move authtoken configuration out of paste.ini
+for svc in api registry; do
+  for var in admin_tenant_name admin_user admin_password auth_host auth_port auth_protocol; do
+    openstack-config --del etc/glance-$svc-paste.ini filter:authtoken $var
+  done
+done
 
 %{__python} setup.py build
 
