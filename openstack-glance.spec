@@ -183,6 +183,23 @@ install -p -D -m 640 %{SOURCE7} %{buildroot}%{_datadir}/glance/glance-scrubber-d
 install -p -D -m 640 etc/policy.json %{buildroot}%{_sysconfdir}/glance/policy.json
 install -p -D -m 640 etc/schema-image.json %{buildroot}%{_sysconfdir}/glance/schema-image.json
 
+# Update common config and paramterized config
+openstack-config --set %{buildroot}%{_datadir}/glance/glance-api-dist.conf DEFAULT filesystem_store_datadir %{_localstatedir}/lib/glance/images/
+openstack-config --set %{buildroot}%{_datadir}/glance/glance-api-dist.conf DEFAULT scrubber_datadir %{_localstatedir}/lib/glance/scrubber
+openstack-config --set %{buildroot}%{_datadir}/glance/glance-api-dist.conf DEFAULT image_cache_dir %{_localstatedir}/lib/glance/image-cache/
+for svc in api registry; do
+  openstack-config --set %{buildroot}%{_datadir}/glance/glance-$svc-dist.conf DEFAULT sql_connection mysql://glance:glance@localhost/glance
+  openstack-config --set %{buildroot}%{_datadir}/glance/glance-$svc-dist.conf DEFAULT log_file %{_localstatedir}/log/glance/$svc.log
+  openstack-config --set %{buildroot}%{_datadir}/glance/glance-$svc-dist.conf keystone_authtoken admin_tenant_name %SERVICE_TENANT_NAME%
+  openstack-config --set %{buildroot}%{_datadir}/glance/glance-$svc-dist.conf keystone_authtoken admin_user %SERVICE_USER%
+  openstack-config --set %{buildroot}%{_datadir}/glance/glance-$svc-dist.conf keystone_authtoken admin_password %SERVICE_PASSWORD%
+  openstack-config --set %{buildroot}%{_datadir}/glance/glance-$svc-dist.conf keystone_authtoken auth_host 127.0.0.1
+  openstack-config --set %{buildroot}%{_datadir}/glance/glance-$svc-dist.conf keystone_authtoken auth_port 35357
+  openstack-config --set %{buildroot}%{_datadir}/glance/glance-$svc-dist.conf keystone_authtoken auth_protocol http
+done
+openstack-config --set %{buildroot}%{_datadir}/glance/glance-scrubber-dist.conf DEFAULT scrubber_datadir %{_localstatedir}/lib/glance/scrubber
+openstack-config --set %{buildroot}%{_datadir}/glance/glance-scrubber-dist.conf DEFAULT log_file %{_localstatedir}/log/glance/scrubber.log
+
 # Initscripts
 install -p -D -m 644 %{SOURCE1} %{buildroot}%{_unitdir}/openstack-glance-api.service
 install -p -D -m 644 %{SOURCE2} %{buildroot}%{_unitdir}/openstack-glance-registry.service
