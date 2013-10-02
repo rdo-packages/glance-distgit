@@ -174,15 +174,15 @@ install -d -m 755 %{buildroot}%{_sharedstatedir}/glance/images
 
 # Config file
 install -p -D -m 640 etc/glance-api.conf %{buildroot}%{_sysconfdir}/glance/glance-api.conf
-install -p -D -m 640 %{SOURCE5} %{buildroot}%{_datadir}/glance/glance-api-dist.conf
-install -p -D -m 640 etc/glance-api-paste.ini %{buildroot}%{_datadir}/glance/glance-api-dist-paste.ini
+install -p -D -m 644 %{SOURCE5} %{buildroot}%{_datadir}/glance/glance-api-dist.conf
+install -p -D -m 644 etc/glance-api-paste.ini %{buildroot}%{_datadir}/glance/glance-api-dist-paste.ini
 install -p -D -m 640 etc/glance-registry.conf %{buildroot}%{_sysconfdir}/glance/glance-registry.conf
-install -p -D -m 640 %{SOURCE6} %{buildroot}%{_datadir}/glance/glance-registry-dist.conf
-install -p -D -m 640 etc/glance-registry-paste.ini %{buildroot}%{_datadir}/glance/glance-registry-dist-paste.ini
+install -p -D -m 644 %{SOURCE6} %{buildroot}%{_datadir}/glance/glance-registry-dist.conf
+install -p -D -m 644 etc/glance-registry-paste.ini %{buildroot}%{_datadir}/glance/glance-registry-dist-paste.ini
 install -p -D -m 640 etc/glance-cache.conf %{buildroot}%{_sysconfdir}/glance/glance-cache.conf
-install -p -D -m 640 %{SOURCE7} %{buildroot}%{_datadir}/glance/glance-cache-dist.conf
+install -p -D -m 644 %{SOURCE7} %{buildroot}%{_datadir}/glance/glance-cache-dist.conf
 install -p -D -m 640 etc/glance-scrubber.conf %{buildroot}%{_sysconfdir}/glance/glance-scrubber.conf
-install -p -D -m 640 %{SOURCE8} %{buildroot}%{_datadir}/glance/glance-scrubber-dist.conf
+install -p -D -m 644 %{SOURCE8} %{buildroot}%{_datadir}/glance/glance-scrubber-dist.conf
 
 install -p -D -m 640 etc/policy.json %{buildroot}%{_sysconfdir}/glance/policy.json
 install -p -D -m 640 etc/schema-image.json %{buildroot}%{_sysconfdir}/glance/schema-image.json
@@ -268,12 +268,12 @@ fi
 %{_bindir}/glance-scrubber
 %{_bindir}/glance-replicator
 
-%attr(0640, root, glance) %{_datadir}/glance/glance-api-dist.conf
-%attr(0640, root, glance) %{_datadir}/glance/glance-registry-dist.conf
-%attr(0640, root, glance) %{_datadir}/glance/glance-cache-dist.conf
-%attr(0640, root, glance) %{_datadir}/glance/glance-scrubber-dist.conf
-%attr(-, root, glance) %{_datadir}/glance/glance-api-dist-paste.ini
-%attr(-, root, glance) %{_datadir}/glance/glance-registry-dist-paste.ini
+%{_datadir}/glance/glance-api-dist.conf
+%{_datadir}/glance/glance-registry-dist.conf
+%{_datadir}/glance/glance-cache-dist.conf
+%{_datadir}/glance/glance-scrubber-dist.conf
+%{_datadir}/glance/glance-api-dist-paste.ini
+%{_datadir}/glance/glance-registry-dist-paste.ini
 
 %{_unitdir}/openstack-glance-api.service
 %{_unitdir}/openstack-glance-registry.service
