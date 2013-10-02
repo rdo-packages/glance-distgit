@@ -14,7 +14,8 @@ Source4:          openstack-glance.logrotate
 
 Source5:          glance-api-dist.conf
 Source6:          glance-registry-dist.conf
-Source7:          glance-scrubber-dist.conf
+Source7:          glance-cache-dist.conf
+Source8:          glance-scrubber-dist.conf
 
 #
 # patches_base=2013.2.b3
@@ -178,8 +179,10 @@ install -p -D -m 640 etc/glance-registry.conf %{buildroot}%{_sysconfdir}/glance/
 install -p -D -m 640 %{SOURCE6} %{buildroot}%{_datadir}/glance/glance-registry-dist.conf
 install -p -D -m 640 etc/glance-registry-paste.ini %{buildroot}%{_sysconfdir}/glance/glance-registry-paste.ini
 install -p -D -m 640 etc/glance-cache.conf %{buildroot}%{_sysconfdir}/glance/glance-cache.conf
+install -p -D -m 640 %{SOURCE7} %{buildroot}%{_datadir}/glance/glance-cache-dist.conf
 install -p -D -m 640 etc/glance-scrubber.conf %{buildroot}%{_sysconfdir}/glance/glance-scrubber.conf
-install -p -D -m 640 %{SOURCE7} %{buildroot}%{_datadir}/glance/glance-scrubber-dist.conf
+install -p -D -m 640 %{SOURCE8} %{buildroot}%{_datadir}/glance/glance-scrubber-dist.conf
+
 install -p -D -m 640 etc/policy.json %{buildroot}%{_sysconfdir}/glance/policy.json
 install -p -D -m 640 etc/schema-image.json %{buildroot}%{_sysconfdir}/glance/schema-image.json
 
@@ -197,6 +200,8 @@ for svc in api registry; do
   openstack-config --set %{buildroot}%{_datadir}/glance/glance-$svc-dist.conf keystone_authtoken auth_port 35357
   openstack-config --set %{buildroot}%{_datadir}/glance/glance-$svc-dist.conf keystone_authtoken auth_protocol http
 done
+openstack-config --set %{buildroot}%{_datadir}/glance/glance-cache-dist.conf DEFAULT image_cache_dir %{_localstatedir}/lib/glance/image-cache/
+openstack-config --set %{buildroot}%{_datadir}/glance/glance-cache-dist.conf DEFAULT log_file %{_localstatedir}/log/glance/image-cache.log
 openstack-config --set %{buildroot}%{_datadir}/glance/glance-scrubber-dist.conf DEFAULT scrubber_datadir %{_localstatedir}/lib/glance/scrubber
 openstack-config --set %{buildroot}%{_datadir}/glance/glance-scrubber-dist.conf DEFAULT log_file %{_localstatedir}/log/glance/scrubber.log
 
@@ -263,6 +268,7 @@ fi
 
 %attr(0640, root, glance) %{_datadir}/glance/glance-api-dist.conf
 %attr(0640, root, glance) %{_datadir}/glance/glance-registry-dist.conf
+%attr(0640, root, glance) %{_datadir}/glance/glance-cache-dist.conf
 %attr(0640, root, glance) %{_datadir}/glance/glance-scrubber-dist.conf
 
 %{_unitdir}/openstack-glance-api.service
