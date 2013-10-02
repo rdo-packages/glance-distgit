@@ -279,7 +279,7 @@ fi
 * Wed Sep 25 2013 Pádraig Brady <pbrady@redhat.com) 2013.2-0.11.b3
 - Fix up dist.conf issues
 
-* Thu Sep 19 2013 John Bresnahan <jbresnah@redhat.com> 2013.2-0.10.b3
+* Thu Sep 20 2013 John Bresnahan <jbresnah@redhat.com> 2013.2-0.10.b3
 - Split distribution config to /usr/share/glance/glance*-dist.conf
 
 * Fri Sep 20 2013 John Bresnahan <jbresnah@redhat.com> 2013.2-0.9.b3
