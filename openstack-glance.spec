@@ -70,7 +70,7 @@ Requires:         pyxattr
 Requires:         python-swiftclient
 Requires:         python-cinderclient
 Requires:         python-keystoneclient
-Requires:         python-oslo-config
+Requires:         python-oslo-config >= 1:1.2.0
 
 #test deps: python-mox python-nose python-requests
 #test and optional store:
