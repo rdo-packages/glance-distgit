@@ -1,4 +1,4 @@
-From 17ca15b02030d8b595af64a0ea01d3e9c1f2c137 Mon Sep 17 00:00:00 2001
+From f397849c410c5d3a8ce87fe3cb925b865c277790 Mon Sep 17 00:00:00 2001
 From: John Bresnahan <jbresnah@redhat.com>
 Date: Mon, 9 Sep 2013 17:02:07 -1000
 Subject: [PATCH] Revert use oslo.sphinx and remove local copy of doc
