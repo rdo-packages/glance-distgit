@@ -6,7 +6,7 @@ Summary:          OpenStack Image Service
 Group:            Applications/System
 License:          ASL 2.0
 URL:              http://glance.openstack.org
-Source0:          https://launchpad.net/glance/havana/havana-3/+download/glance-2013.2.tar.gz
+Source0:          https://launchpad.net/glance/havana/%{version}/+download/glance-%{version}.tar.gz
 Source1:          openstack-glance-api.service
 Source2:          openstack-glance-registry.service
 Source3:          openstack-glance-scrubber.service
