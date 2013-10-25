@@ -1,6 +1,6 @@
 Name:             openstack-glance
 Version:          2013.2
-Release:          1%{?dist}
+Release:          2%{?dist}
 Summary:          OpenStack Image Service
 
 Group:            Applications/System
@@ -305,7 +305,7 @@ fi
 %config(noreplace) %attr(-, root, glance) %{_sysconfdir}/glance/schema-image.json
 %config(noreplace) %attr(-, root, glance) %{_sysconfdir}/logrotate.d/openstack-glance
 %dir %attr(0755, glance, nobody) %{_sharedstatedir}/glance
-%dir %attr(0755, glance, nobody) %{_localstatedir}/log/glance
+%dir %attr(0750, glance, glance) %{_localstatedir}/log/glance
 %dir %attr(0755, glance, nobody) %{_localstatedir}/run/glance
 
 %files -n python-glance
@@ -318,6 +318,9 @@ fi
 %doc doc/build/html
 
 %changelog
+* Fri Oct 25 2013 Flavio Percoco <pbrady@redhat.com> 2013.2-2
+- Fixes #956815
+
 * Fri Oct 18 2013 Pádraig Brady <pbrady@redhat.com> 2013.2-1
 - Update to Havana GA
 
