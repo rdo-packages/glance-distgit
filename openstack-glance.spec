@@ -318,7 +318,7 @@ fi
 %doc doc/build/html
 
 %changelog
-* Fri Oct 25 2013 Flavio Percoco <pbrady@redhat.com> 2013.2-2
+* Fri Oct 25 2013 Flavio Percoco <flavio@redhat.com> 2013.2-2
 - Fixes #956815
 
 * Fri Oct 18 2013 Pádraig Brady <pbrady@redhat.com> 2013.2-1
