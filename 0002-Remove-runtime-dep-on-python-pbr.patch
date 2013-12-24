@@ -1,4 +1,4 @@
-From 78ddad340b519036b49730db2fb1f39e3b85d73c Mon Sep 17 00:00:00 2001
+From d24faaf2c90edde78f19c7f0bbb11568a2e53a5b Mon Sep 17 00:00:00 2001
 From: John Bresnahan <jbresnah@redhat.com>
 Date: Mon, 9 Sep 2013 17:00:28 -1000
 Subject: [PATCH] Remove runtime dep on python pbr

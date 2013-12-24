@@ -1,12 +1,12 @@
 Name:             openstack-glance
-Version:          2013.2
-Release:          2%{?dist}
+Version:          2014.1
+Release:          0.1.b1%{?dist}
 Summary:          OpenStack Image Service
 
 Group:            Applications/System
 License:          ASL 2.0
 URL:              http://glance.openstack.org
-Source0:          https://launchpad.net/glance/havana/%{version}/+download/glance-%{version}.tar.gz
+Source0:          https://launchpad.net/glance/havana/%{version}/+download/glance-%{version}.b1.tar.gz
 Source1:          openstack-glance-api.service
 Source2:          openstack-glance-registry.service
 Source3:          openstack-glance-scrubber.service
@@ -18,11 +18,10 @@ Source7:          glance-cache-dist.conf
 Source8:          glance-scrubber-dist.conf
 
 #
-# patches_base=2013.2
+# patches_base=2014.1.b1
 #
 Patch0001: 0001-Don-t-access-the-net-while-building-docs.patch
 Patch0002: 0002-Remove-runtime-dep-on-python-pbr.patch
-Patch0003: 0003-Revert-use-oslo.sphinx-and-remove-local-copy-of-doc.patch
 
 BuildArch:        noarch
 BuildRequires:    python2-devel
@@ -38,6 +37,7 @@ Requires:         python-glanceclient >= 1:0
 Requires:         openstack-utils
 BuildRequires:    openstack-utils
 BuildRequires:    python-pbr
+BuildRequires:    python-oslo-sphinx
 
 %description
 OpenStack Image Service (code-named Glance) provides discovery, registration,
@@ -71,6 +71,7 @@ Requires:         python-swiftclient
 Requires:         python-cinderclient
 Requires:         python-keystoneclient
 Requires:         python-oslo-config >= 1:1.2.0
+Requires:         python-oslo-messaging
 Requires:         python-qpid
 
 #test deps: python-mox python-nose python-requests
@@ -108,11 +109,10 @@ and delivery services for virtual disk images.
 This package contains documentation files for glance.
 
 %prep
-%setup -q -n glance-%{version}
+%setup -q -n glance-%{version}.b1
 
 %patch0001 -p1
 %patch0002 -p1
-%patch0003 -p1
 # Remove bundled egg-info
 rm -rf glance.egg-info
 sed -i '/\/usr\/bin\/env python/d' glance/common/config.py glance/common/crypt.py glance/db/sqlalchemy/migrate_repo/manage.py
@@ -318,6 +318,9 @@ fi
 %doc doc/build/html
 
 %changelog
+* Mon Dec 23 2013 Pádraig Brady <pbrady@redhat.com> 2014.1-0.1.b1
+- Update to Icehouse milestone 1
+
 * Fri Oct 25 2013 Flavio Percoco <flavio@redhat.com> 2013.2-2
 - Fixes #956815
 
