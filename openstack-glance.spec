@@ -35,7 +35,7 @@ Requires(pre):    shadow-utils
 Requires:         python-glance = %{version}-%{release}
 Requires:         python-glanceclient >= 1:0
 Requires:         openstack-utils
-BuildRequires:    openstack-utils
+BuildRequires:    crudini
 BuildRequires:    python-pbr
 BuildRequires:    python-oslo-sphinx
 
@@ -134,7 +134,7 @@ rm -rf {test-,}requirements.txt tools/{pip,test}-requires
 # Move authtoken configuration out of paste.ini
 for svc in api registry; do
   for var in admin_tenant_name admin_user admin_password auth_host auth_port auth_protocol; do
-    openstack-config --del etc/glance-$svc-paste.ini filter:authtoken $var
+    crudini --del etc/glance-$svc-paste.ini filter:authtoken $var
   done
 done
 
@@ -202,24 +202,24 @@ install -d -m 755 %{buildroot}%{_localstatedir}/run/glance
 install -d -m 755 %{buildroot}%{_localstatedir}/log/glance
 
 # Update common config and paramterized config
-openstack-config --set %{buildroot}%{_datadir}/glance/glance-api-dist.conf DEFAULT filesystem_store_datadir %{_localstatedir}/lib/glance/images/
-openstack-config --set %{buildroot}%{_datadir}/glance/glance-api-dist.conf DEFAULT scrubber_datadir %{_localstatedir}/lib/glance/scrubber
-openstack-config --set %{buildroot}%{_datadir}/glance/glance-api-dist.conf DEFAULT image_cache_dir %{_localstatedir}/lib/glance/image-cache/
+crudini --set %{buildroot}%{_datadir}/glance/glance-api-dist.conf DEFAULT filesystem_store_datadir %{_localstatedir}/lib/glance/images/
+crudini --set %{buildroot}%{_datadir}/glance/glance-api-dist.conf DEFAULT scrubber_datadir %{_localstatedir}/lib/glance/scrubber
+crudini --set %{buildroot}%{_datadir}/glance/glance-api-dist.conf DEFAULT image_cache_dir %{_localstatedir}/lib/glance/image-cache/
 for svc in api registry; do
-  openstack-config --set %{buildroot}%{_datadir}/glance/glance-$svc-dist.conf DEFAULT sql_connection mysql://glance:glance@localhost/glance
-  openstack-config --set %{buildroot}%{_datadir}/glance/glance-$svc-dist.conf DEFAULT log_file %{_localstatedir}/log/glance/$svc.log
-  openstack-config --set %{buildroot}%{_datadir}/glance/glance-$svc-dist.conf keystone_authtoken admin_tenant_name %SERVICE_TENANT_NAME%
-  openstack-config --set %{buildroot}%{_datadir}/glance/glance-$svc-dist.conf keystone_authtoken admin_user %SERVICE_USER%
-  openstack-config --set %{buildroot}%{_datadir}/glance/glance-$svc-dist.conf keystone_authtoken admin_password %SERVICE_PASSWORD%
-  openstack-config --set %{buildroot}%{_datadir}/glance/glance-$svc-dist.conf keystone_authtoken auth_host 127.0.0.1
-  openstack-config --set %{buildroot}%{_datadir}/glance/glance-$svc-dist.conf keystone_authtoken auth_port 35357
-  openstack-config --set %{buildroot}%{_datadir}/glance/glance-$svc-dist.conf keystone_authtoken auth_protocol http
-  openstack-config --set %{buildroot}%{_datadir}/glance/glance-$svc-dist.conf paste_deploy config_file %{_datadir}/glance/glance-$svc-dist-paste.ini
+  crudini --set %{buildroot}%{_datadir}/glance/glance-$svc-dist.conf DEFAULT sql_connection mysql://glance:glance@localhost/glance
+  crudini --set %{buildroot}%{_datadir}/glance/glance-$svc-dist.conf DEFAULT log_file %{_localstatedir}/log/glance/$svc.log
+  crudini --set %{buildroot}%{_datadir}/glance/glance-$svc-dist.conf keystone_authtoken admin_tenant_name %SERVICE_TENANT_NAME%
+  crudini --set %{buildroot}%{_datadir}/glance/glance-$svc-dist.conf keystone_authtoken admin_user %SERVICE_USER%
+  crudini --set %{buildroot}%{_datadir}/glance/glance-$svc-dist.conf keystone_authtoken admin_password %SERVICE_PASSWORD%
+  crudini --set %{buildroot}%{_datadir}/glance/glance-$svc-dist.conf keystone_authtoken auth_host 127.0.0.1
+  crudini --set %{buildroot}%{_datadir}/glance/glance-$svc-dist.conf keystone_authtoken auth_port 35357
+  crudini --set %{buildroot}%{_datadir}/glance/glance-$svc-dist.conf keystone_authtoken auth_protocol http
+  crudini --set %{buildroot}%{_datadir}/glance/glance-$svc-dist.conf paste_deploy config_file %{_datadir}/glance/glance-$svc-dist-paste.ini
 done
-openstack-config --set %{buildroot}%{_datadir}/glance/glance-cache-dist.conf DEFAULT image_cache_dir %{_localstatedir}/lib/glance/image-cache/
-openstack-config --set %{buildroot}%{_datadir}/glance/glance-cache-dist.conf DEFAULT log_file %{_localstatedir}/log/glance/image-cache.log
-openstack-config --set %{buildroot}%{_datadir}/glance/glance-scrubber-dist.conf DEFAULT scrubber_datadir %{_localstatedir}/lib/glance/scrubber
-openstack-config --set %{buildroot}%{_datadir}/glance/glance-scrubber-dist.conf DEFAULT log_file %{_localstatedir}/log/glance/scrubber.log
+crudini --set %{buildroot}%{_datadir}/glance/glance-cache-dist.conf DEFAULT image_cache_dir %{_localstatedir}/lib/glance/image-cache/
+crudini --set %{buildroot}%{_datadir}/glance/glance-cache-dist.conf DEFAULT log_file %{_localstatedir}/log/glance/image-cache.log
+crudini --set %{buildroot}%{_datadir}/glance/glance-scrubber-dist.conf DEFAULT scrubber_datadir %{_localstatedir}/lib/glance/scrubber
+crudini --set %{buildroot}%{_datadir}/glance/glance-scrubber-dist.conf DEFAULT log_file %{_localstatedir}/log/glance/scrubber.log
 
 # Programmatically update defaults in sample config
 # which is installed at /etc/$project/$program.conf
