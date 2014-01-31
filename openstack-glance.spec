@@ -334,7 +334,7 @@ fi
 * Wed Sep 25 2013 Pádraig Brady <pbrady@redhat.com> 2013.2-0.11.b3
 - Fix up dist.conf issues
 
-* Thu Sep 20 2013 John Bresnahan <jbresnah@redhat.com> 2013.2-0.10.b3
+* Fri Sep 20 2013 John Bresnahan <jbresnah@redhat.com> 2013.2-0.10.b3
 - Split distribution config to /usr/share/glance/glance*-dist.conf
 
 * Fri Sep 20 2013 John Bresnahan <jbresnah@redhat.com> 2013.2-0.9.b3
@@ -374,7 +374,7 @@ fi
 * Tue Apr  2 2013 Pádraig Brady <pbrady@redhat.com> 2013.1-0.8.rc1
 - Adjust to support sqlalchemy-0.8.0
 
-* Tue Mar 22 2013 Nikola Đipanov <ndipanov@redhat.com> 2013.1-0.7.rc1
+* Fri Mar 22 2013 Nikola Đipanov <ndipanov@redhat.com> 2013.1-0.7.rc1
 - Update to Grizzly RC1
 
 * Tue Feb 26 2013 Nikola Đipanov <ndipanov@redhat.com> 2013.1-0.6.g3
@@ -418,7 +418,7 @@ fi
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_18_Mass_Rebuild
 - Remove world readable bit on sensitive config files
 
-* Tue May 28 2012 Pádraig Brady <P@draigBrady.com> - 2012.2-0.1.f1
+* Mon May 28 2012 Pádraig Brady <P@draigBrady.com> - 2012.2-0.1.f1
 - Update to Folsom milestone 1
 
 * Tue May 22 2012 Pádraig Brady <P@draigBrady.com> - 2012.1-8
