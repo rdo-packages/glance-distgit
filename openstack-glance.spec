@@ -22,6 +22,7 @@ Source8:          glance-scrubber-dist.conf
 #
 Patch0001: 0001-Don-t-access-the-net-while-building-docs.patch
 Patch0002: 0002-Remove-runtime-dep-on-python-pbr.patch
+Patch0003: 0003-Revert-Switch-over-to-oslosphinx.patch
 
 BuildArch:        noarch
 BuildRequires:    python2-devel
@@ -113,6 +114,7 @@ This package contains documentation files for glance.
 
 %patch0001 -p1
 %patch0002 -p1
+%patch0003 -p1
 # Remove bundled egg-info
 rm -rf glance.egg-info
 sed -i '/\/usr\/bin\/env python/d' glance/common/config.py glance/common/crypt.py glance/db/sqlalchemy/migrate_repo/manage.py
