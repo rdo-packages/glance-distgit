@@ -5,8 +5,8 @@ Subject: [PATCH] Revert "Switch over to oslosphinx"
 
 This reverts commit 69df886b761dd6ee47a15cad4f11e030f1e1c286.
 ---
- doc/source/conf.py    | 2 +-
- test-requirements.txt | 2 +-
+ doc/source/conf.py    |    2 +-
+ test-requirements.txt |    2 +-
  2 files changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/doc/source/conf.py b/doc/source/conf.py

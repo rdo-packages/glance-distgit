@@ -8,8 +8,8 @@ Subject: [PATCH] Don't access the net while building docs
 Change-Id: I42c6e3a5062db209a0abe00cebc04d383c79cbcb
 (cherry picked from commit f2b4bb4e45afcc178200966193a7b87401c534d7)
 ---
- doc/source/conf.py | 1 -
- 1 file changed, 1 deletion(-)
+ doc/source/conf.py |    1 -
+ 1 files changed, 0 insertions(+), 1 deletions(-)
 
 diff --git a/doc/source/conf.py b/doc/source/conf.py
 index 2253323..fb2131e 100644

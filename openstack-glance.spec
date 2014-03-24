@@ -1,6 +1,6 @@
 Name:             openstack-glance
 Version:          2014.1
-Release:          0.3.b3%{?dist}
+Release:          0.4.b3%{?dist}
 Summary:          OpenStack Image Service
 
 Group:            Applications/System
@@ -23,6 +23,7 @@ Source8:          glance-scrubber-dist.conf
 Patch0001: 0001-Don-t-access-the-net-while-building-docs.patch
 Patch0002: 0002-Remove-runtime-dep-on-python-pbr.patch
 Patch0003: 0003-Revert-Switch-over-to-oslosphinx.patch
+Patch0004: 0004-unconfigure-unsupported-storage-drivers.patch
 
 BuildArch:        noarch
 BuildRequires:    python2-devel
@@ -115,6 +116,7 @@ This package contains documentation files for glance.
 %patch0001 -p1
 %patch0002 -p1
 %patch0003 -p1
+%patch0004 -p1
 # Remove bundled egg-info
 rm -rf glance.egg-info
 sed -i '/\/usr\/bin\/env python/d' glance/common/config.py glance/common/crypt.py glance/db/sqlalchemy/migrate_repo/manage.py
@@ -320,6 +322,9 @@ fi
 %doc doc/build/html
 
 %changelog
+* Mon Mar 24 2014 Pádraig Brady <pbrady@redhat.com> - 2014.1-0.4.b3
+- unconfigure unsupported storage drivers
+
 * Fri Mar 14 2014 Flavio Percoco <flavio@redhat.com> 2014.1-0.3.b3
 - Update to Icehouse milestone 3
 

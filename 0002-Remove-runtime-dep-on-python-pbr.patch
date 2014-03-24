@@ -4,8 +4,8 @@ Date: Mon, 9 Sep 2013 17:00:28 -1000
 Subject: [PATCH] Remove runtime dep on python pbr
 
 ---
- glance/version.py | 29 +++++++++++++++++++++++++++--
- 1 file changed, 27 insertions(+), 2 deletions(-)
+ glance/version.py |   29 +++++++++++++++++++++++++++--
+ 1 files changed, 27 insertions(+), 2 deletions(-)
 
 diff --git a/glance/version.py b/glance/version.py
 index 0172206..ac67472 100644
