@@ -1,12 +1,12 @@
 Name:             openstack-glance
 Version:          2014.1
-Release:          0.4.b3%{?dist}
+Release:          0.5.rc1%{?dist}
 Summary:          OpenStack Image Service
 
 Group:            Applications/System
 License:          ASL 2.0
 URL:              http://glance.openstack.org
-Source0:          https://launchpad.net/glance/icehouse/icehouse-2/+download/glance-%{version}.b3.tar.gz
+Source0:          https://launchpad.net/glance/icehouse/icehouse-2/+download/glance-%{version}.rc1.tar.gz
 Source1:          openstack-glance-api.service
 Source2:          openstack-glance-registry.service
 Source3:          openstack-glance-scrubber.service
@@ -18,12 +18,11 @@ Source7:          glance-cache-dist.conf
 Source8:          glance-scrubber-dist.conf
 
 #
-# patches_base=2014.1.b3
+# patches_base=2014.1.rc1
 #
 Patch0001: 0001-Don-t-access-the-net-while-building-docs.patch
 Patch0002: 0002-Remove-runtime-dep-on-python-pbr.patch
-Patch0003: 0003-Revert-Switch-over-to-oslosphinx.patch
-Patch0004: 0004-unconfigure-unsupported-storage-drivers.patch
+Patch0003: 0003-avoid-unsupported-storage-drivers.patch
 
 BuildArch:        noarch
 BuildRequires:    python2-devel
@@ -112,12 +111,11 @@ and delivery services for virtual disk images.
 This package contains documentation files for glance.
 
 %prep
-%setup -q -n glance-%{version}.b3
+%setup -q -n glance-%{version}.rc1
 
 %patch0001 -p1
 %patch0002 -p1
 %patch0003 -p1
-%patch0004 -p1
 # Remove bundled egg-info
 rm -rf glance.egg-info
 sed -i '/\/usr\/bin\/env python/d' glance/common/config.py glance/common/crypt.py glance/db/sqlalchemy/migrate_repo/manage.py
@@ -127,6 +125,9 @@ echo %{version} > glance/versioninfo
 sed -i '/setuptools_git/d; /setup_requires/d; /install_requires/d; /dependency_links/d' setup.py
 sed -i s/REDHATGLANCEVERSION/%{version}/ glance/version.py
 sed -i s/REDHATGLANCERELEASE/%{release}/ glance/version.py
+
+# make doc build compatible with python-oslo-sphinx RPM
+sed -i 's/oslosphinx/oslo.sphinx/' doc/source/conf.py
 
 # Remove the requirements file so that pbr hooks don't add it
 # to distutils requiers_dist config
@@ -323,6 +324,10 @@ fi
 %doc doc/build/html
 
 %changelog
+* Wed Apr 09 2014 Pádraig Brady <pbrady@redhat.com> - 2014.1-0.5.rc1
+- Update to Icehouse release candidate 1
+- Depend on python-kombu for rabbit installations
+
 * Mon Mar 24 2014 Pádraig Brady <pbrady@redhat.com> - 2014.1-0.4.b3
 - unconfigure unsupported storage drivers
 
