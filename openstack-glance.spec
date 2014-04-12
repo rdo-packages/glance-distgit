@@ -1,12 +1,12 @@
 Name:             openstack-glance
 Version:          2014.1
-Release:          0.5.rc1%{?dist}
+Release:          0.6.rc2%{?dist}
 Summary:          OpenStack Image Service
 
 Group:            Applications/System
 License:          ASL 2.0
 URL:              http://glance.openstack.org
-Source0:          https://launchpad.net/glance/icehouse/icehouse-2/+download/glance-%{version}.rc1.tar.gz
+Source0:          https://launchpad.net/glance/icehouse/icehouse-2/+download/glance-%{version}.rc2.tar.gz
 Source1:          openstack-glance-api.service
 Source2:          openstack-glance-registry.service
 Source3:          openstack-glance-scrubber.service
@@ -18,7 +18,7 @@ Source7:          glance-cache-dist.conf
 Source8:          glance-scrubber-dist.conf
 
 #
-# patches_base=2014.1.rc1
+# patches_base=2014.1.rc2
 #
 Patch0001: 0001-Don-t-access-the-net-while-building-docs.patch
 Patch0002: 0002-Remove-runtime-dep-on-python-pbr.patch
@@ -109,7 +109,7 @@ and delivery services for virtual disk images.
 This package contains documentation files for glance.
 
 %prep
-%setup -q -n glance-%{version}.rc1
+%setup -q -n glance-%{version}.rc2
 
 %patch0001 -p1
 %patch0002 -p1
@@ -322,6 +322,9 @@ fi
 %doc doc/build/html
 
 %changelog
+* Sat Apr 12 2014 Pádraig Brady <pbrady@redhat.com> - 2014.1-0.6.rc2
+- Update to Icehouse release candidate 2
+
 * Wed Apr 09 2014 Pádraig Brady <pbrady@redhat.com> - 2014.1-0.5.rc1
 - Update to Icehouse release candidate 1
 - Depend on python-kombu for rabbit installations
