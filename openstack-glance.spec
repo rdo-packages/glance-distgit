@@ -131,6 +131,11 @@ sed -i 's/oslosphinx/oslo.sphinx/' doc/source/conf.py
 # to distutils requiers_dist config
 rm -rf {test-,}requirements.txt tools/{pip,test}-requires
 
+# Adjust DB config to be compat with openstack-db
+for svc in api registry; do
+  sed -i 's|^#connection = <None>|#connection = mysql://glance:glance@localhost/glance|' etc/glance-$svc.conf
+done
+
 %build
 
 %{__python} setup.py build
