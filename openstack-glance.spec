@@ -1,6 +1,6 @@
 Name:             openstack-glance
 Version:          2014.1
-Release:          1%{?dist}
+Release:          2%{?dist}
 Summary:          OpenStack Image Service
 
 Group:            Applications/System
@@ -131,13 +131,29 @@ sed -i 's/oslosphinx/oslo.sphinx/' doc/source/conf.py
 # to distutils requiers_dist config
 rm -rf {test-,}requirements.txt tools/{pip,test}-requires
 
-# Adjust DB config to be compat with openstack-db
-for svc in api registry; do
-  sed -i 's|^#connection = <None>|#connection = mysql://glance:glance@localhost/glance|' etc/glance-$svc.conf
+# Programmatically update defaults in example config
+api_dist=%{SOURCE5}
+registry_dist=%{SOURCE6}
+cache_dist=%{SOURCE7}
+scrubber_dist=%{SOURCE8}
+for svc in api registry cache scrubber; do
+  #  First we ensure all values are commented in appropriate format.
+  #  Since icehouse, there was an uncommented keystone_authtoken section
+  #  at the end of the file which mimics but also conflicted with our
+  #  distro editing that had been done for many releases.
+  sed -i '/^[^#[]/{s/^/#/; s/ //g}; /^#[^ ]/s/ = /=/' etc/glance-$svc.conf
+
+  #  TODO: Make this more robust
+  #  Note it only edits the first occurance, so assumes a section ordering in sample
+  #  and also doesn't support multi-valued variables like dhcpbridge_flagfile.
+  eval dist_conf=\$${svc}_dist
+  while read name eq value; do
+    test "$name" && test "$value" || continue
+    sed -i "0,/^# *$name=/{s!^# *$name=.*!#$name=$value!}" etc/glance-$svc.conf
+  done < $dist_conf
 done
 
 %build
-
 %{__python} setup.py build
 
 %install
@@ -298,6 +314,9 @@ fi
 %doc doc/build/html
 
 %changelog
+* Thu Apr 24 2014 Pádraig Brady <pbrady@redhat.com> - 2014.1-2
+- Comment all default config items in /etc/glance/*.conf
+
 * Thu Apr 17 2014 Pádraig Brady <pbrady@redhat.com> - 2014.1-1
 - Update to Icehouse release
 
