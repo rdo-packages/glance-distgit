@@ -1,6 +1,6 @@
 Name:             openstack-glance
 Version:          2014.1
-Release:          2%{?dist}
+Release:          3%{?dist}
 Summary:          OpenStack Image Service
 
 Group:            Applications/System
@@ -314,6 +314,9 @@ fi
 %doc doc/build/html
 
 %changelog
+* Sat Jun 07 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 2014.1-3
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_21_Mass_Rebuild
+
 * Thu Apr 24 2014 Pádraig Brady <pbrady@redhat.com> - 2014.1-2
 - Comment all default config items in /etc/glance/*.conf
 
