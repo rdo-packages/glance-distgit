@@ -1,6 +1,6 @@
 Name:             openstack-glance
 Version:          2014.1
-Release:          3%{?dist}
+Release:          4%{?dist}
 Summary:          OpenStack Image Service
 
 Group:            Applications/System
@@ -70,7 +70,7 @@ Requires:         pyxattr
 Requires:         python-swiftclient
 Requires:         python-cinderclient
 Requires:         python-keystoneclient
-Requires:         python-oslo-config >= 1:1.2.0
+Requires:         python-oslo-config >= 1:1.2.1
 Requires:         python-oslo-messaging
 
 #test deps: python-mox python-nose python-requests
@@ -314,6 +314,9 @@ fi
 %doc doc/build/html
 
 %changelog
+* Tue Jun 17 2014 Pádraig Brady <pbrady@redhat.com> - 2014.1-4
+- Ensure minimum version of oslo.config is installed
+
 * Sat Jun 07 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 2014.1-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_21_Mass_Rebuild
 
