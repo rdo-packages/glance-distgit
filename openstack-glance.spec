@@ -1,5 +1,5 @@
 Name:             openstack-glance
-Version:          2014.1
+Version:          2014.1.1
 Release:          4%{?dist}
 Summary:          OpenStack Image Service
 
@@ -18,11 +18,12 @@ Source7:          glance-cache-dist.conf
 Source8:          glance-scrubber-dist.conf
 
 #
-# patches_base=2014.1
+# patches_base=2014.1.1
 #
 Patch0001: 0001-Don-t-access-the-net-while-building-docs.patch
 Patch0002: 0002-Remove-runtime-dep-on-python-pbr.patch
 Patch0003: 0003-avoid-unsupported-storage-drivers.patch
+Patch0004: 0004-notify-calling-process-we-are-ready-to-serve.patch
 
 BuildArch:        noarch
 BuildRequires:    python2-devel
@@ -113,6 +114,7 @@ This package contains documentation files for glance.
 %patch0001 -p1
 %patch0002 -p1
 %patch0003 -p1
+%patch0004 -p1
 
 # Remove bundled egg-info
 rm -rf glance.egg-info
@@ -314,6 +316,10 @@ fi
 %doc doc/build/html
 
 %changelog
+* Mon Jun 23 2014 Jon Bernard <jobernar@redhat.com> - 2014.1.1-1
+- Update to latest Icehouse release
+- Include patch to improve systemd integration
+
 * Tue Jun 17 2014 Pádraig Brady <pbrady@redhat.com> - 2014.1-4
 - Ensure minimum version of oslo.config is installed
 

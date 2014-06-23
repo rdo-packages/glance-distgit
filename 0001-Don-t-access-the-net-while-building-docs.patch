@@ -1,4 +1,4 @@
-From 721c886380656d924362baaba0849f5faba0e760 Mon Sep 17 00:00:00 2001
+From 6488de036b95663d4cfe808cfd979a4121fd9782 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?P=C3=A1draig=20Brady?= <pbrady@redhat.com>
 Date: Fri, 6 Jan 2012 17:12:54 +0000
 Subject: [PATCH] Don't access the net while building docs
@@ -8,8 +8,8 @@ Subject: [PATCH] Don't access the net while building docs
 Change-Id: I42c6e3a5062db209a0abe00cebc04d383c79cbcb
 (cherry picked from commit f2b4bb4e45afcc178200966193a7b87401c534d7)
 ---
- doc/source/conf.py |    1 -
- 1 files changed, 0 insertions(+), 1 deletions(-)
+ doc/source/conf.py | 1 -
+ 1 file changed, 1 deletion(-)
 
 diff --git a/doc/source/conf.py b/doc/source/conf.py
 index 2253323..fb2131e 100644
