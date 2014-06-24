@@ -316,7 +316,7 @@ fi
 %doc doc/build/html
 
 %changelog
-* Mon Jun 23 2014 Jon Bernard <jobernar@redhat.com> - 2014.1.1-1
+* Mon Jun 23 2014 Jon Bernard <jobernar@redhat.com> - 2014.1.1-4
 - Update to latest Icehouse release
 - Include patch to improve systemd integration
 
