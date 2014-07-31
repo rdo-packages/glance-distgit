@@ -22,8 +22,7 @@ Source8:          glance-scrubber-dist.conf
 #
 Patch0001: 0001-Don-t-access-the-net-while-building-docs.patch
 Patch0002: 0002-Remove-runtime-dep-on-python-pbr.patch
-Patch0003: 0003-avoid-unsupported-storage-drivers.patch
-Patch0004: 0004-notify-calling-process-we-are-ready-to-serve.patch
+Patch0003: 0003-notify-calling-process-we-are-ready-to-serve.patch
 
 BuildArch:        noarch
 BuildRequires:    python2-devel
@@ -109,12 +108,11 @@ and delivery services for virtual disk images.
 This package contains documentation files for glance.
 
 %prep
-%setup -q -n glance-%{version}
+%setup -q -n glance-%{upstream_version}
 
 %patch0001 -p1
 %patch0002 -p1
 %patch0003 -p1
-%patch0004 -p1
 
 # Remove bundled egg-info
 rm -rf glance.egg-info
@@ -125,9 +123,6 @@ echo %{version} > glance/versioninfo
 sed -i '/setuptools_git/d; /setup_requires/d; /install_requires/d; /dependency_links/d' setup.py
 sed -i s/REDHATGLANCEVERSION/%{version}/ glance/version.py
 sed -i s/REDHATGLANCERELEASE/%{release}/ glance/version.py
-
-# make doc build compatible with python-oslo-sphinx RPM
-sed -i 's/oslosphinx/oslo.sphinx/' doc/source/conf.py
 
 # Remove the requirements file so that pbr hooks don't add it
 # to distutils requiers_dist config

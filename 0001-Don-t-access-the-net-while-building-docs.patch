@@ -1,4 +1,4 @@
-From 6488de036b95663d4cfe808cfd979a4121fd9782 Mon Sep 17 00:00:00 2001
+From eba47e72503bf38bf6af77b1d6b56fa943261297 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?P=C3=A1draig=20Brady?= <pbrady@redhat.com>
 Date: Fri, 6 Jan 2012 17:12:54 +0000
 Subject: [PATCH] Don't access the net while building docs
@@ -23,3 +23,6 @@ index 2253323..fb2131e 100644
                'sphinx.ext.pngmath',
                'sphinx.ext.graphviz',
                'oslosphinx',
+-- 
+1.9.3
+

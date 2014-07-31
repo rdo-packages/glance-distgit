@@ -1,4 +1,4 @@
-From d1635beebfacd2f792b19550dff0aa4cb69c87ac Mon Sep 17 00:00:00 2001
+From b8964ddb3de2f8e5be675dda229389d917721166 Mon Sep 17 00:00:00 2001
 From: Alan Pevec <apevec@redhat.com>
 Date: Tue, 11 Feb 2014 22:36:00 +0100
 Subject: [PATCH] notify calling process we are ready to serve
@@ -38,7 +38,7 @@ Change-Id: I80f325c9be9c171c2dc8d5526570bf64f0f87c78
  create mode 100644 glance/openstack/common/systemd.py
 
 diff --git a/glance/cmd/api.py b/glance/cmd/api.py
-index 37ab59a..c985140 100755
+index 73c79a1..e64cf1a 100755
 --- a/glance/cmd/api.py
 +++ b/glance/cmd/api.py
 @@ -43,6 +43,7 @@ from glance.common import config
@@ -187,3 +187,6 @@ index 0000000..47612a9
 +        if notify_socket:
 +            retval = onready(notify_socket, timeout)
 +            sys.exit(retval)
+-- 
+1.9.3
+
