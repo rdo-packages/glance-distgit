@@ -1,12 +1,13 @@
 Name:             openstack-glance
-Version:          2014.1.1
-Release:          4%{?dist}
+Version:          2014.2
+Release:          0.1.b2%{?dist}
 Summary:          OpenStack Image Service
 
 Group:            Applications/System
 License:          ASL 2.0
 URL:              http://glance.openstack.org
-Source0:          https://launchpad.net/glance/icehouse/%{version}/+download/glance-%{version}.tar.gz
+Source0:          https://launchpad.net/glance/juno/juno-2/+download/glance-%{version}.b2.tar.gz
+
 Source1:          openstack-glance-api.service
 Source2:          openstack-glance-registry.service
 Source3:          openstack-glance-scrubber.service
@@ -18,7 +19,7 @@ Source7:          glance-cache-dist.conf
 Source8:          glance-scrubber-dist.conf
 
 #
-# patches_base=2014.1.1
+# patches_base=2014.2.b2
 #
 Patch0001: 0001-Don-t-access-the-net-while-building-docs.patch
 Patch0002: 0002-Remove-runtime-dep-on-python-pbr.patch
@@ -109,7 +110,7 @@ and delivery services for virtual disk images.
 This package contains documentation files for glance.
 
 %prep
-%setup -q -n glance-%{version}
+%setup -q -n glance-%{version}.b2
 
 %patch0001 -p1
 %patch0002 -p1
@@ -316,6 +317,9 @@ fi
 %doc doc/build/html
 
 %changelog
+* Thu Jul 31 2014 Jon Bernard <jobernar@redhat.com> - 2014.2-0.1.b2
+- Update to Juno milestone 2
+
 * Mon Jun 23 2014 Jon Bernard <jobernar@redhat.com> - 2014.1.1-4
 - Update to latest Icehouse release
 - Include patch to improve systemd integration

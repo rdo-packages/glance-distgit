@@ -1,7 +1,7 @@
-From ad3a631632f7dce41ffac61b754a6b401514c573 Mon Sep 17 00:00:00 2001
+From 64fccff955accd7c0f8f18a274d6bd7b5cc9f77c Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?P=C3=A1draig=20Brady?= <P@draigBrady.com>
 Date: Wed, 9 Apr 2014 10:31:27 +0100
-Subject: [PATCH] avoid unsupported storage drivers
+Subject: [PATCH 3/4] avoid unsupported storage drivers
 
 ---
  etc/glance-api.conf      | 2 --
@@ -10,7 +10,7 @@ Subject: [PATCH] avoid unsupported storage drivers
  3 files changed, 6 deletions(-)
 
 diff --git a/etc/glance-api.conf b/etc/glance-api.conf
-index 8b4bf66..c53be76 100644
+index 45a0558..509bb58 100644
 --- a/etc/glance-api.conf
 +++ b/etc/glance-api.conf
 @@ -17,10 +17,8 @@ default_store = file
@@ -39,10 +39,10 @@ index 0246b67..04e5623 100644
  # ============ Filesystem Store Options ========================
  
 diff --git a/glance/store/__init__.py b/glance/store/__init__.py
-index 33a67d6..7af3813 100644
+index ae51417..ba52952 100644
 --- a/glance/store/__init__.py
 +++ b/glance/store/__init__.py
-@@ -69,10 +69,8 @@ _ALL_STORES = [
+@@ -53,10 +53,8 @@ _ALL_STORES = [
      'glance.store.rbd.Store',
      'glance.store.s3.Store',
      'glance.store.swift.Store',
@@ -53,3 +53,6 @@ index 33a67d6..7af3813 100644
  ]
  
  
+-- 
+1.9.1
+
