@@ -72,6 +72,8 @@ Requires:         python-cinderclient
 Requires:         python-keystoneclient
 Requires:         python-oslo-config >= 1:1.2.1
 Requires:         python-oslo-messaging
+Requires:         python-retrying
+Requires:         python-osprofiler
 
 #test deps: python-mox python-nose python-requests
 #test and optional store:
@@ -311,6 +313,9 @@ fi
 %doc doc/build/html
 
 %changelog
+* Fri Aug 15 2014 Derek Higgins <derekh@redhat.com> - XXX
+- Add dependency on python-retrying and python-osprofiler
+
 * Mon Jun 23 2014 Jon Bernard <jobernar@redhat.com> - 2014.1.1-4
 - Update to latest Icehouse release
 - Include patch to improve systemd integration
