@@ -74,6 +74,7 @@ Requires:         python-oslo-config >= 1:1.2.1
 Requires:         python-oslo-messaging
 Requires:         python-retrying
 Requires:         python-osprofiler
+Requires:         python-oslo-vmware
 
 #test deps: python-mox python-nose python-requests
 #test and optional store:
@@ -313,6 +314,9 @@ fi
 %doc doc/build/html
 
 %changelog
+* Mon Aug 18 2014 Derek Higgins <derekh@redhat.com> - XXX
+- Add dependency on python-oslo-vmware
+
 * Fri Aug 15 2014 Derek Higgins <derekh@redhat.com> - XXX
 - Add dependency on python-retrying and python-osprofiler
 
