@@ -1,6 +1,6 @@
 Name:             openstack-glance
 Version:          2014.2
-Release:          0.1.b2%{?dist}
+Release:          0.2.b2%{?dist}
 Summary:          OpenStack Image Service
 
 Group:            Applications/System
@@ -319,6 +319,9 @@ fi
 %doc doc/build/html
 
 %changelog
+* Sat Aug 30 2014 Jon Bernard <jobernar@redhat.com> 2014.2-0.2.b2
+- Fix store disk space exhaustion (CVE-2014-5356)
+
 * Thu Jul 31 2014 Jon Bernard <jobernar@redhat.com> - 2014.2-0.1.b2
 - Update to Juno milestone 2
 
