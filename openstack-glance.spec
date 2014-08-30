@@ -25,6 +25,7 @@ Patch0001: 0001-Don-t-access-the-net-while-building-docs.patch
 Patch0002: 0002-Remove-runtime-dep-on-python-pbr.patch
 Patch0003: 0003-avoid-unsupported-storage-drivers.patch
 Patch0004: 0004-notify-calling-process-we-are-ready-to-serve.patch
+Patch0005: 0005-Enforce-image_size_cap-on-v2-upload.patch
 
 BuildArch:        noarch
 BuildRequires:    python2-devel
@@ -116,6 +117,7 @@ This package contains documentation files for glance.
 %patch0002 -p1
 %patch0003 -p1
 %patch0004 -p1
+%patch0005 -p1
 
 # Remove bundled egg-info
 rm -rf glance.egg-info

@@ -1,7 +1,7 @@
 From fd6a8facb0fd4ca8f9bf4a703b83184756bee389 Mon Sep 17 00:00:00 2001
 From: Alan Pevec <apevec@redhat.com>
 Date: Tue, 11 Feb 2014 22:36:00 +0100
-Subject: [PATCH 4/4] notify calling process we are ready to serve
+Subject: [PATCH] notify calling process we are ready to serve
 
 Systemd notification should be sent in-process, otherwise systemd might
 miss the subprocess sending notification.
@@ -187,6 +187,3 @@ index 0000000..47612a9
 +        if notify_socket:
 +            retval = onready(notify_socket, timeout)
 +            sys.exit(retval)
--- 
-1.9.1
-
