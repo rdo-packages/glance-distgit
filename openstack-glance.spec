@@ -1,6 +1,6 @@
 Name:             openstack-glance
 Version:          2014.2
-Release:          0.2.b2%{?dist}
+Release:          0.3.b2%{?dist}
 Summary:          OpenStack Image Service
 
 Group:            Applications/System
@@ -39,9 +39,6 @@ BuildRequires:    python2-devel
 BuildRequires:    python-setuptools
 BuildRequires:    intltool
 
-Requires(post):   systemd-units
-Requires(preun):  systemd-units
-Requires(postun): systemd-units
 Requires(pre):    shadow-utils
 Requires:         python-glance = %{version}-%{release}
 Requires:         python-glanceclient >= 1:0
@@ -389,6 +386,9 @@ fi
 %doc doc/build/html
 
 %changelog
+* Wed Sep 03 2014 Haïkel Guémar <hguemar@fedoraproject.org> - 2014.2-0.3.b2
+- Removed unused requirements on systemd
+
 * Wed Sep 03 2014 Flavio Percoco <flavio@redhat.com> 2014.2-0.3.b2
 - Merge spec from el6-icehouse
 
