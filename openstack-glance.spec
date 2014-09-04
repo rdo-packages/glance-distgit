@@ -1,6 +1,6 @@
 Name:             openstack-glance
 Version:          2014.2
-Release:          0.3.b2%{?dist}
+Release:          0.4.b2%{?dist}
 Summary:          OpenStack Image Service
 
 Group:            Applications/System
@@ -94,6 +94,17 @@ Requires:         python-cinderclient
 Requires:         python-keystoneclient
 Requires:         python-oslo-config >= 1:1.2.1
 Requires:         python-oslo-messaging
+Requires:         python-oslo-vmware
+Requires:         python-oslo-i18n
+Requires:         python-oslo-db
+Requires:         python-keystonemiddleware
+Requires:         python-retrying
+Requires:         python-six >= 1.7.0
+Requires:         python-posix_ipc
+Requires:         python-stevedore
+Requires:         python-anyjson
+Requires:         python-netaddr
+Requires:         pyOpenSSL
 
 #test deps: python-mox python-nose python-requests
 #test and optional store:
@@ -386,6 +397,9 @@ fi
 %doc doc/build/html
 
 %changelog
+* Fri Sep 05 2014 Alan Pevec <apevec@redhat.com> - 2014.2-0.4.b2
+- add missing dependencies
+
 * Wed Sep 03 2014 Haïkel Guémar <hguemar@fedoraproject.org> - 2014.2-0.3.b2
 - Removed unused requirements on systemd
 
