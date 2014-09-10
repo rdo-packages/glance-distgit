@@ -1,4 +1,4 @@
-From fd6a8facb0fd4ca8f9bf4a703b83184756bee389 Mon Sep 17 00:00:00 2001
+From 5bde10a187244e39d32b42c82bc108279b2dd9a7 Mon Sep 17 00:00:00 2001
 From: Alan Pevec <apevec@redhat.com>
 Date: Tue, 11 Feb 2014 22:36:00 +0100
 Subject: [PATCH] notify calling process we are ready to serve
@@ -33,8 +33,9 @@ Change-Id: I80f325c9be9c171c2dc8d5526570bf64f0f87c78
 ---
  glance/cmd/api.py                  |   2 +
  glance/cmd/registry.py             |   2 +
+ glance/cmd/scrubber.py             |   2 +
  glance/openstack/common/systemd.py | 104 +++++++++++++++++++++++++++++++++++++
- 3 files changed, 108 insertions(+)
+ 4 files changed, 110 insertions(+)
  create mode 100644 glance/openstack/common/systemd.py
 
 diff --git a/glance/cmd/api.py b/glance/cmd/api.py
@@ -77,6 +78,26 @@ index 23623a8..4cbc798 100755
          server.wait()
      except RuntimeError as e:
          sys.exit("ERROR: %s" % e)
+diff --git a/glance/cmd/scrubber.py b/glance/cmd/scrubber.py
+index 95694ea..3df34a8 100755
+--- a/glance/cmd/scrubber.py
++++ b/glance/cmd/scrubber.py
+@@ -34,6 +34,7 @@ from oslo.config import cfg
+ 
+ from glance.common import config
+ from glance.openstack.common import log
++from glance.openstack.common import systemd
+ from glance import scrubber
+ import glance.store
+ 
+@@ -65,6 +66,7 @@ def main():
+         if CONF.daemon:
+             server = scrubber.Daemon(CONF.wakeup_time)
+             server.start(app)
++            systemd.notify_once()
+             server.wait()
+         else:
+             import eventlet
 diff --git a/glance/openstack/common/systemd.py b/glance/openstack/common/systemd.py
 new file mode 100644
 index 0000000..47612a9
