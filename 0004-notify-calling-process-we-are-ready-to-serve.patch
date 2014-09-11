@@ -1,4 +1,4 @@
-From 5bde10a187244e39d32b42c82bc108279b2dd9a7 Mon Sep 17 00:00:00 2001
+From bedcf16700210711395ccd1c7d5e8bd7bf3f359e Mon Sep 17 00:00:00 2001
 From: Alan Pevec <apevec@redhat.com>
 Date: Tue, 11 Feb 2014 22:36:00 +0100
 Subject: [PATCH] notify calling process we are ready to serve
@@ -39,18 +39,18 @@ Change-Id: I80f325c9be9c171c2dc8d5526570bf64f0f87c78
  create mode 100644 glance/openstack/common/systemd.py
 
 diff --git a/glance/cmd/api.py b/glance/cmd/api.py
-index 73c79a1..e64cf1a 100755
+index 3860e32..47bc3d8 100755
 --- a/glance/cmd/api.py
 +++ b/glance/cmd/api.py
-@@ -43,6 +43,7 @@ from glance.common import config
- from glance.common import exception
+@@ -48,6 +48,7 @@ from glance.common import exception
  from glance.common import wsgi
+ from glance import notifier
  from glance.openstack.common import log
 +from glance.openstack.common import systemd
  import glance.store
  
- 
-@@ -61,6 +62,7 @@ def main():
+ CONF = cfg.CONF
+@@ -80,6 +81,7 @@ def main():
  
          server = wsgi.Server()
          server.start(config.load_paste_app('glance-api'), default_port=9292)
@@ -59,18 +59,18 @@ index 73c79a1..e64cf1a 100755
      except exception.WorkerCreationFailure as e:
          fail(2, e)
 diff --git a/glance/cmd/registry.py b/glance/cmd/registry.py
-index 23623a8..4cbc798 100755
+index 06cea6a..e0dfbab 100755
 --- a/glance/cmd/registry.py
 +++ b/glance/cmd/registry.py
-@@ -39,6 +39,7 @@ if os.path.exists(os.path.join(possible_topdir, 'glance', '__init__.py')):
- from glance.common import config
+@@ -44,6 +44,7 @@ from glance.common import config
  from glance.common import wsgi
+ from glance import notifier
  from glance.openstack.common import log
 +from glance.openstack.common import systemd
  
- 
- def main():
-@@ -49,6 +50,7 @@ def main():
+ CONF = cfg.CONF
+ CONF.import_group("profiler", "glance.common.wsgi")
+@@ -69,6 +70,7 @@ def main():
          server = wsgi.Server()
          server.start(config.load_paste_app('glance-registry'),
                       default_port=9191)
