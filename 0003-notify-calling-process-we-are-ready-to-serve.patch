@@ -1,4 +1,4 @@
-From e497ec914256f341ea6dce94d88cce2bba4ceafc Mon Sep 17 00:00:00 2001
+From 78211b1849ac6e8e724c42c4d9c818a181d38ef3 Mon Sep 17 00:00:00 2001
 From: Alan Pevec <apevec@redhat.com>
 Date: Tue, 11 Feb 2014 22:36:00 +0100
 Subject: [PATCH] notify calling process we are ready to serve
@@ -38,18 +38,18 @@ Change-Id: I80f325c9be9c171c2dc8d5526570bf64f0f87c78
  create mode 100644 glance/openstack/common/systemd.py
 
 diff --git a/glance/cmd/api.py b/glance/cmd/api.py
-index 3860e32..47bc3d8 100755
+index 557dc3b..3457269 100755
 --- a/glance/cmd/api.py
 +++ b/glance/cmd/api.py
-@@ -48,6 +48,7 @@ from glance.common import exception
+@@ -49,6 +49,7 @@ from glance.common import exception
  from glance.common import wsgi
  from glance import notifier
  from glance.openstack.common import log
 +from glance.openstack.common import systemd
- import glance.store
  
  CONF = cfg.CONF
-@@ -80,6 +81,7 @@ def main():
+ CONF.import_group("profiler", "glance.common.wsgi")
+@@ -81,6 +82,7 @@ def main():
  
          server = wsgi.Server()
          server.start(config.load_paste_app('glance-api'), default_port=9292)
