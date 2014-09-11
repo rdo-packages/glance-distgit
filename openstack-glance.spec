@@ -38,6 +38,12 @@ Requires(pre):    shadow-utils
 Requires:         python-glance = %{version}-%{release}
 Requires:         python-glanceclient >= 1:0
 Requires:         openstack-utils
+Requires:         python-retrying
+Requires:         python-wsme >= 0.6
+Requires:         python-oslo-config
+Requires:         python-oslo-db >= 0.2.0
+Requires:         python-oslo-i18n >= 0.1.0
+Requires:         python-oslo-messaging
 BuildRequires:    python-pbr
 BuildRequires:    python-oslo-sphinx
 
