@@ -18,13 +18,6 @@ Source6:          glance-registry-dist.conf
 Source7:          glance-cache-dist.conf
 Source8:          glance-scrubber-dist.conf
 
-Source9:          openstack-glance-api.init
-Source900:        openstack-glance-api.upstart
-Source10:         openstack-glance-registry.init
-Source1000:       openstack-glance-registry.upstart
-Source11:         openstack-glance-scrubber.init
-Source1100:       openstack-glance-scrubber.upstart
-
 #
 # patches_base=2014.2.b2
 #
@@ -46,20 +39,10 @@ Requires:         openstack-utils
 BuildRequires:    python-pbr
 BuildRequires:    python-oslo-sphinx
 
-%if 0%{?rhel} == 6
-Requires(post):   chkconfig
-Requires(postun): initscripts
-Requires(preun):  chkconfig
-Requires(preun):  initscripts
-# for daemon_notify
-Requires: /usr/bin/uuidgen
-Requires: /bin/sleep
-%else
 Requires(post): systemd
 Requires(preun): systemd
 Requires(postun): systemd
 BuildRequires: systemd
-%endif
 
 %description
 OpenStack Image Service (code-named Glance) provides discovery, registration,
@@ -238,24 +221,10 @@ install -p -D -m 644 %{SOURCE8} %{buildroot}%{_datadir}/glance/glance-scrubber-d
 install -p -D -m 640 etc/policy.json %{buildroot}%{_sysconfdir}/glance/policy.json
 install -p -D -m 640 etc/schema-image.json %{buildroot}%{_sysconfdir}/glance/schema-image.json
 
-%if 0%{?rhel} == 6
-# Install service readiness wrapper
-install -p -D -m 755 %{SOURCE22} %{buildroot}%{_initrddir}/openstack-glance-api
-install -p -D -m 644 %{SOURCE23} %{buildroot}%{_datadir}/glance/openstack-glance-api.upstart
-
-install -p -D -m 755 %{SOURCE22} %{buildroot}%{_initrddir}/openstack-glance-registry
-install -p -D -m 644 %{SOURCE23} %{buildroot}%{_datadir}/glance/openstack-glance-registry.upstart
-
-install -p -D -m 755 %{SOURCE22} %{buildroot}%{_initrddir}/openstack-glance-scrubber
-install -p -D -m 644 %{SOURCE23} %{buildroot}%{_datadir}/glance/openstack-glance-scrubber.upstart
-%else
-# Initscripts
+# systemd services
 install -p -D -m 644 %{SOURCE1} %{buildroot}%{_unitdir}/openstack-glance-api.service
 install -p -D -m 644 %{SOURCE2} %{buildroot}%{_unitdir}/openstack-glance-registry.service
 install -p -D -m 644 %{SOURCE3} %{buildroot}%{_unitdir}/openstack-glance-scrubber.service
-%endif
-
-
 
 # Logrotate config
 install -p -D -m 644 %{SOURCE4} %{buildroot}%{_sysconfdir}/logrotate.d/openstack-glance
@@ -265,10 +234,6 @@ install -d -m 755 %{buildroot}%{_localstatedir}/run/glance
 
 # Install log directory
 install -d -m 755 %{buildroot}%{_localstatedir}/log/glance
-
-%if 0%{?rhel} == 6
-install -d -m 755 %{buildroot}%{_localstatedir}/run/glance
-%endif
 
 # Programmatically update defaults in sample config
 # which is installed at /etc/$project/$program.conf
@@ -295,51 +260,21 @@ useradd -u 161 -r -g glance -d %{_sharedstatedir}/glance -s /sbin/nologin \
 exit 0
 
 %post
-%if 0%{?rhel} == 6
-if [ $1 -eq 1 ] ; then
-    # Initial installation
-    /sbin/chkconfig --add openstack-glance-api
-    /sbin/chkconfig --add openstack-glance-registry
-    /sbin/chkconfig --add openstack-glance-scrubber
-fi
-%else
 # Initial installation
 %systemd_post openstack-glance-api.service
 %systemd_post openstack-glance-registry.service
 %systemd_post openstack-glance-scrubber.service
-%endif
 
 
 %preun
-%if 0%{?rhel} == 6
-if [ $1 -eq 0 ] ; then
-    /sbin/service openstack-glance-api stop >/dev/null 2>&1
-    /sbin/service openstack-glance-registry stop >/dev/null 2>&1
-    /sbin/service openstack-glance-scrubber stop >/dev/null 2>&1
-
-    /sbin/chkconfig --del openstack-glance-api
-    /sbin/chkconfig --del openstack-glance-registry
-    /sbin/chkconfig --del openstack-glance-scrubber
-fi
-%else
 %systemd_preun openstack-glance-api.service
 %systemd_preun openstack-glance-registry.service
 %systemd_preun openstack-glance-scrubber.service
-%endif
 
 %postun
-%if 0%{?rhel} == 6
-if [ $1 -ge 1 ] ; then
-    # Package upgrade, not uninstall
-    /sbin/service openstack-glance-api condrestart >/dev/null 2>&1 || :
-    /sbin/service openstack-glance-registry condrestart >/dev/null 2>&1 || :
-    /sbin/service openstack-glance-scrubber condrestart >/dev/null 2>&1 || :
-fi
-%else
 %systemd_postun_with_restart openstack-glance-api.service
 %systemd_postun_with_restart openstack-glance-registry.service
 %systemd_postun_with_restart openstack-glance-scrubber.service
-%endif
 
 %files
 %doc README.rst
@@ -361,18 +296,9 @@ fi
 %{_datadir}/glance/glance-api-dist-paste.ini
 %{_datadir}/glance/glance-registry-dist-paste.ini
 
-%if 0%{?rhel} == 6
-%{_datadir}/glance/openstack-glance-api.upstart
-%{_datadir}/glance/openstack-glance-registry.upstart
-%{_datadir}/glance/openstack-glance-scrubber.upstart
-%{_initrddir}/openstack-glance-api
-%{_initrddir}/openstack-glance-registry
-%{_initrddir}/openstack-glance-scrubber
-%else
 %{_unitdir}/openstack-glance-api.service
 %{_unitdir}/openstack-glance-registry.service
 %{_unitdir}/openstack-glance-scrubber.service
-%endif
 
 %{_mandir}/man1/glance*.1.gz
 %dir %{_sysconfdir}/glance
@@ -385,7 +311,6 @@ fi
 %config(noreplace) %attr(-, root, glance) %{_sysconfdir}/logrotate.d/openstack-glance
 %dir %attr(0755, glance, nobody) %{_sharedstatedir}/glance
 %dir %attr(0750, glance, glance) %{_localstatedir}/log/glance
-%dir %attr(0755, glance, nobody) %{_localstatedir}/run/glance
 
 %files -n python-glance
 %doc README.rst
