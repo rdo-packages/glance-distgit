@@ -75,6 +75,7 @@ Requires:         python-oslo-messaging
 Requires:         python-retrying
 Requires:         python-osprofiler
 Requires:         python-oslo-vmware
+Requires:         python-wsme >= 0.6
 
 #test deps: python-mox python-nose python-requests
 #test and optional store:
