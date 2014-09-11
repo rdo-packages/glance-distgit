@@ -3,7 +3,7 @@
 
 Name:             openstack-glance
 Version:          2014.2
-Release:          0.5.b%{milestone}%{?dist}
+Release:          0.6.b%{milestone}%{?dist}
 Summary:          OpenStack Image Service
 
 Group:            Applications/System
@@ -38,12 +38,6 @@ Requires(pre):    shadow-utils
 Requires:         python-glance = %{version}-%{release}
 Requires:         python-glanceclient >= 1:0
 Requires:         openstack-utils
-Requires:         python-retrying
-Requires:         python-wsme >= 0.6
-Requires:         python-oslo-config
-Requires:         python-oslo-db >= 0.2.0
-Requires:         python-oslo-i18n >= 0.1.0
-Requires:         python-oslo-messaging
 BuildRequires:    python-pbr
 BuildRequires:    python-oslo-sphinx
 
@@ -73,28 +67,30 @@ Requires:         python-eventlet
 Requires:         python-httplib2
 Requires:         python-iso8601
 Requires:         python-jsonschema
-Requires:         python-migrate
+Requires:         python-migrate >= 0.9.1
 Requires:         python-paste-deploy
 Requires:         python-routes
-Requires:         python-sqlalchemy
+Requires:         python-sqlalchemy >= 0.8.4
 Requires:         python-webob
 Requires:         python-crypto
 Requires:         pyxattr
-Requires:         python-swiftclient
 Requires:         python-cinderclient
-Requires:         python-keystoneclient
+Requires:         python-keystoneclient >= 1:0.9.0
+Requires:         python-keystonemiddleware
+Requires:         python-swiftclient
 Requires:         python-oslo-config >= 1:1.2.1
-Requires:         python-oslo-messaging
+Requires:         python-oslo-messaging >= 1.4.0.0
 Requires:         python-oslo-vmware
 Requires:         python-oslo-i18n
 Requires:         python-oslo-db
-Requires:         python-keystonemiddleware
+Requires:         python-osprofiler
 Requires:         python-retrying
 Requires:         python-six >= 1.7.0
 Requires:         python-posix_ipc
 Requires:         python-stevedore
 Requires:         python-anyjson
 Requires:         python-netaddr
+Requires:         python-wsme >= 0.6
 Requires:         pyOpenSSL
 
 #test deps: python-mox python-nose python-requests
@@ -329,6 +325,9 @@ exit 0
 %doc doc/build/html
 
 %changelog
+* Thu Sep 11 2014 Alan Pevec <apevec@redhat.com> 2014.2-0.6.b3
+- update dependencies
+
 * Thu Sep 11 2014 Haikel Guemar <hguemar@fedoraproject.org> 2014.2-0.5.b2
 - Update to Juno milestone 3
 
