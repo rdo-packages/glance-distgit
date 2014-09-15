@@ -3,7 +3,7 @@
 
 Name:             openstack-glance
 Version:          2014.2
-Release:          0.6.b%{milestone}%{?dist}
+Release:          0.7.b%{milestone}%{?dist}
 Summary:          OpenStack Image Service
 
 Group:            Applications/System
@@ -97,6 +97,7 @@ Requires:         pyOpenSSL
 #test and optional store:
 #ceph - glance.store.rdb
 #python-boto - glance.store.s3
+Requires:         python-boto
 
 %description -n   python-glance
 OpenStack Image Service (code-named Glance) provides discovery, registration,
@@ -325,6 +326,9 @@ exit 0
 %doc doc/build/html
 
 %changelog
+* Mon Sep 15 2014 Alan Pevec <apevec@redhat.com> 2014.2-0.7.b3
+- require boto for S3 store
+
 * Thu Sep 11 2014 Alan Pevec <apevec@redhat.com> 2014.2-0.6.b3
 - update dependencies
 
