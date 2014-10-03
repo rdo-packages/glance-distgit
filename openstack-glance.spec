@@ -3,7 +3,7 @@
 
 Name:             openstack-glance
 Version:          2014.2
-Release:          0.7.b%{milestone}%{?dist}
+Release:          0.8.b%{milestone}%{?dist}
 Summary:          OpenStack Image Service
 
 Group:            Applications/System
@@ -75,6 +75,7 @@ Requires:         python-webob
 Requires:         python-crypto
 Requires:         pyxattr
 Requires:         python-cinderclient
+Requires:         python-glance-store
 Requires:         python-keystoneclient >= 1:0.9.0
 Requires:         python-keystonemiddleware
 Requires:         python-swiftclient
@@ -326,6 +327,9 @@ exit 0
 %doc doc/build/html
 
 %changelog
+* Fri Oct  3 2014 Haikel Guemar <hguemar@fedoraproject.org> - 2014.2-0.8.b3
+- Requires python-glance-store (RHBZ #1149206)
+
 * Mon Sep 15 2014 Alan Pevec <apevec@redhat.com> 2014.2-0.7.b3
 - require boto for S3 store
 
