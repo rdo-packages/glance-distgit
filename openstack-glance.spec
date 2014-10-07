@@ -1,15 +1,15 @@
 %global release_name juno
-%global milestone 3
+%global milestone rc1
 
 Name:             openstack-glance
 Version:          2014.2
-Release:          0.8.b%{milestone}%{?dist}
+Release:          0.9.b%{milestone}%{?dist}
 Summary:          OpenStack Image Service
 
 Group:            Applications/System
 License:          ASL 2.0
 URL:              http://glance.openstack.org
-Source0:          https://launchpad.net/glance/%{release_name}/%{release_name}-%{milestone}/+download/glance-%{version}.b%{milestone}.tar.gz
+Source0:          https://launchpad.net/glance/%{release_name}/%{release_name}-%{milestone}/+download/glance-%{version}.%{milestone}.tar.gz
 
 Source1:          openstack-glance-api.service
 Source2:          openstack-glance-registry.service
@@ -22,7 +22,7 @@ Source7:          glance-cache-dist.conf
 Source8:          glance-scrubber-dist.conf
 
 #
-# patches_base=2014.2.b3
+# patches_base=2014.2.rc1
 #
 Patch0001: 0001-Don-t-access-the-net-while-building-docs.patch
 Patch0002: 0002-Remove-runtime-dep-on-python-pbr.patch
@@ -130,7 +130,7 @@ and delivery services for virtual disk images.
 This package contains documentation files for glance.
 
 %prep
-%setup -q -n glance-%{version}.b%{milestone}
+%setup -q -n glance-%{version}.%{milestone}
 
 %patch0001 -p1
 %patch0002 -p1
@@ -327,6 +327,9 @@ exit 0
 %doc doc/build/html
 
 %changelog
+* Tue Oct 07 2014 Haikel Guemar <hguemar@fedoraproject.org> 2014.2-0.9.rc1
+- Update to upstream 2014.2.rc1
+
 * Fri Oct  3 2014 Haikel Guemar <hguemar@fedoraproject.org> - 2014.2-0.8.b3
 - Requires python-glance-store (RHBZ #1149206)
 
