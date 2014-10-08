@@ -35,6 +35,7 @@ Requires(postun): systemd-units
 Requires(pre):    shadow-utils
 Requires:         python-glance = %{version}-%{release}
 Requires:         python-glanceclient >= 1:0
+Requires:         python-glance_store
 Requires:         openstack-utils
 BuildRequires:    python-pbr
 BuildRequires:    python-oslo-sphinx
@@ -315,6 +316,9 @@ fi
 %doc doc/build/html
 
 %changelog
+* Wed Oct 08 2014 Dan Prince <dprince@redhat.com> - XXX
+- Add dependency on python-glance_store
+
 * Mon Aug 18 2014 Derek Higgins <derekh@redhat.com> - XXX
 - Add dependency on python-oslo-vmware
 
