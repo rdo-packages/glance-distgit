@@ -35,7 +35,7 @@ Requires(postun): systemd-units
 Requires(pre):    shadow-utils
 Requires:         python-glance = %{version}-%{release}
 Requires:         python-glanceclient >= 1:0
-Requires:         python-glance_store
+Requires:         python-glance-store
 Requires:         openstack-utils
 BuildRequires:    python-pbr
 BuildRequires:    python-oslo-sphinx
