@@ -3,7 +3,7 @@
 
 Name:             openstack-glance
 Version:          2014.2
-Release:          0.12%{milestone}%{?dist}
+Release:          0.13%{milestone}.%{?dist}
 Summary:          OpenStack Image Service
 
 Group:            Applications/System
@@ -327,6 +327,9 @@ exit 0
 %doc doc/build/html
 
 %changelog
+* Wed Oct 15 2014 Haïkel Guémar <hguemar@fedoraproject.org> - 2014.2-0.13.rc3
+- Fix typos in spec
+
 * Wed Oct 15 2014 Haïkel Guémar <hguemar@fedoraproject.org> 2014.2-0.12.rc3
 - Update to upstream 2014.2.rc3
 
