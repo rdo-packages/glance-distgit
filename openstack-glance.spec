@@ -3,7 +3,7 @@
 
 Name:             openstack-glance
 Version:          2014.2
-Release:          0.13%{milestone}.%{?dist}
+Release:          0.13.%{milestone}%{?dist}
 Summary:          OpenStack Image Service
 
 Group:            Applications/System
