@@ -1,9 +1,9 @@
 %global release_name juno
-%global milestone rc2
+%global milestone rc3
 
 Name:             openstack-glance
 Version:          2014.2
-Release:          0.11.%{milestone}%{?dist}
+Release:          0.12%{milestone}%{?dist}
 Summary:          OpenStack Image Service
 
 Group:            Applications/System
@@ -22,7 +22,7 @@ Source7:          glance-cache-dist.conf
 Source8:          glance-scrubber-dist.conf
 
 #
-# patches_base=2014.2.rc2
+# patches_base=2014.2.rc3
 #
 Patch0001: 0001-Don-t-access-the-net-while-building-docs.patch
 Patch0002: 0002-Remove-runtime-dep-on-python-pbr.patch
@@ -327,6 +327,9 @@ exit 0
 %doc doc/build/html
 
 %changelog
+* Wed Oct 15 2014 Haïkel Guémar <hguemar@fedoraproject.org> 2014.2-0.12.rc3
+- Update to upstream 2014.2.rc3
+
 * Mon Oct 13 2014 Haikel Guemar <hguemar@fedoraproject.org> 2014.2-0.11.rc2
 - Update to upstream 2014.2.rc2
 

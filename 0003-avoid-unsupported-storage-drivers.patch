@@ -1,28 +1,12 @@
-From d257f89ea817ce812b6ffc40289c15ebfddeaf48 Mon Sep 17 00:00:00 2001
+From 6787bf30e50ac415639ffd22c04778839950cfc0 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?P=C3=A1draig=20Brady?= <P@draigBrady.com>
 Date: Wed, 9 Apr 2014 10:31:27 +0100
 Subject: [PATCH] avoid unsupported storage drivers
 
 ---
- etc/glance-api.conf   | 2 --
  etc/glance-cache.conf | 2 --
- 2 files changed, 4 deletions(-)
+ 1 file changed, 2 deletions(-)
 
-diff --git a/etc/glance-api.conf b/etc/glance-api.conf
-index bf5b824..34b2c47 100644
---- a/etc/glance-api.conf
-+++ b/etc/glance-api.conf
-@@ -17,10 +17,8 @@ default_store = file
- #      glance.store.rbd.Store,
- #      glance.store.s3.Store,
- #      glance.store.swift.Store,
--#      glance.store.sheepdog.Store,
- #      glance.store.cinder.Store,
- #      glance.store.gridfs.Store,
--#      glance.store.vmware_datastore.Store,
- #known_stores = glance.store.filesystem.Store,
- #               glance.store.http.Store
- 
 diff --git a/etc/glance-cache.conf b/etc/glance-cache.conf
 index 0246b67..04e5623 100644
 --- a/etc/glance-cache.conf
