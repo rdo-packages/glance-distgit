@@ -1,7 +1,7 @@
-From 7fb8bf655bcdb81a3ed2eb2898e7d548c16fb2eb Mon Sep 17 00:00:00 2001
+From 2afe0b42562e0daa755478a80f7c9d024958e887 Mon Sep 17 00:00:00 2001
 From: John Bresnahan <jbresnah@redhat.com>
 Date: Mon, 9 Sep 2013 17:00:28 -1000
-Subject: [PATCH] Remove runtime dep on python pbr
+Subject: [PATCH 1/2] Remove runtime dep on python pbr
 
 ---
  glance/version.py | 29 +++++++++++++++++++++++++++--

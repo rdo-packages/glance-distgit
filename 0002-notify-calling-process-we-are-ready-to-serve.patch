@@ -1,7 +1,7 @@
-From 78211b1849ac6e8e724c42c4d9c818a181d38ef3 Mon Sep 17 00:00:00 2001
+From fdaf3b14dcbf13574bdb082f81c065fe9af61ae6 Mon Sep 17 00:00:00 2001
 From: Alan Pevec <apevec@redhat.com>
 Date: Tue, 11 Feb 2014 22:36:00 +0100
-Subject: [PATCH] notify calling process we are ready to serve
+Subject: [PATCH 2/2] notify calling process we are ready to serve
 
 Systemd notification should be sent in-process, otherwise systemd might
 miss the subprocess sending notification.
@@ -38,10 +38,10 @@ Change-Id: I80f325c9be9c171c2dc8d5526570bf64f0f87c78
  create mode 100644 glance/openstack/common/systemd.py
 
 diff --git a/glance/cmd/api.py b/glance/cmd/api.py
-index 557dc3b..3457269 100755
+index a805a1b..fd204e3 100755
 --- a/glance/cmd/api.py
 +++ b/glance/cmd/api.py
-@@ -49,6 +49,7 @@ from glance.common import exception
+@@ -50,6 +50,7 @@ from glance.common import exception
  from glance.common import wsgi
  from glance import notifier
  from glance.openstack.common import log
@@ -49,7 +49,7 @@ index 557dc3b..3457269 100755
  
  CONF = cfg.CONF
  CONF.import_group("profiler", "glance.common.wsgi")
-@@ -81,6 +82,7 @@ def main():
+@@ -82,6 +83,7 @@ def main():
  
          server = wsgi.Server()
          server.start(config.load_paste_app('glance-api'), default_port=9292)
@@ -58,10 +58,10 @@ index 557dc3b..3457269 100755
      except exception.WorkerCreationFailure as e:
          fail(2, e)
 diff --git a/glance/cmd/registry.py b/glance/cmd/registry.py
-index 06cea6a..e0dfbab 100755
+index ba64c0a..b150ef3 100755
 --- a/glance/cmd/registry.py
 +++ b/glance/cmd/registry.py
-@@ -44,6 +44,7 @@ from glance.common import config
+@@ -45,6 +45,7 @@ from glance.common import config
  from glance.common import wsgi
  from glance import notifier
  from glance.openstack.common import log
@@ -69,7 +69,7 @@ index 06cea6a..e0dfbab 100755
  
  CONF = cfg.CONF
  CONF.import_group("profiler", "glance.common.wsgi")
-@@ -69,6 +70,7 @@ def main():
+@@ -70,6 +71,7 @@ def main():
          server = wsgi.Server()
          server.start(config.load_paste_app('glance-registry'),
                       default_port=9191)
