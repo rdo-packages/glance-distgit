@@ -10,11 +10,6 @@ License:          ASL 2.0
 URL:              http://glance.openstack.org
 Source0:          https://launchpad.net/glance/%{release_name}/%{version}/+download/glance-%{version}.tar.gz
 
-Patch0001: 0001-Don-t-access-the-net-while-building-docs.patch
-Patch0002: 0002-Remove-runtime-dep-on-python-pbr.patch
-Patch0003: 0003-avoid-unsupported-storage-drivers.patch
-Patch0004: 0004-notify-calling-process-we-are-ready-to-serve.patch
-
 Source1:          openstack-glance-api.service
 Source2:          openstack-glance-registry.service
 Source3:          openstack-glance-scrubber.service
@@ -24,6 +19,14 @@ Source5:          glance-api-dist.conf
 Source6:          glance-registry-dist.conf
 Source7:          glance-cache-dist.conf
 Source8:          glance-scrubber-dist.conf
+
+#
+# patches_base=2014.2
+#
+Patch0001: 0001-Don-t-access-the-net-while-building-docs.patch
+Patch0002: 0002-Remove-runtime-dep-on-python-pbr.patch
+Patch0003: 0003-avoid-unsupported-storage-drivers.patch
+Patch0004: 0004-notify-calling-process-we-are-ready-to-serve.patch
 
 BuildArch:        noarch
 BuildRequires:    python2-devel
