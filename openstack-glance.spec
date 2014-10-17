@@ -182,7 +182,7 @@ done
 %{__python} setup.py install -O1 --skip-build --root %{buildroot}
 
 # Delete tests
-rm -fr %{buildroot}%{python_sitelib}/glance/tests
+rm -fr %{buildroot}%{python2_sitelib}/glance/tests
 
 # Drop old glance CLI it has been deprecated
 # and replaced glanceclient
@@ -318,9 +318,8 @@ exit 0
 
 %files -n python-glance
 %doc README.rst
-%{python_sitelib}/glance
-%{python_sitelib}/glance-%{version}*.egg-info
-
+%{python2_sitelib}/glance
+%{python2_sitelib}/glance-%{version}*.egg-info
 
 %files doc
 %doc doc/build/html
