@@ -1,12 +1,15 @@
+%global release_name juno
+
 Name:             openstack-glance
-Version:          2014.1.1
-Release:          4%{?dist}
+Version:          XXX
+Release:          XXX{?dist}
 Summary:          OpenStack Image Service
 
 Group:            Applications/System
 License:          ASL 2.0
 URL:              http://glance.openstack.org
-Source0:          https://launchpad.net/glance/icehouse/%{version}/+download/glance-%{version}.tar.gz
+Source0:          https://launchpad.net/glance/%{release_name}/%{version}/+download/glance-%{version}.tar.gz
+
 Source1:          openstack-glance-api.service
 Source2:          openstack-glance-registry.service
 Source3:          openstack-glance-scrubber.service
@@ -18,7 +21,7 @@ Source7:          glance-cache-dist.conf
 Source8:          glance-scrubber-dist.conf
 
 #
-# patches_base=2014.1.1
+# patches_base=2014.2
 #
 Patch0001: 0001-Remove-runtime-dep-on-python-pbr.patch
 Patch0002: 0002-notify-calling-process-we-are-ready-to-serve.patch
@@ -28,16 +31,16 @@ BuildRequires:    python2-devel
 BuildRequires:    python-setuptools
 BuildRequires:    intltool
 
-Requires(post):   systemd-units
-Requires(preun):  systemd-units
-Requires(postun): systemd-units
 Requires(pre):    shadow-utils
 Requires:         python-glance = %{version}-%{release}
 Requires:         python-glanceclient >= 1:0
-Requires:         python-glance-store
 Requires:         openstack-utils
-BuildRequires:    python-pbr
 BuildRequires:    python-oslo-sphinx
+
+Requires(post): systemd
+Requires(preun): systemd
+Requires(postun): systemd
+BuildRequires: systemd
 
 %description
 OpenStack Image Service (code-named Glance) provides discovery, registration,
@@ -60,27 +63,38 @@ Requires:         python-eventlet
 Requires:         python-httplib2
 Requires:         python-iso8601
 Requires:         python-jsonschema
-Requires:         python-migrate
+Requires:         python-migrate >= 0.9.1
 Requires:         python-paste-deploy
 Requires:         python-routes
-Requires:         python-sqlalchemy
+Requires:         python-sqlalchemy >= 0.8.4
 Requires:         python-webob
 Requires:         python-crypto
 Requires:         pyxattr
-Requires:         python-swiftclient
 Requires:         python-cinderclient
-Requires:         python-keystoneclient
+Requires:         python-glance-store
+Requires:         python-keystoneclient >= 1:0.9.0
+Requires:         python-keystonemiddleware
+Requires:         python-swiftclient
 Requires:         python-oslo-config >= 1:1.2.1
-Requires:         python-oslo-messaging
-Requires:         python-retrying
-Requires:         python-osprofiler
+Requires:         python-oslo-messaging >= 1.4.0.0
 Requires:         python-oslo-vmware
+Requires:         python-oslo-i18n
+Requires:         python-oslo-db
+Requires:         python-osprofiler
+Requires:         python-retrying
+Requires:         python-six >= 1.7.0
+Requires:         python-posix_ipc
+Requires:         python-stevedore
+Requires:         python-anyjson
+Requires:         python-netaddr
 Requires:         python-wsme >= 0.6
+Requires:         pyOpenSSL
 
 #test deps: python-mox python-nose python-requests
 #test and optional store:
 #ceph - glance.store.rdb
 #python-boto - glance.store.s3
+Requires:         python-boto
 
 %description -n   python-glance
 OpenStack Image Service (code-named Glance) provides discovery, registration,
@@ -160,7 +174,7 @@ done
 %{__python} setup.py install -O1 --skip-build --root %{buildroot}
 
 # Delete tests
-rm -fr %{buildroot}%{python_sitelib}/glance/tests
+rm -fr %{buildroot}%{python2_sitelib}/glance/tests
 
 # Drop old glance CLI it has been deprecated
 # and replaced glanceclient
@@ -203,7 +217,7 @@ install -p -D -m 644 %{SOURCE8} %{buildroot}%{_datadir}/glance/glance-scrubber-d
 install -p -D -m 640 etc/policy.json %{buildroot}%{_sysconfdir}/glance/policy.json
 install -p -D -m 640 etc/schema-image.json %{buildroot}%{_sysconfdir}/glance/schema-image.json
 
-# Initscripts
+# systemd services
 install -p -D -m 644 %{SOURCE1} %{buildroot}%{_unitdir}/openstack-glance-api.service
 install -p -D -m 644 %{SOURCE2} %{buildroot}%{_unitdir}/openstack-glance-registry.service
 install -p -D -m 644 %{SOURCE3} %{buildroot}%{_unitdir}/openstack-glance-scrubber.service
@@ -242,31 +256,21 @@ useradd -u 161 -r -g glance -d %{_sharedstatedir}/glance -s /sbin/nologin \
 exit 0
 
 %post
-if [ $1 -eq 1 ] ; then
-    # Initial installation
-    /bin/systemctl daemon-reload >/dev/null 2>&1 || :
-fi
+# Initial installation
+%systemd_post openstack-glance-api.service
+%systemd_post openstack-glance-registry.service
+%systemd_post openstack-glance-scrubber.service
 
 
 %preun
-if [ $1 -eq 0 ] ; then
-    # Package removal, not upgrade
-    /bin/systemctl --no-reload disable openstack-glance-api.service > /dev/null 2>&1 || :
-    /bin/systemctl --no-reload disable openstack-glance-registry.service > /dev/null 2>&1 || :
-    /bin/systemctl --no-reload disable openstack-glance-scrubber.service > /dev/null 2>&1 || :
-    /bin/systemctl stop openstack-glance-api.service > /dev/null 2>&1 || :
-    /bin/systemctl stop openstack-glance-registry.service > /dev/null 2>&1 || :
-    /bin/systemctl stop openstack-glance-scrubber.service > /dev/null 2>&1 || :
-fi
+%systemd_preun openstack-glance-api.service
+%systemd_preun openstack-glance-registry.service
+%systemd_preun openstack-glance-scrubber.service
 
 %postun
-/bin/systemctl daemon-reload >/dev/null 2>&1 || :
-if [ $1 -ge 1 ] ; then
-    # Package upgrade, not uninstall
-    /bin/systemctl try-restart openstack-glance-api.service >/dev/null 2>&1 || :
-    /bin/systemctl try-restart openstack-glance-registry.service >/dev/null 2>&1 || :
-    /bin/systemctl try-restart openstack-glance-scrubber.service >/dev/null 2>&1 || :
-fi
+%systemd_postun_with_restart openstack-glance-api.service
+%systemd_postun_with_restart openstack-glance-registry.service
+%systemd_postun_with_restart openstack-glance-scrubber.service
 
 %files
 %doc README.rst
@@ -291,6 +295,7 @@ fi
 %{_unitdir}/openstack-glance-api.service
 %{_unitdir}/openstack-glance-registry.service
 %{_unitdir}/openstack-glance-scrubber.service
+
 %{_mandir}/man1/glance*.1.gz
 %dir %{_sysconfdir}/glance
 %config(noreplace) %attr(-, root, glance) %{_sysconfdir}/glance/glance-api.conf
@@ -302,29 +307,60 @@ fi
 %config(noreplace) %attr(-, root, glance) %{_sysconfdir}/logrotate.d/openstack-glance
 %dir %attr(0755, glance, nobody) %{_sharedstatedir}/glance
 %dir %attr(0750, glance, glance) %{_localstatedir}/log/glance
-%dir %attr(0755, glance, nobody) %{_localstatedir}/run/glance
 
 %files -n python-glance
 %doc README.rst
-%{python_sitelib}/glance
-%{python_sitelib}/glance-%{version}*.egg-info
-
+%{python2_sitelib}/glance
+%{python2_sitelib}/glance-*.egg-info
 
 %files doc
 %doc doc/build/html
 
 %changelog
-* Thu Oct 16 2014 Dan Prince <dprince@redhat.com> - XXX
-- Drop 0001-Don-t-access-the-net-while-building-docs.patch
+* Fri Oct 17 2014 Haïkel Guémar <hguemar@fedoraproject.org> 2014.2-1
+- Update to upstream 2014.2
 
-* Wed Oct 08 2014 Dan Prince <dprince@redhat.com> - XXX
-- Add dependency on python-glance_store
+* Wed Oct 15 2014 Haïkel Guémar <hguemar@fedoraproject.org> - 2014.2-0.13.rc3
+- Fix typos in spec
 
-* Mon Aug 18 2014 Derek Higgins <derekh@redhat.com> - XXX
-- Add dependency on python-oslo-vmware
+* Wed Oct 15 2014 Haïkel Guémar <hguemar@fedoraproject.org> 2014.2-0.12.rc3
+- Update to upstream 2014.2.rc3
 
-* Fri Aug 15 2014 Derek Higgins <derekh@redhat.com> - XXX
-- Add dependency on python-retrying and python-osprofiler
+* Mon Oct 13 2014 Haikel Guemar <hguemar@fedoraproject.org> 2014.2-0.11.rc2
+- Update to upstream 2014.2.rc2
+
+* Tue Oct  7 2014 Haïkel Guémar <hguemar@fedoraproject.org> - 2014.2-0.10.rc1
+- Fix typo in Release field
+
+* Tue Oct 07 2014 Haikel Guemar <hguemar@fedoraproject.org> 2014.2-0.9.rc1
+- Update to upstream 2014.2.rc1
+
+* Fri Oct  3 2014 Haikel Guemar <hguemar@fedoraproject.org> - 2014.2-0.8.b3
+- Requires python-glance-store (RHBZ #1149206)
+
+* Mon Sep 15 2014 Alan Pevec <apevec@redhat.com> 2014.2-0.7.b3
+- require boto for S3 store
+
+* Thu Sep 11 2014 Alan Pevec <apevec@redhat.com> 2014.2-0.6.b3
+- update dependencies
+
+* Thu Sep 11 2014 Haikel Guemar <hguemar@fedoraproject.org> 2014.2-0.5.b2
+- Update to Juno milestone 3
+
+* Fri Sep 05 2014 Alan Pevec <apevec@redhat.com> - 2014.2-0.4.b2
+- add missing dependencies
+
+* Wed Sep 03 2014 Haïkel Guémar <hguemar@fedoraproject.org> - 2014.2-0.3.b2
+- Removed unused requirements on systemd
+
+* Wed Sep 03 2014 Flavio Percoco <flavio@redhat.com> 2014.2-0.3.b2
+- Merge spec from el6-icehouse
+
+* Sat Aug 30 2014 Jon Bernard <jobernar@redhat.com> 2014.2-0.2.b2
+- Fix store disk space exhaustion (CVE-2014-5356)
+
+* Thu Jul 31 2014 Jon Bernard <jobernar@redhat.com> - 2014.2-0.1.b2
+- Update to Juno milestone 2
 
 * Mon Jun 23 2014 Jon Bernard <jobernar@redhat.com> - 2014.1.1-4
 - Update to latest Icehouse release
