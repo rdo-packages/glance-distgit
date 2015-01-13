@@ -2,7 +2,7 @@
 
 Name:             openstack-glance
 Version:          2014.2.1
-Release:          1%{?dist}
+Release:          2%{?dist}
 Summary:          OpenStack Image Service
 
 Group:            Applications/System
@@ -24,6 +24,8 @@ Patch0001: 0001-Don-t-access-the-net-while-building-docs.patch
 Patch0002: 0002-Remove-runtime-dep-on-python-pbr.patch
 Patch0003: 0003-avoid-unsupported-storage-drivers.patch
 Patch0004: 0004-notify-calling-process-we-are-ready-to-serve.patch
+Patch0005: 0005-To-prevent-client-use-v2-patch-api-to-handle-file-an.patch
+Patch0006: 0006-Prevent-file-swift-config-and-filesystem-schemes.patch
 
 BuildArch:        noarch
 BuildRequires:    python2-devel
@@ -132,6 +134,8 @@ This package contains documentation files for glance.
 %patch0002 -p1
 %patch0003 -p1
 %patch0004 -p1
+%patch0005 -p1
+%patch0006 -p1
 
 # Remove bundled egg-info
 rm -rf glance.egg-info
@@ -322,37 +326,40 @@ exit 0
 %doc doc/build/html
 
 %changelog
-* Fri Dec 05 2014 Haïkel Guémar <hguemar@fedoraproject.org> 2014.2.1-1
+* Tue Jan 13 2015 Haïkel Guémar <hguemar@fedoraproject.org> - 2014.2.1-2
+- Unrestricted path flow traversal (RHBZ #1174474)
+
+* Fri Dec 05 2014 Haïkel Guémar <hguemar@fedoraproject.org> - 2014.2.1-1
 - Update to upstream 2014.2.1
 
-* Fri Oct 17 2014 Haïkel Guémar <hguemar@fedoraproject.org> 2014.2-1
+* Fri Oct 17 2014 Haïkel Guémar <hguemar@fedoraproject.org> - 2014.2-1
 - Update to upstream 2014.2
 
 * Wed Oct 15 2014 Haïkel Guémar <hguemar@fedoraproject.org> - 2014.2-0.13.rc3
 - Fix typos in spec
 
-* Wed Oct 15 2014 Haïkel Guémar <hguemar@fedoraproject.org> 2014.2-0.12.rc3
+* Wed Oct 15 2014 Haïkel Guémar <hguemar@fedoraproject.org> - 2014.2-0.12.rc3
 - Update to upstream 2014.2.rc3
 
-* Mon Oct 13 2014 Haikel Guemar <hguemar@fedoraproject.org> 2014.2-0.11.rc2
+* Mon Oct 13 2014 Haikel Guemar <hguemar@fedoraproject.org> - 2014.2-0.11.rc2
 - Update to upstream 2014.2.rc2
 
 * Tue Oct  7 2014 Haïkel Guémar <hguemar@fedoraproject.org> - 2014.2-0.10.rc1
 - Fix typo in Release field
 
-* Tue Oct 07 2014 Haikel Guemar <hguemar@fedoraproject.org> 2014.2-0.9.rc1
+* Tue Oct 07 2014 Haikel Guemar <hguemar@fedoraproject.org> - 2014.2-0.9.rc1
 - Update to upstream 2014.2.rc1
 
 * Fri Oct  3 2014 Haikel Guemar <hguemar@fedoraproject.org> - 2014.2-0.8.b3
 - Requires python-glance-store (RHBZ #1149206)
 
-* Mon Sep 15 2014 Alan Pevec <apevec@redhat.com> 2014.2-0.7.b3
+* Mon Sep 15 2014 Alan Pevec <apevec@redhat.com> - 2014.2-0.7.b3
 - require boto for S3 store
 
-* Thu Sep 11 2014 Alan Pevec <apevec@redhat.com> 2014.2-0.6.b3
+* Thu Sep 11 2014 Alan Pevec <apevec@redhat.com> - 2014.2-0.6.b3
 - update dependencies
 
-* Thu Sep 11 2014 Haikel Guemar <hguemar@fedoraproject.org> 2014.2-0.5.b2
+* Thu Sep 11 2014 Haikel Guemar <hguemar@fedoraproject.org> - 2014.2-0.5.b2
 - Update to Juno milestone 3
 
 * Fri Sep 05 2014 Alan Pevec <apevec@redhat.com> - 2014.2-0.4.b2
@@ -361,10 +368,10 @@ exit 0
 * Wed Sep 03 2014 Haïkel Guémar <hguemar@fedoraproject.org> - 2014.2-0.3.b2
 - Removed unused requirements on systemd
 
-* Wed Sep 03 2014 Flavio Percoco <flavio@redhat.com> 2014.2-0.3.b2
+* Wed Sep 03 2014 Flavio Percoco <flavio@redhat.com> - 2014.2-0.3.b2
 - Merge spec from el6-icehouse
 
-* Sat Aug 30 2014 Jon Bernard <jobernar@redhat.com> 2014.2-0.2.b2
+* Sat Aug 30 2014 Jon Bernard <jobernar@redhat.com> - 2014.2-0.2.b2
 - Fix store disk space exhaustion (CVE-2014-5356)
 
 * Thu Jul 31 2014 Jon Bernard <jobernar@redhat.com> - 2014.2-0.1.b2
@@ -396,35 +403,35 @@ exit 0
 * Mon Mar 24 2014 Pádraig Brady <pbrady@redhat.com> - 2014.1-0.4.b3
 - unconfigure unsupported storage drivers
 
-* Fri Mar 14 2014 Flavio Percoco <flavio@redhat.com> 2014.1-0.3.b3
+* Fri Mar 14 2014 Flavio Percoco <flavio@redhat.com> - 2014.1-0.3.b3
 - Update to Icehouse milestone 3
 
-* Fri Jan 31 2014 Alan Pevec <apevec@redhat.com> 2014.1-0.2.b2
+* Fri Jan 31 2014 Alan Pevec <apevec@redhat.com> - 2014.1-0.2.b2
 - Update to Icehouse milestone 2
 
-* Mon Dec 23 2013 Pádraig Brady <pbrady@redhat.com> 2014.1-0.1.b1
+* Mon Dec 23 2013 Pádraig Brady <pbrady@redhat.com> - 2014.1-0.1.b1
 - Update to Icehouse milestone 1
 
-* Fri Oct 25 2013 Flavio Percoco <flavio@redhat.com> 2013.2-2
+* Fri Oct 25 2013 Flavio Percoco <flavio@redhat.com> - 2013.2-2
 - Fixes #956815
 
-* Fri Oct 18 2013 Pádraig Brady <pbrady@redhat.com> 2013.2-1
+* Fri Oct 18 2013 Pádraig Brady <pbrady@redhat.com> - 2013.2-1
 - Update to Havana GA
 
-* Thu Oct 03 2013 Pádraig Brady <pbrady@redhat.com> 2013.2-0.12.rc1
+* Thu Oct 03 2013 Pádraig Brady <pbrady@redhat.com> - 2013.2-0.12.rc1
 - Update to 2013.2.rc1
 - Fixup various config file issues
 
-* Wed Sep 25 2013 Pádraig Brady <pbrady@redhat.com> 2013.2-0.11.b3
+* Wed Sep 25 2013 Pádraig Brady <pbrady@redhat.com> - 2013.2-0.11.b3
 - Fix up dist.conf issues
 
-* Fri Sep 20 2013 John Bresnahan <jbresnah@redhat.com> 2013.2-0.10.b3
+* Fri Sep 20 2013 John Bresnahan <jbresnah@redhat.com> - 2013.2-0.10.b3
 - Split distribution config to /usr/share/glance/glance*-dist.conf
 
-* Fri Sep 20 2013 John Bresnahan <jbresnah@redhat.com> 2013.2-0.9.b3
+* Fri Sep 20 2013 John Bresnahan <jbresnah@redhat.com> - 2013.2-0.9.b3
 - Substitute in the correct version information
 
-* Mon Sep  9 2013 John Bresnahan <jbresnah@redhat.com> 2013.2-0.8.b3
+* Mon Sep  9 2013 John Bresnahan <jbresnah@redhat.com> - 2013.2-0.8.b3
 - Update to version 2013.2.b3
 - Remove runtime dep on python pbr
 - Revert use oslo.sphinx and remove local copy of doc
@@ -432,69 +439,69 @@ exit 0
 * Sat Aug 03 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 2013.2-0.7.b2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_20_Mass_Rebuild
 
-* Tue Jul 23 2013 Pádraig Brady <pbrady@redhat.com> 2013.2-0.6.b2
+* Tue Jul 23 2013 Pádraig Brady <pbrady@redhat.com> - 2013.2-0.6.b2
 - Update to Havana milestone 2
 - Depend on python-keystoneclient for auth_token middleware
 - Remove tests from the distribution
 
-* Fri Jun  7 2013 John Bresnahan <jbresnah@redhat.com> 2013.2-0.3.b1
+* Fri Jun  7 2013 John Bresnahan <jbresnah@redhat.com> - 2013.2-0.3.b1
 - Don't access the net while building docs
 
-* Thu Jun  6 2013 John Bresnahan <jbresnah@redhat.com> 2013.2-0.1.b1
+* Thu Jun  6 2013 John Bresnahan <jbresnah@redhat.com> - 2013.2-0.1.b1
 - Update to version 2013.2.b1
 
-* Thu Jun  6 2013 John Bresnahan <jbresnah@redhat.com> 2013.1.2
+* Thu Jun  6 2013 John Bresnahan <jbresnah@redhat.com> - 2013.1.2
 - Update to version 2013.1.2
 
-* Mon May 13 2013 Pádraig Brady <pbrady@redhat.com> 2013.1-2
+* Mon May 13 2013 Pádraig Brady <pbrady@redhat.com> - 2013.1-2
 - Add the scrubber service for deferred image deletion
 
-* Mon Apr 08 2013 Nikola Đipanov <ndipanov@redhat.com> 2013.1-1
+* Mon Apr 08 2013 Nikola Đipanov <ndipanov@redhat.com> - 2013.1-1
 - Update to Grizzly final
 
-* Tue Apr  2 2013 Nikola Đipanov <ndipanov@redhat.com> 2013.1-0.9.rc2
+* Tue Apr  2 2013 Nikola Đipanov <ndipanov@redhat.com> - 2013.1-0.9.rc2
 - Update to Grizzly RC2
 
-* Tue Apr  2 2013 Pádraig Brady <pbrady@redhat.com> 2013.1-0.8.rc1
+* Tue Apr  2 2013 Pádraig Brady <pbrady@redhat.com> - 2013.1-0.8.rc1
 - Adjust to support sqlalchemy-0.8.0
 
-* Fri Mar 22 2013 Nikola Đipanov <ndipanov@redhat.com> 2013.1-0.7.rc1
+* Fri Mar 22 2013 Nikola Đipanov <ndipanov@redhat.com> - 2013.1-0.7.rc1
 - Update to Grizzly RC1
 
-* Tue Feb 26 2013 Nikola Đipanov <ndipanov@redhat.com> 2013.1-0.6.g3
+* Tue Feb 26 2013 Nikola Đipanov <ndipanov@redhat.com> - 2013.1-0.6.g3
 - Fix dep issues introduced by the Grizzly-3 update
 
-* Mon Feb 25 2013 Nikola Đipanov <ndipanov@redhat.com> 2013.1-0.5.g3
+* Mon Feb 25 2013 Nikola Đipanov <ndipanov@redhat.com> - 2013.1-0.5.g3
 - Update to Grizzlt milestone 3
 
 * Thu Feb 14 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 2013.1-0.4.g2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_19_Mass_Rebuild
 
-* Tue Jan 29 2013 Nikola Đipanov <ndipanov@redhat.com> 2013.1-0.3.g2
+* Tue Jan 29 2013 Nikola Đipanov <ndipanov@redhat.com> - 2013.1-0.3.g2
 - Fix backend password leak in Glance error message (CVE-2013-0212)
 
-* Fri Jan 11 2013 Nikola Đipanov <ndipanov@redhat.com> 2013.1-0.2.g2
+* Fri Jan 11 2013 Nikola Đipanov <ndipanov@redhat.com> - 2013.1-0.2.g2
 - Update to Grizzlt milestone 2
 
-* Fri Nov 23 2012 Pádraig Brady <P@draigBrady.com> 2013.1-0.1.g1
+* Fri Nov 23 2012 Pádraig Brady <P@draigBrady.com> - 2013.1-0.1.g1
 - Update to Grizzlt milestone 1
 
-* Fri Nov  9 2012 Pádraig Brady <P@draigBrady.com> 2012.2-4
+* Fri Nov  9 2012 Pádraig Brady <P@draigBrady.com> - 2012.2-4
 - Fix Glance Authentication bypass for image deletion (CVE-2012-4573)
 
-* Thu Sep 27 2012 Alan Pevec <apevec@redhat.com> 2012.2-2
+* Thu Sep 27 2012 Alan Pevec <apevec@redhat.com> - 2012.2-2
 - Update to folsom final
 
-* Wed Sep 26 2012 Alan Pevec <apevec@redhat.com> 2012.2-0.7.rc3
+* Wed Sep 26 2012 Alan Pevec <apevec@redhat.com> - 2012.2-0.7.rc3
 - Update to Folsom rc3
 
-* Tue Sep 25 2012 Alan Pevec <apevec@redhat.com> 2012.2-0.6.rc2
+* Tue Sep 25 2012 Alan Pevec <apevec@redhat.com> - 2012.2-0.6.rc2
 - Update to Folsom rc2
 
-* Fri Sep 14 2012 Alan Pevec <apevec@redhat.com> 2012.2-0.5.rc1
+* Fri Sep 14 2012 Alan Pevec <apevec@redhat.com> - 2012.2-0.5.rc1
 - Update to Folsom rc1
 
-* Thu Aug 23 2012 Alan Pevec <apevec@redhat.com> 2012.2-0.4.f3
+* Thu Aug 23 2012 Alan Pevec <apevec@redhat.com> - 2012.2-0.4.f3
 - Update to folsom-3 milestone
 - Drop old glance CLI, deprecated by python-glanceclient
 
