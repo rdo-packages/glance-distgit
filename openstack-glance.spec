@@ -2,7 +2,7 @@
 
 Name:             openstack-glance
 Version:          2014.2.1
-Release:          2%{?dist}
+Release:          3%{?dist}
 Summary:          OpenStack Image Service
 
 Group:            Applications/System
@@ -26,6 +26,7 @@ Patch0003: 0003-avoid-unsupported-storage-drivers.patch
 Patch0004: 0004-notify-calling-process-we-are-ready-to-serve.patch
 Patch0005: 0005-To-prevent-client-use-v2-patch-api-to-handle-file-an.patch
 Patch0006: 0006-Prevent-file-swift-config-and-filesystem-schemes.patch
+Patch0007: 0007-Cleanup-chunks-for-deleted-image-that-was-saving.patch
 
 BuildArch:        noarch
 BuildRequires:    python2-devel
@@ -136,6 +137,7 @@ This package contains documentation files for glance.
 %patch0004 -p1
 %patch0005 -p1
 %patch0006 -p1
+%patch0007 -p1
 
 # Remove bundled egg-info
 rm -rf glance.egg-info
@@ -326,6 +328,9 @@ exit 0
 %doc doc/build/html
 
 %changelog
+* Thu Jan 29 2015 Haïkel Guémar <hguemar@fedoraproject.org> - 2014.2.1-3
+- Usage storage quota bypass - CVE-2014-9623 (RHBZ #1187003)
+
 * Tue Jan 13 2015 Haïkel Guémar <hguemar@fedoraproject.org> - 2014.2.1-2
 - Unrestricted path flow traversal (RHBZ #1174474)
 
