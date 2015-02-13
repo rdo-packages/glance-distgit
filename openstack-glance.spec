@@ -20,11 +20,6 @@ Source6:          glance-registry-dist.conf
 Source7:          glance-cache-dist.conf
 Source8:          glance-scrubber-dist.conf
 
-#
-# patches_base=2014.2
-#
-Patch0001: 0001-Remove-runtime-dep-on-python-pbr.patch
-
 BuildArch:        noarch
 BuildRequires:    python2-devel
 BuildRequires:    python-setuptools
@@ -88,6 +83,7 @@ Requires:         python-anyjson
 Requires:         python-netaddr
 Requires:         python-wsme >= 0.6
 Requires:         pyOpenSSL
+Requires:         python-pbr
 
 #test deps: python-mox python-nose python-requests
 #test and optional store:
@@ -127,17 +123,7 @@ This package contains documentation files for glance.
 %prep
 %setup -q -n glance-%{upstream_version}
 
-%patch0001 -p1
-
-# Remove bundled egg-info
-rm -rf glance.egg-info
 sed -i '/\/usr\/bin\/env python/d' glance/common/config.py glance/common/crypt.py glance/db/sqlalchemy/migrate_repo/manage.py
-# versioninfo is missing in f3 tarball
-echo %{version} > glance/versioninfo
-
-sed -i '/setuptools_git/d; /setup_requires/d; /install_requires/d; /dependency_links/d' setup.py
-sed -i s/REDHATGLANCEVERSION/%{version}/ glance/version.py
-sed -i s/REDHATGLANCERELEASE/%{release}/ glance/version.py
 
 # Remove the requirements file so that pbr hooks don't add it
 # to distutils requiers_dist config
