@@ -24,7 +24,6 @@ Source8:          glance-scrubber-dist.conf
 # patches_base=2014.2
 #
 Patch0001: 0001-Remove-runtime-dep-on-python-pbr.patch
-Patch0002: 0002-notify-calling-process-we-are-ready-to-serve.patch
 
 BuildArch:        noarch
 BuildRequires:    python2-devel
@@ -129,7 +128,6 @@ This package contains documentation files for glance.
 %setup -q -n glance-%{upstream_version}
 
 %patch0001 -p1
-%patch0002 -p1
 
 # Remove bundled egg-info
 rm -rf glance.egg-info
