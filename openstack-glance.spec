@@ -85,6 +85,7 @@ Requires:         python-wsme >= 0.6
 Requires:         pyOpenSSL
 Requires:         python-pbr
 Requires:         python-semantic-version
+Requires:         python-elasticsearch
 
 #test deps: python-mox python-nose python-requests
 #test and optional store:
