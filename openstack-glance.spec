@@ -47,6 +47,54 @@ Service's client library for streaming virtual disk images.
 
 This package contains the API and registry servers.
 
+%package          common
+Summary:          Components common to all OpenStack Glance services
+
+%description      common
+OpenStack Image Service (code-named Glance) provides discovery, registration,
+and delivery services for virtual disk images. The Image Service API server
+provides a standard REST interface for querying information about virtual disk
+images stored in a variety of back-end stores, including OpenStack Object
+Storage. Clients can register new virtual disk images with the Image Service,
+query for information on publicly available disk images, and use the Image
+Service's client library for streaming virtual disk images.
+
+This package contains shared scripts configuration between all OpenStack glance
+services.
+
+
+%package          api
+Summary:          OpenStack Glance API service
+Requires:         openstack-glance-common = %{version}-%{release}
+
+%description      api
+OpenStack Image Service (code-named Glance) provides discovery, registration,
+and delivery services for virtual disk images. The Image Service API server
+provides a standard REST interface for querying information about virtual disk
+images stored in a variety of back-end stores, including OpenStack Object
+Storage. Clients can register new virtual disk images with the Image Service,
+query for information on publicly available disk images, and use the Image
+Service's client library for streaming virtual disk images.
+
+This package contains the API and local cache servers.
+
+
+%package          registry
+Summary:          OpenStack Glance registry service
+Requires:         openstack-glance-common = %{version}-%{release}
+
+%description      registry
+OpenStack Image Service (code-named Glance) provides discovery, registration,
+and delivery services for virtual disk images. The Image Service API server
+provides a standard REST interface for querying information about virtual disk
+images stored in a variety of back-end stores, including OpenStack Object
+Storage. Clients can register new virtual disk images with the Image Service,
+query for information on publicly available disk images, and use the Image
+Service's client library for streaming virtual disk images.
+
+This package contains the registry server.
+
+
 %package -n       python-glance
 Summary:          Glance Python libraries
 Group:            Applications/System
@@ -154,10 +202,10 @@ for svc in api registry cache scrubber; do
 done
 
 %build
-%{__python} setup.py build
+%{__python2} setup.py build
 
 %install
-%{__python} setup.py install -O1 --skip-build --root %{buildroot}
+%{__python2} setup.py install -O1 --skip-build --root %{buildroot}
 
 # Delete tests
 rm -fr %{buildroot}%{python2_sitelib}/glance/tests
@@ -234,377 +282,104 @@ for svc in api registry cache scrubber; do
   done < %{buildroot}%{_datadir}/glance/glance-$svc-dist.conf
 done
 
-%pre
+%pre common
 getent group glance >/dev/null || groupadd -r glance -g 161
 getent passwd glance >/dev/null || \
 useradd -u 161 -r -g glance -d %{_sharedstatedir}/glance -s /sbin/nologin \
 -c "OpenStack Glance Daemons" glance
 exit 0
 
-%post
-# Initial installation
+%post api
 %systemd_post openstack-glance-api.service
-%systemd_post openstack-glance-registry.service
 %systemd_post openstack-glance-scrubber.service
 
+%post registry
+%systemd_post openstack-glance-registry.service
 
-%preun
+
+%preun api
 %systemd_preun openstack-glance-api.service
-%systemd_preun openstack-glance-registry.service
 %systemd_preun openstack-glance-scrubber.service
 
-%postun
+%preun registry
+%systemd_preun openstack-glance-registry.service
+
+%postun api
 %systemd_postun_with_restart openstack-glance-api.service
-%systemd_postun_with_restart openstack-glance-registry.service
 %systemd_postun_with_restart openstack-glance-scrubber.service
+
+%postun registry
+%systemd_postun_with_restart openstack-glance-registry.service
+
 
 %files
 %doc README.rst
-%{_bindir}/glance-api
+%license LICENSE
 %{_bindir}/glance-control
 %{_bindir}/glance-manage
-%{_bindir}/glance-registry
-%{_bindir}/glance-cache-cleaner
-%{_bindir}/glance-cache-manage
-%{_bindir}/glance-cache-prefetcher
-%{_bindir}/glance-cache-pruner
-%{_bindir}/glance-scrubber
-%{_bindir}/glance-replicator
-%{_bindir}/glance-index
-%{_bindir}/glance-search
 
-%{_datadir}/glance/glance-api-dist.conf
-%{_datadir}/glance/glance-registry-dist.conf
-%{_datadir}/glance/glance-cache-dist.conf
-%{_datadir}/glance/glance-scrubber-dist.conf
-%{_datadir}/glance/glance-api-dist-paste.ini
-%{_datadir}/glance/glance-registry-dist-paste.ini
+%{_mandir}/man1/glance-control.1.*
+%{_mandir}/man1/glance-manage.1.*
 
-%{_unitdir}/openstack-glance-api.service
-%{_unitdir}/openstack-glance-registry.service
-%{_unitdir}/openstack-glance-scrubber.service
 
-%{_mandir}/man1/glance*.1.gz
+%files common
+%license LICENSE
 %dir %{_sysconfdir}/glance
-%config(noreplace) %attr(-, root, glance) %{_sysconfdir}/glance/glance-api.conf
-%config(noreplace) %attr(-, root, glance) %{_sysconfdir}/glance/glance-registry.conf
-%config(noreplace) %attr(-, root, glance) %{_sysconfdir}/glance/glance-cache.conf
-%config(noreplace) %attr(-, root, glance) %{_sysconfdir}/glance/glance-scrubber.conf
-%config(noreplace) %attr(-, root, glance) %{_sysconfdir}/glance/policy.json
 %config(noreplace) %attr(-, root, glance) %{_sysconfdir}/glance/schema-image.json
 %config(noreplace) %attr(-, root, glance) %{_sysconfdir}/logrotate.d/openstack-glance
 %dir %attr(0755, glance, nobody) %{_sharedstatedir}/glance
 %dir %attr(0750, glance, glance) %{_localstatedir}/log/glance
 
+
+%files api
+%{_bindir}/glance-api
+%{_bindir}/glance-cache-cleaner
+%{_bindir}/glance-cache-manage
+%{_bindir}/glance-cache-prefetcher
+%{_bindir}/glance-cache-pruner
+%{_bindir}/glance-index
+%{_bindir}/glance-scrubber
+%{_bindir}/glance-search
+
+%{_mandir}/man1/glance-api.1.*
+%{_mandir}/man1/glance-cache-*.1.*
+%{_mandir}/man1/glance-scrubber.1.*
+
+%{_datadir}/glance/glance-api-dist.conf
+%{_datadir}/glance/glance-api-dist-paste.ini
+%{_datadir}/glance/glance-cache-dist.conf
+%{_datadir}/glance/glance-scrubber-dist.conf
+
+%{_unitdir}/openstack-glance-api.service
+%{_unitdir}/openstack-glance-scrubber.service
+
+%config(noreplace) %attr(-, root, glance) %{_sysconfdir}/glance/policy.json
+%config(noreplace) %attr(-, root, glance) %{_sysconfdir}/glance/glance-api.conf
+%config(noreplace) %attr(-, root, glance) %{_sysconfdir}/glance/glance-cache.conf
+%config(noreplace) %attr(-, root, glance) %{_sysconfdir}/glance/glance-scrubber.conf
+
+
+%files registry
+%{_bindir}/glance-registry
+%{_bindir}/glance-replicator
+
+%{_mandir}/man1/glance-registry.1.*
+%{_mandir}/man1/glance-replicator.1.*
+
+%{_datadir}/glance/glance-registry-dist.conf
+%{_datadir}/glance/glance-registry-dist-paste.ini
+%{_unitdir}/openstack-glance-registry.service
+
+%config(noreplace) %attr(-, root, glance) %{_sysconfdir}/glance/glance-registry.conf
+
 %files -n python-glance
 %doc README.rst
+%license LICENSE
 %{python2_sitelib}/glance
 %{python2_sitelib}/glance-*.egg-info
 
 %files doc
+%license LICENSE
 %doc doc/build/html
 
 %changelog
-* Fri Oct 17 2014 Haïkel Guémar <hguemar@fedoraproject.org> 2014.2-1
-- Update to upstream 2014.2
-
-* Wed Oct 15 2014 Haïkel Guémar <hguemar@fedoraproject.org> - 2014.2-0.13.rc3
-- Fix typos in spec
-
-* Wed Oct 15 2014 Haïkel Guémar <hguemar@fedoraproject.org> 2014.2-0.12.rc3
-- Update to upstream 2014.2.rc3
-
-* Mon Oct 13 2014 Haikel Guemar <hguemar@fedoraproject.org> 2014.2-0.11.rc2
-- Update to upstream 2014.2.rc2
-
-* Tue Oct  7 2014 Haïkel Guémar <hguemar@fedoraproject.org> - 2014.2-0.10.rc1
-- Fix typo in Release field
-
-* Tue Oct 07 2014 Haikel Guemar <hguemar@fedoraproject.org> 2014.2-0.9.rc1
-- Update to upstream 2014.2.rc1
-
-* Fri Oct  3 2014 Haikel Guemar <hguemar@fedoraproject.org> - 2014.2-0.8.b3
-- Requires python-glance-store (RHBZ #1149206)
-
-* Mon Sep 15 2014 Alan Pevec <apevec@redhat.com> 2014.2-0.7.b3
-- require boto for S3 store
-
-* Thu Sep 11 2014 Alan Pevec <apevec@redhat.com> 2014.2-0.6.b3
-- update dependencies
-
-* Thu Sep 11 2014 Haikel Guemar <hguemar@fedoraproject.org> 2014.2-0.5.b2
-- Update to Juno milestone 3
-
-* Fri Sep 05 2014 Alan Pevec <apevec@redhat.com> - 2014.2-0.4.b2
-- add missing dependencies
-
-* Wed Sep 03 2014 Haïkel Guémar <hguemar@fedoraproject.org> - 2014.2-0.3.b2
-- Removed unused requirements on systemd
-
-* Wed Sep 03 2014 Flavio Percoco <flavio@redhat.com> 2014.2-0.3.b2
-- Merge spec from el6-icehouse
-
-* Sat Aug 30 2014 Jon Bernard <jobernar@redhat.com> 2014.2-0.2.b2
-- Fix store disk space exhaustion (CVE-2014-5356)
-
-* Thu Jul 31 2014 Jon Bernard <jobernar@redhat.com> - 2014.2-0.1.b2
-- Update to Juno milestone 2
-
-* Mon Jun 23 2014 Jon Bernard <jobernar@redhat.com> - 2014.1.1-4
-- Update to latest Icehouse release
-- Include patch to improve systemd integration
-
-* Tue Jun 17 2014 Pádraig Brady <pbrady@redhat.com> - 2014.1-4
-- Ensure minimum version of oslo.config is installed
-
-* Sat Jun 07 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 2014.1-3
-- Rebuilt for https://fedoraproject.org/wiki/Fedora_21_Mass_Rebuild
-
-* Thu Apr 24 2014 Pádraig Brady <pbrady@redhat.com> - 2014.1-2
-- Comment all default config items in /etc/glance/*.conf
-
-* Thu Apr 17 2014 Pádraig Brady <pbrady@redhat.com> - 2014.1-1
-- Update to Icehouse release
-
-* Sat Apr 12 2014 Pádraig Brady <pbrady@redhat.com> - 2014.1-0.6.rc2
-- Update to Icehouse release candidate 2
-
-* Wed Apr 09 2014 Pádraig Brady <pbrady@redhat.com> - 2014.1-0.5.rc1
-- Update to Icehouse release candidate 1
-- Depend on python-kombu for rabbit installations
-
-* Mon Mar 24 2014 Pádraig Brady <pbrady@redhat.com> - 2014.1-0.4.b3
-- unconfigure unsupported storage drivers
-
-* Fri Mar 14 2014 Flavio Percoco <flavio@redhat.com> 2014.1-0.3.b3
-- Update to Icehouse milestone 3
-
-* Fri Jan 31 2014 Alan Pevec <apevec@redhat.com> 2014.1-0.2.b2
-- Update to Icehouse milestone 2
-
-* Mon Dec 23 2013 Pádraig Brady <pbrady@redhat.com> 2014.1-0.1.b1
-- Update to Icehouse milestone 1
-
-* Fri Oct 25 2013 Flavio Percoco <flavio@redhat.com> 2013.2-2
-- Fixes #956815
-
-* Fri Oct 18 2013 Pádraig Brady <pbrady@redhat.com> 2013.2-1
-- Update to Havana GA
-
-* Thu Oct 03 2013 Pádraig Brady <pbrady@redhat.com> 2013.2-0.12.rc1
-- Update to 2013.2.rc1
-- Fixup various config file issues
-
-* Wed Sep 25 2013 Pádraig Brady <pbrady@redhat.com> 2013.2-0.11.b3
-- Fix up dist.conf issues
-
-* Fri Sep 20 2013 John Bresnahan <jbresnah@redhat.com> 2013.2-0.10.b3
-- Split distribution config to /usr/share/glance/glance*-dist.conf
-
-* Fri Sep 20 2013 John Bresnahan <jbresnah@redhat.com> 2013.2-0.9.b3
-- Substitute in the correct version information
-
-* Mon Sep  9 2013 John Bresnahan <jbresnah@redhat.com> 2013.2-0.8.b3
-- Update to version 2013.2.b3
-- Remove runtime dep on python pbr
-- Revert use oslo.sphinx and remove local copy of doc
-
-* Sat Aug 03 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 2013.2-0.7.b2
-- Rebuilt for https://fedoraproject.org/wiki/Fedora_20_Mass_Rebuild
-
-* Tue Jul 23 2013 Pádraig Brady <pbrady@redhat.com> 2013.2-0.6.b2
-- Update to Havana milestone 2
-- Depend on python-keystoneclient for auth_token middleware
-- Remove tests from the distribution
-
-* Fri Jun  7 2013 John Bresnahan <jbresnah@redhat.com> 2013.2-0.3.b1
-- Don't access the net while building docs
-
-* Thu Jun  6 2013 John Bresnahan <jbresnah@redhat.com> 2013.2-0.1.b1
-- Update to version 2013.2.b1
-
-* Thu Jun  6 2013 John Bresnahan <jbresnah@redhat.com> 2013.1.2
-- Update to version 2013.1.2
-
-* Mon May 13 2013 Pádraig Brady <pbrady@redhat.com> 2013.1-2
-- Add the scrubber service for deferred image deletion
-
-* Mon Apr 08 2013 Nikola Đipanov <ndipanov@redhat.com> 2013.1-1
-- Update to Grizzly final
-
-* Tue Apr  2 2013 Nikola Đipanov <ndipanov@redhat.com> 2013.1-0.9.rc2
-- Update to Grizzly RC2
-
-* Tue Apr  2 2013 Pádraig Brady <pbrady@redhat.com> 2013.1-0.8.rc1
-- Adjust to support sqlalchemy-0.8.0
-
-* Fri Mar 22 2013 Nikola Đipanov <ndipanov@redhat.com> 2013.1-0.7.rc1
-- Update to Grizzly RC1
-
-* Tue Feb 26 2013 Nikola Đipanov <ndipanov@redhat.com> 2013.1-0.6.g3
-- Fix dep issues introduced by the Grizzly-3 update
-
-* Mon Feb 25 2013 Nikola Đipanov <ndipanov@redhat.com> 2013.1-0.5.g3
-- Update to Grizzlt milestone 3
-
-* Thu Feb 14 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 2013.1-0.4.g2
-- Rebuilt for https://fedoraproject.org/wiki/Fedora_19_Mass_Rebuild
-
-* Tue Jan 29 2013 Nikola Đipanov <ndipanov@redhat.com> 2013.1-0.3.g2
-- Fix backend password leak in Glance error message (CVE-2013-0212)
-
-* Fri Jan 11 2013 Nikola Đipanov <ndipanov@redhat.com> 2013.1-0.2.g2
-- Update to Grizzlt milestone 2
-
-* Fri Nov 23 2012 Pádraig Brady <P@draigBrady.com> 2013.1-0.1.g1
-- Update to Grizzlt milestone 1
-
-* Fri Nov  9 2012 Pádraig Brady <P@draigBrady.com> 2012.2-4
-- Fix Glance Authentication bypass for image deletion (CVE-2012-4573)
-
-* Thu Sep 27 2012 Alan Pevec <apevec@redhat.com> 2012.2-2
-- Update to folsom final
-
-* Wed Sep 26 2012 Alan Pevec <apevec@redhat.com> 2012.2-0.7.rc3
-- Update to Folsom rc3
-
-* Tue Sep 25 2012 Alan Pevec <apevec@redhat.com> 2012.2-0.6.rc2
-- Update to Folsom rc2
-
-* Fri Sep 14 2012 Alan Pevec <apevec@redhat.com> 2012.2-0.5.rc1
-- Update to Folsom rc1
-
-* Thu Aug 23 2012 Alan Pevec <apevec@redhat.com> 2012.2-0.4.f3
-- Update to folsom-3 milestone
-- Drop old glance CLI, deprecated by python-glanceclient
-
-* Fri Jul 20 2012 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 2012.2-0.2.f1
-- Rebuilt for https://fedoraproject.org/wiki/Fedora_18_Mass_Rebuild
-- Remove world readable bit on sensitive config files
-
-* Mon May 28 2012 Pádraig Brady <P@draigBrady.com> - 2012.2-0.1.f1
-- Update to Folsom milestone 1
-
-* Tue May 22 2012 Pádraig Brady <P@draigBrady.com> - 2012.1-8
-- Fix an issue with glance-manage db_sync (#823702)
-
-* Mon May 21 2012 Pádraig Brady <P@draigBrady.com> - 2012.1-6
-- Sync with essex stable
-- Don't auto create database on service start
-- Remove openstack-glance-db-setup. use openstack-db instead
-
-* Fri May 18 2012 Alan Pevec <apevec@redhat.com> - 2012.1-5
-- Drop hard dep on python-kombu, notifications are configurable
-
-* Wed Apr 25 2012 Pádraig Brady <P@draigBrady.com> - 2012.1-4
-- Fix leak of swift objects on deletion
-
-* Tue Apr 10 2012 Pádraig Brady <P@draigBrady.com> - 2012.1-3
-- Fix db setup script to correctly start mysqld
-
-* Tue Apr 10 2012 Pádraig Brady <P@draigBrady.com> - 2012.1-2
-- Fix startup failure due to a file ownership issue (#811130)
-
-* Mon Apr  9 2012 Pádraig Brady <P@draigBrady.com> - 2012.1-1
-- Update to Essex final
-
-* Fri Mar 30 2012 Russell Bryant <rbryant@redhat.com> - 2012.1-0.11.rc2
-- Update to Essex rc2
-
-* Wed Mar 28 2012 Russell Bryant <rbryant@redhat.com> - 2012.1-0.10.rc1
-- Update openstack-glance-db-setup to common script from openstack-keystone package.
-- Change permissions of glance-registry.conf to 0640.
-- Set group on all config files to glance.
-
-* Tue Mar 27 2012 Russell Bryant <rbryant@redhat.com> - 2012.1-0.9.rc1
-- Use MySQL by default.
-- Add openstack-glance-db-setup script.
-
-* Wed Mar 21 2012 Russell Bryant <rbryant@redhat.com> - 2012.1-0.8.rc1
-- Fix source URL for essex rc1
-
-* Wed Mar 21 2012 Russell Bryant <rbryant@redhat.com> - 2012.1-0.7.rc1
-- Update to essex rc1
-
-* Thu Mar 8 2012 Dan Prince <dprince@redhat.com> - 2012.1-0.6.e4
-- Include config files for cache and scrubber.
-
-* Fri Mar 2 2012 Russell Bryant <rbryant@redhat.com> - 2012.1-0.5.e4
-- Add python-iso8601 dependency.
-
-* Fri Mar 2 2012 Russell Bryant <rbryant@redhat.com> - 2012.1-0.4.e4
-- Update to essex-4 milestone.
-- Change python-xattr depdendency to pyxattr.
-- Add pysendfile dependency.
-
-* Mon Feb 13 2012 Russell Bryant <rbryant@redhat.com> - 2012.1-0.3.e3
-- Set PrivateTmp=true in glance systemd unit files. (rhbz#782505)
-- Add dependency on python-crypto. (rhbz#789943)
-
-* Mon Jan 30 2012 Russell Bryant <rbryant@redhat.com> - 2012.1-0.2.e3
-- Update how patches are managed to use update_patches.sh script
-
-* Thu Jan 26 2012 Russell Bryant <rbryant@redhat.com> - 2012.1-0.1.e3
-- Update to essex-3 milestone
-
-* Thu Jan 26 2012 Russell Bryant <rbryant@redhat.com> - 2011.3.1-2
-- Add python-migrate dependency to python-glance (rhbz#784891)
-
-* Fri Jan 20 2012 Pádraig Brady <P@draigBrady.com> - 2011.3.1-1
-- Update to 2011.3.1 final
-
-* Wed Jan 18 2012 Mark McLoughlin <markmc@redhat.com> - 2011.3.1-0.2.1063%{?dist}
-- Update to latest 2011.3.1 release candidate
-
-* Tue Jan 17 2012 Mark McLoughlin <markmc@redhat.com> - 2011.3.1-0.1.1062%{?dist}
-- Update to 2011.3.1 release candidate
-- Includes 6 new patches from upstream
-
-* Fri Jan  6 2012 Mark McLoughlin <markmc@redhat.com> - 2011.3-4
-- Rebase to latest upstream stable/diablo branch adding ~20 patches
-
-* Tue Dec 20 2011 David Busby <oneiroi@fedoraproject.org> - 2011.3-3
-- Depend on python-httplib2
-
-* Tue Nov 22 2011 Pádraig Brady <P@draigBrady.com> - 2011.3-2
-- Ensure the docs aren't built with the system glance module
-- Ensure we don't access the net when building docs
-- Depend on python-paste-deploy (#759512)
-
-* Tue Sep 27 2011 Mark McLoughlin <markmc@redhat.com> - 2011.3-1
-- Update to Diablo final
-
-* Tue Sep  6 2011 Mark McLoughlin <markmc@redhat.com> - 2011.3-0.8.d4
-- fix DB path in config
-- add BR: intltool for distutils-extra
-
-* Wed Aug 31 2011 Angus Salkeld <asalkeld@redhat.com> - 2011.3-0.7.d4
-- Use the available man pages
-- don't make service files executable
-- delete unused files
-- add BR: python-distutils-extra (#733610)
-
-* Tue Aug 30 2011 Angus Salkeld <asalkeld@redhat.com> - 2011.3-0.6.d4
-- Change from LSB scripts to systemd service files (#732689).
-
-* Fri Aug 26 2011 Mark McLoughlin <markmc@redhat.com> - 2011.3-0.5.d4
-- Update to diablo4 milestone
-- Add logrotate config (#732691)
-
-* Wed Aug 24 2011 Mark McLoughlin <markmc@redhat.com> - 2011.3-0.4.992bzr
-- Update to latest upstream
-- Use statically assigned uid:gid 161:161 (#732687)
-
-* Mon Aug 22 2011 Mark McLoughlin <markmc@redhat.com> - 2011.3-0.3.987bzr
-- Re-instate python2-devel BR (#731966)
-
-* Mon Aug 22 2011 Mark McLoughlin <markmc@redhat.com> - 2011.3-0.2.987bzr
-- Fix rpmlint warnings, reduce macro usage (#731966)
-
-* Wed Aug 17 2011 Mark McLoughlin <markmc@redhat.com> - 2011.3-0.1.987bzr
-- Update to latest upstream
-- Require python-kombu for new notifiers support
-
-* Mon Aug  8 2011 Mark McLoughlin <markmc@redhat.com> - 2011.3-0.1.967bzr
-- Initial package from Alexander Sakhnov <asakhnov@mirantis.com>
-  with cleanups by Mark McLoughlin
