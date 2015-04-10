@@ -27,6 +27,10 @@ BuildRequires:    intltool
 
 Requires(pre):    shadow-utils
 Requires:         python-glance = %{version}-%{release}
+# for backward compatiblity with previous all-in-one main package
+Requires:         openstack-glance-api = %{version}-%{release}
+Requires:         openstack-glance-registry = %{version}-%{release}
+
 Requires:         python-glanceclient >= 1:0
 Requires:         openstack-utils
 BuildRequires:    python-oslo-sphinx
