@@ -1,7 +1,7 @@
 %global release_name juno
 
 Name:             openstack-glance
-Version:          2014.2.2
+Version:          2014.2.3
 Release:          1%{?dist}
 Summary:          OpenStack Image Service
 
@@ -322,6 +322,10 @@ exit 0
 %doc doc/build/html
 
 %changelog
+* Wed Apr 15 2015 Haikel Guemar <hguemar@fedoraproject.org> - 2014.2.3-1
+- Update to upstream 2014.2.3
+- Fix security issue (RHBZ#1174477)
+
 * Thu Feb 05 2015 Haïkel Guémar <hguemar@fedoraproject.org> - 2014.2.2-1
 - Update to upstream 2014.2.2
 

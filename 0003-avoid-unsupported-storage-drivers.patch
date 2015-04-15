@@ -1,4 +1,4 @@
-From da5a6193bf3985335bccb9d37d2f388634eccefb Mon Sep 17 00:00:00 2001
+From c61e0ce7cf6b5397e704900cac73a04d87ebaaf3 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?P=C3=A1draig=20Brady?= <P@draigBrady.com>
 Date: Wed, 9 Apr 2014 10:31:27 +0100
 Subject: [PATCH] avoid unsupported storage drivers
