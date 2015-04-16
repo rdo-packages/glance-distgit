@@ -24,21 +24,12 @@ BuildArch:        noarch
 BuildRequires:    python2-devel
 BuildRequires:    python-setuptools
 BuildRequires:    intltool
-
-Requires(pre):    shadow-utils
-Requires:         python-glance = %{version}-%{release}
-# for backward compatiblity with previous all-in-one main package
-Requires:         openstack-glance-api = %{version}-%{release}
-Requires:         openstack-glance-registry = %{version}-%{release}
-
-Requires:         python-glanceclient >= 1:0
-Requires:         openstack-utils
 BuildRequires:    python-oslo-sphinx
 
-Requires(post): systemd
-Requires(preun): systemd
-Requires(postun): systemd
-BuildRequires: systemd
+Requires:         python-glance = %{version}-%{release}
+Requires:         python-glanceclient >= 1:0
+Requires:         openstack-utils
+
 
 %description
 OpenStack Image Service (code-named Glance) provides discovery, registration,
@@ -53,6 +44,12 @@ This package contains the API and registry servers.
 
 %package          common
 Summary:          Components common to all OpenStack Glance services
+Requires:         openstack-glance = %{version}-%{release}
+Requires(pre):    shadow-utils
+Requires(post):   systemd
+Requires(preun):  systemd
+Requires(postun): systemd
+BuildRequires:    systemd
 
 %description      common
 OpenStack Image Service (code-named Glance) provides discovery, registration,
