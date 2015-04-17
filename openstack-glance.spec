@@ -24,12 +24,17 @@ BuildArch:        noarch
 BuildRequires:    python2-devel
 BuildRequires:    python-setuptools
 BuildRequires:    intltool
-BuildRequires:    python-oslo-sphinx
 
+Requires(pre):    shadow-utils
 Requires:         python-glance = %{version}-%{release}
 Requires:         python-glanceclient >= 1:0
 Requires:         openstack-utils
+BuildRequires:    python-oslo-sphinx
 
+Requires(post): systemd
+Requires(preun): systemd
+Requires(postun): systemd
+BuildRequires: systemd
 
 %description
 OpenStack Image Service (code-named Glance) provides discovery, registration,
@@ -41,60 +46,6 @@ query for information on publicly available disk images, and use the Image
 Service's client library for streaming virtual disk images.
 
 This package contains the API and registry servers.
-
-%package          common
-Summary:          Components common to all OpenStack Glance services
-Requires:         openstack-glance = %{version}-%{release}
-Requires(pre):    shadow-utils
-Requires(post):   systemd
-Requires(preun):  systemd
-Requires(postun): systemd
-BuildRequires:    systemd
-
-%description      common
-OpenStack Image Service (code-named Glance) provides discovery, registration,
-and delivery services for virtual disk images. The Image Service API server
-provides a standard REST interface for querying information about virtual disk
-images stored in a variety of back-end stores, including OpenStack Object
-Storage. Clients can register new virtual disk images with the Image Service,
-query for information on publicly available disk images, and use the Image
-Service's client library for streaming virtual disk images.
-
-This package contains shared scripts configuration between all OpenStack glance
-services.
-
-
-%package          api
-Summary:          OpenStack Glance API service
-Requires:         openstack-glance-common = %{version}-%{release}
-
-%description      api
-OpenStack Image Service (code-named Glance) provides discovery, registration,
-and delivery services for virtual disk images. The Image Service API server
-provides a standard REST interface for querying information about virtual disk
-images stored in a variety of back-end stores, including OpenStack Object
-Storage. Clients can register new virtual disk images with the Image Service,
-query for information on publicly available disk images, and use the Image
-Service's client library for streaming virtual disk images.
-
-This package contains the API and local cache servers.
-
-
-%package          registry
-Summary:          OpenStack Glance registry service
-Requires:         openstack-glance-common = %{version}-%{release}
-
-%description      registry
-OpenStack Image Service (code-named Glance) provides discovery, registration,
-and delivery services for virtual disk images. The Image Service API server
-provides a standard REST interface for querying information about virtual disk
-images stored in a variety of back-end stores, including OpenStack Object
-Storage. Clients can register new virtual disk images with the Image Service,
-query for information on publicly available disk images, and use the Image
-Service's client library for streaming virtual disk images.
-
-This package contains the registry server.
-
 
 %package -n       python-glance
 Summary:          Glance Python libraries
@@ -283,104 +234,74 @@ for svc in api registry cache scrubber; do
   done < %{buildroot}%{_datadir}/glance/glance-$svc-dist.conf
 done
 
-%pre common
+%pre
 getent group glance >/dev/null || groupadd -r glance -g 161
 getent passwd glance >/dev/null || \
 useradd -u 161 -r -g glance -d %{_sharedstatedir}/glance -s /sbin/nologin \
 -c "OpenStack Glance Daemons" glance
 exit 0
 
-%post api
+%post
+# Initial installation
 %systemd_post openstack-glance-api.service
+%systemd_post openstack-glance-registry.service
 %systemd_post openstack-glance-scrubber.service
 
-%post registry
-%systemd_post openstack-glance-registry.service
 
-
-%preun api
+%preun
 %systemd_preun openstack-glance-api.service
+%systemd_preun openstack-glance-registry.service
 %systemd_preun openstack-glance-scrubber.service
 
-%preun registry
-%systemd_preun openstack-glance-registry.service
-
-%postun api
+%postun
 %systemd_postun_with_restart openstack-glance-api.service
-%systemd_postun_with_restart openstack-glance-scrubber.service
-
-%postun registry
 %systemd_postun_with_restart openstack-glance-registry.service
-
+%systemd_postun_with_restart openstack-glance-scrubber.service
 
 %files
 %doc README.rst
-%license LICENSE
+%{_bindir}/glance-api
 %{_bindir}/glance-control
 %{_bindir}/glance-manage
+%{_bindir}/glance-registry
+%{_bindir}/glance-cache-cleaner
+%{_bindir}/glance-cache-manage
+%{_bindir}/glance-cache-prefetcher
+%{_bindir}/glance-cache-pruner
+%{_bindir}/glance-scrubber
+%{_bindir}/glance-replicator
+%{_bindir}/glance-index
+%{_bindir}/glance-search
 
-%{_mandir}/man1/glance-control.1.*
-%{_mandir}/man1/glance-manage.1.*
+%{_datadir}/glance/glance-api-dist.conf
+%{_datadir}/glance/glance-registry-dist.conf
+%{_datadir}/glance/glance-cache-dist.conf
+%{_datadir}/glance/glance-scrubber-dist.conf
+%{_datadir}/glance/glance-api-dist-paste.ini
+%{_datadir}/glance/glance-registry-dist-paste.ini
 
+%{_unitdir}/openstack-glance-api.service
+%{_unitdir}/openstack-glance-registry.service
+%{_unitdir}/openstack-glance-scrubber.service
 
-%files common
-%license LICENSE
+%{_mandir}/man1/glance*.1.gz
 %dir %{_sysconfdir}/glance
+%config(noreplace) %attr(-, root, glance) %{_sysconfdir}/glance/glance-api.conf
+%config(noreplace) %attr(-, root, glance) %{_sysconfdir}/glance/glance-registry.conf
+%config(noreplace) %attr(-, root, glance) %{_sysconfdir}/glance/glance-cache.conf
+%config(noreplace) %attr(-, root, glance) %{_sysconfdir}/glance/glance-scrubber.conf
+%config(noreplace) %attr(-, root, glance) %{_sysconfdir}/glance/policy.json
 %config(noreplace) %attr(-, root, glance) %{_sysconfdir}/glance/schema-image.json
 %config(noreplace) %attr(-, root, glance) %{_sysconfdir}/logrotate.d/openstack-glance
 %dir %attr(0755, glance, nobody) %{_sharedstatedir}/glance
 %dir %attr(0750, glance, glance) %{_localstatedir}/log/glance
 
-
-%files api
-%{_bindir}/glance-api
-%{_bindir}/glance-cache-cleaner
-%{_bindir}/glance-cache-manage
-%{_bindir}/glance-cache-prefetcher
-%{_bindir}/glance-cache-pruner
-%{_bindir}/glance-index
-%{_bindir}/glance-scrubber
-%{_bindir}/glance-search
-
-%{_mandir}/man1/glance-api.1.*
-%{_mandir}/man1/glance-cache-*.1.*
-%{_mandir}/man1/glance-scrubber.1.*
-
-%{_datadir}/glance/glance-api-dist.conf
-%{_datadir}/glance/glance-api-dist-paste.ini
-%{_datadir}/glance/glance-cache-dist.conf
-%{_datadir}/glance/glance-scrubber-dist.conf
-
-%{_unitdir}/openstack-glance-api.service
-%{_unitdir}/openstack-glance-scrubber.service
-
-%config(noreplace) %attr(-, root, glance) %{_sysconfdir}/glance/policy.json
-%config(noreplace) %attr(-, root, glance) %{_sysconfdir}/glance/glance-api.conf
-%config(noreplace) %attr(-, root, glance) %{_sysconfdir}/glance/glance-cache.conf
-%config(noreplace) %attr(-, root, glance) %{_sysconfdir}/glance/glance-scrubber.conf
-
-
-%files registry
-%{_bindir}/glance-registry
-%{_bindir}/glance-replicator
-
-%{_mandir}/man1/glance-registry.1.*
-%{_mandir}/man1/glance-replicator.1.*
-
-%{_datadir}/glance/glance-registry-dist.conf
-%{_datadir}/glance/glance-registry-dist-paste.ini
-%{_unitdir}/openstack-glance-registry.service
-
-%config(noreplace) %attr(-, root, glance) %{_sysconfdir}/glance/glance-registry.conf
-
 %files -n python-glance
 %doc README.rst
-%license LICENSE
 %{python2_sitelib}/glance
 %{python2_sitelib}/glance-*.egg-info
 
 %files doc
-%license LICENSE
 %doc doc/build/html
 
 %changelog
