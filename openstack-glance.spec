@@ -1,14 +1,18 @@
-%global release_name juno
+%global release_name kilo
+%global milestone .0rc2
+%global service glance
+
+%{!?upstream_version: %global upstream_version %{version}%{?milestone}}
 
 Name:             openstack-glance
-Version:          2014.2.3
-Release:          1%{?dist}
+Version:          2015.1
+Release:          0.1%{?milestone}%{?dist}
 Summary:          OpenStack Image Service
 
 Group:            Applications/System
 License:          ASL 2.0
 URL:              http://glance.openstack.org
-Source0:          https://launchpad.net/glance/%{release_name}/%{version}/+download/glance-%{version}.tar.gz
+Source0:          http://launchpad.net/%{service}/%{release_name}/%{release_name}-rc2/+download/%{service}-%{upstream_version}.tar.gz
 
 Source1:          openstack-glance-api.service
 Source2:          openstack-glance-registry.service
@@ -20,11 +24,6 @@ Source6:          glance-registry-dist.conf
 Source7:          glance-cache-dist.conf
 Source8:          glance-scrubber-dist.conf
 
-Patch0001: 0001-Don-t-access-the-net-while-building-docs.patch
-Patch0002: 0002-Remove-runtime-dep-on-python-pbr.patch
-Patch0003: 0003-avoid-unsupported-storage-drivers.patch
-Patch0004: 0004-notify-calling-process-we-are-ready-to-serve.patch
-
 BuildArch:        noarch
 BuildRequires:    python2-devel
 BuildRequires:    python-setuptools
@@ -34,7 +33,6 @@ Requires(pre):    shadow-utils
 Requires:         python-glance = %{version}-%{release}
 Requires:         python-glanceclient >= 1:0
 Requires:         openstack-utils
-BuildRequires:    python-pbr
 BuildRequires:    python-oslo-sphinx
 
 Requires(post): systemd
@@ -89,6 +87,9 @@ Requires:         python-anyjson
 Requires:         python-netaddr
 Requires:         python-wsme >= 0.6
 Requires:         pyOpenSSL
+Requires:         python-pbr
+Requires:         python-semantic-version
+Requires:         python-elasticsearch
 
 #test deps: python-mox python-nose python-requests
 #test and optional store:
@@ -126,25 +127,9 @@ and delivery services for virtual disk images.
 This package contains documentation files for glance.
 
 %prep
-%setup -q -n glance-%{version}
+%setup -q -n glance-%{upstream_version}
 
-%patch0001 -p1
-%patch0002 -p1
-%patch0003 -p1
-%patch0004 -p1
-
-# Remove bundled egg-info
-rm -rf glance.egg-info
 sed -i '/\/usr\/bin\/env python/d' glance/common/config.py glance/common/crypt.py glance/db/sqlalchemy/migrate_repo/manage.py
-# versioninfo is missing in f3 tarball
-echo %{version} > glance/versioninfo
-
-sed -i '/setuptools_git/d; /setup_requires/d; /install_requires/d; /dependency_links/d' setup.py
-sed -i s/REDHATGLANCEVERSION/%{version}/ glance/version.py
-sed -i s/REDHATGLANCERELEASE/%{release}/ glance/version.py
-
-# make doc build compatible with python-oslo-sphinx RPM
-sed -i 's/oslosphinx/oslo.sphinx/' doc/source/conf.py
 
 # Remove the requirements file so that pbr hooks don't add it
 # to distutils requiers_dist config
@@ -173,10 +158,10 @@ for svc in api registry cache scrubber; do
 done
 
 %build
-%{__python} setup.py build
+%{__python2} setup.py build
 
 %install
-%{__python} setup.py install -O1 --skip-build --root %{buildroot}
+%{__python2} setup.py install -O1 --skip-build --root %{buildroot}
 
 # Delete tests
 rm -fr %{buildroot}%{python2_sitelib}/glance/tests
@@ -289,6 +274,8 @@ exit 0
 %{_bindir}/glance-cache-pruner
 %{_bindir}/glance-scrubber
 %{_bindir}/glance-replicator
+%{_bindir}/glance-index
+%{_bindir}/glance-search
 
 %{_datadir}/glance/glance-api-dist.conf
 %{_datadir}/glance/glance-registry-dist.conf
@@ -316,7 +303,7 @@ exit 0
 %files -n python-glance
 %doc README.rst
 %{python2_sitelib}/glance
-%{python2_sitelib}/glance-%{version}*.egg-info
+%{python2_sitelib}/*.egg-info
 
 %files doc
 %doc doc/build/html
