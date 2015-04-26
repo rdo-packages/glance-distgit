@@ -23,13 +23,13 @@ Source8:          glance-scrubber-dist.conf
 BuildArch:        noarch
 BuildRequires:    python2-devel
 BuildRequires:    python-setuptools
+BuildRequires:    python-pbr
 BuildRequires:    intltool
 
 Requires(pre):    shadow-utils
 Requires:         python-glance = %{version}-%{release}
 Requires:         python-glanceclient >= 1:0
 Requires:         openstack-utils
-BuildRequires:    python-oslo-sphinx
 
 Requires(post): systemd
 Requires(preun): systemd
@@ -107,6 +107,7 @@ Requires:         %{name} = %{version}-%{release}
 
 BuildRequires:    systemd-units
 BuildRequires:    python-sphinx
+BuildRequires:    python-oslo-sphinx
 BuildRequires:    graphviz
 
 # Required to build module documents
