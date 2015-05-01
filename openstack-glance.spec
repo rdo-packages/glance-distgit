@@ -1,18 +1,17 @@
 %global release_name kilo
-%global milestone .0rc2
 %global service glance
 
 %{!?upstream_version: %global upstream_version %{version}%{?milestone}}
 
 Name:             openstack-glance
-Version:          2015.1
-Release:          0.1%{?milestone}%{?dist}
+Version:          2015.1.0
+Release:          1%{?milestone}%{?dist}
 Summary:          OpenStack Image Service
 
 Group:            Applications/System
 License:          ASL 2.0
 URL:              http://glance.openstack.org
-Source0:          http://launchpad.net/%{service}/%{release_name}/%{release_name}-rc2/+download/%{service}-%{upstream_version}.tar.gz
+Source0:          http://launchpad.net/%{service}/%{release_name}/%{version}/+download/%{service}-%{upstream_version}.tar.gz
 
 Source1:          openstack-glance-api.service
 Source2:          openstack-glance-registry.service
