@@ -5,13 +5,15 @@
 
 Name:             openstack-glance
 Version:          2015.1.0
-Release:          1%{?milestone}%{?dist}
+Release:          2%{?milestone}%{?dist}
 Summary:          OpenStack Image Service
 
 Group:            Applications/System
 License:          ASL 2.0
 URL:              http://glance.openstack.org
 Source0:          http://launchpad.net/%{service}/%{release_name}/%{version}/+download/%{service}-%{upstream_version}.tar.gz
+
+Patch0001: 0001-notify-calling-process-we-are-ready-to-serve.patch
 
 Source1:          openstack-glance-api.service
 Source2:          openstack-glance-registry.service
@@ -128,6 +130,8 @@ This package contains documentation files for glance.
 
 %prep
 %setup -q -n glance-%{upstream_version}
+
+%patch0001 -p1
 
 sed -i '/\/usr\/bin\/env python/d' glance/common/config.py glance/common/crypt.py glance/db/sqlalchemy/migrate_repo/manage.py
 
@@ -309,5 +313,8 @@ exit 0
 %doc doc/build/html
 
 %changelog
+* Sat May 02 2015 Alan Pevec <alan.pevec@redhat.com> 2015.1.0-2
+- Deploy systemd notifications in api, registry and scrubber services.
+
 * Thu Apr 30 2015 Alan Pevec <alan.pevec@redhat.com> 2015.1.0-1
 - OpenStack Kilo release
