@@ -5,7 +5,7 @@
 
 Name:             openstack-glance
 Version:          2015.1.0
-Release:          2%{?milestone}%{?dist}
+Release:          3%{?milestone}%{?dist}
 Summary:          OpenStack Image Service
 
 Group:            Applications/System
@@ -62,26 +62,32 @@ Requires:         python-eventlet
 Requires:         python-httplib2
 Requires:         python-iso8601
 Requires:         python-jsonschema
-Requires:         python-migrate >= 0.9.1
+Requires:         python-migrate >= 0.9.5
 Requires:         python-paste-deploy
 Requires:         python-routes
-Requires:         python-sqlalchemy >= 0.8.4
+Requires:         python-sqlalchemy >= 0.8.7
 Requires:         python-webob
 Requires:         python-crypto
 Requires:         pyxattr
 Requires:         python-cinderclient
-Requires:         python-glance-store
-Requires:         python-keystoneclient >= 1:0.9.0
+Requires:         python-glance-store >= 0.3.0
+Requires:         python-keystoneclient >= 1:1.1.0
 Requires:         python-keystonemiddleware
-Requires:         python-swiftclient
-Requires:         python-oslo-config >= 1:1.2.1
-Requires:         python-oslo-messaging >= 1.4.0.0
-Requires:         python-oslo-vmware
-Requires:         python-oslo-i18n
-Requires:         python-oslo-db
+Requires:         python-swiftclient >= 2.2.0
+Requires:         python-oslo-config >= 1:1.9.3
+Requires:         python-oslo-concurrency >= 1.8.0
+Requires:         python-oslo-context >= 0.2.0
+Requires:         python-oslo-utils >= 1.4.0
+Requires:         python-oslo-log >= 1.0.0
+Requires:         python-oslo-policy >= 0.3.1
+Requires:         python-oslo-serialization >= 1.4.0
+Requires:         python-oslo-messaging >= 1.8.0
+Requires:         python-oslo-vmware >= 0.11.1
+Requires:         python-oslo-i18n >= 1.5.0
+Requires:         python-oslo-db >= 1.7.0
 Requires:         python-osprofiler
 Requires:         python-retrying
-Requires:         python-six >= 1.7.0
+Requires:         python-six >= 1.9.0
 Requires:         python-posix_ipc
 Requires:         python-stevedore
 Requires:         python-anyjson
@@ -91,6 +97,7 @@ Requires:         pyOpenSSL
 Requires:         python-pbr
 Requires:         python-semantic-version
 Requires:         python-elasticsearch
+Requires:         python-taskflow
 
 #test deps: python-mox python-nose python-requests
 #test and optional store:
@@ -313,6 +320,9 @@ exit 0
 %doc doc/build/html
 
 %changelog
+* Mon May 04 2015 Alan Pevec <alan.pevec@redhat.com> 2015.1.0-3
+- Update dependencies
+
 * Sat May 02 2015 Alan Pevec <alan.pevec@redhat.com> 2015.1.0-2
 - Deploy systemd notifications in api, registry and scrubber services.
 
