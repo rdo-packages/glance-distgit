@@ -5,7 +5,7 @@
 
 Name:             openstack-glance
 Version:          2015.1.0
-Release:          3%{?milestone}%{?dist}
+Release:          4%{?milestone}%{?dist}
 Summary:          OpenStack Image Service
 
 Group:            Applications/System
@@ -320,6 +320,9 @@ exit 0
 %doc doc/build/html
 
 %changelog
+* Mon May 11 2015 Haïkel Guémar <hguemar@fedoraproject.org> - 2015.1.0-4
+- logrotate: rotate logs when file > 10M (RHBZ #1212478)
+
 * Mon May 04 2015 Alan Pevec <alan.pevec@redhat.com> 2015.1.0-3
 - Update dependencies
 
