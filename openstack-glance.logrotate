@@ -1,6 +1,6 @@
 /var/log/glance/*.log {
     weekly
-    rotate 4
+    rotate 14
     size 10M
     missingok
     compress
