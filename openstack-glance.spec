@@ -5,7 +5,7 @@
 
 Name:             openstack-glance
 Version:          2015.1.0
-Release:          5%{?milestone}%{?dist}
+Release:          6%{?milestone}%{?dist}
 Summary:          OpenStack Image Service
 
 Group:            Applications/System
@@ -320,6 +320,9 @@ exit 0
 %doc doc/build/html
 
 %changelog
+* Thu Jun 18 2015 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 2015.1.0-6
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_23_Mass_Rebuild
+
 * Mon May 11 2015 Haïkel Guémar <hguemar@fedoraproject.org> - 2015.1.0-5
 - logrotate: make it consistent with other services (RHBZ #1212478)
 
