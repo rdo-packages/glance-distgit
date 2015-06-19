@@ -1,6 +1,9 @@
 %global release_name juno
 
 Name:             openstack-glance
+# Liberty semver reset
+# https://review.openstack.org/#/q/I6a35fa0dda798fad93b804d00a46af80f08d475c,n,z
+Epoch:            1
 Version:          XXX
 Release:          XXX{?dist}
 Summary:          OpenStack Image Service
@@ -27,7 +30,7 @@ BuildRequires:    python-pbr
 BuildRequires:    intltool
 
 Requires(pre):    shadow-utils
-Requires:         python-glance = %{version}-%{release}
+Requires:         python-glance = %{epoch}:%{version}-%{release}
 Requires:         python-glanceclient >= 1:0
 Requires:         openstack-utils
 
@@ -110,7 +113,7 @@ This package contains the glance Python library.
 Summary:          Documentation for OpenStack Image Service
 Group:            Documentation
 
-Requires:         %{name} = %{version}-%{release}
+Requires:         %{name} = %{epoch}:%{version}-%{release}
 
 BuildRequires:    systemd-units
 BuildRequires:    python-sphinx
