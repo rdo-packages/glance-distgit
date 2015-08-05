@@ -282,8 +282,6 @@ exit 0
 %{_bindir}/glance-cache-pruner
 %{_bindir}/glance-scrubber
 %{_bindir}/glance-replicator
-%{_bindir}/glance-index
-%{_bindir}/glance-search
 
 %{_datadir}/glance/glance-api-dist.conf
 %{_datadir}/glance/glance-registry-dist.conf
