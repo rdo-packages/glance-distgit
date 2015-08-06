@@ -198,6 +198,7 @@ rm -f %{buildroot}/usr/share/doc/glance/README.rst
 # Setup directories
 install -d -m 755 %{buildroot}%{_datadir}/glance
 install -d -m 755 %{buildroot}%{_sharedstatedir}/glance/images
+install -d -m 755 %{buildroot}%{_sysconfdir}/glance/metadefs
 
 # Config file
 install -p -D -m 640 etc/glance-api.conf %{buildroot}%{_sysconfdir}/glance/glance-api.conf
@@ -213,6 +214,9 @@ install -p -D -m 644 %{SOURCE8} %{buildroot}%{_datadir}/glance/glance-scrubber-d
 
 install -p -D -m 640 etc/policy.json %{buildroot}%{_sysconfdir}/glance/policy.json
 install -p -D -m 640 etc/schema-image.json %{buildroot}%{_sysconfdir}/glance/schema-image.json
+
+# Move metadefs
+install -p -D -m  640 etc/metadefs/*.json %{buildroot}%{_sysconfdir}/glance/metadefs/
 
 # systemd services
 install -p -D -m 644 %{SOURCE1} %{buildroot}%{_unitdir}/openstack-glance-api.service
@@ -244,6 +248,9 @@ for svc in api registry cache scrubber; do
     sed -i "0,/^#* *$name *=/{s!^#* *$name *=.*!#$name=$value!}" $cfg
   done < %{buildroot}%{_datadir}/glance/glance-$svc-dist.conf
 done
+
+# Cleanup
+rm -rf %{buildroot}%{_prefix}%{_sysconfdir}
 
 %pre
 getent group glance >/dev/null || groupadd -r glance -g 161
@@ -302,6 +309,7 @@ exit 0
 %config(noreplace) %attr(-, root, glance) %{_sysconfdir}/glance/glance-scrubber.conf
 %config(noreplace) %attr(-, root, glance) %{_sysconfdir}/glance/policy.json
 %config(noreplace) %attr(-, root, glance) %{_sysconfdir}/glance/schema-image.json
+%config(noreplace) %attr(-, root, glance) %{_sysconfdir}/glance/metadefs/*.json
 %config(noreplace) %attr(-, root, glance) %{_sysconfdir}/logrotate.d/openstack-glance
 %dir %attr(0755, glance, nobody) %{_sharedstatedir}/glance
 %dir %attr(0750, glance, glance) %{_localstatedir}/log/glance
