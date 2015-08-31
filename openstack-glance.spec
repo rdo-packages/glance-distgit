@@ -125,6 +125,7 @@ BuildRequires:    python-boto
 BuildRequires:    python-eventlet
 BuildRequires:    python-routes
 BuildRequires:    python-sqlalchemy
+BuildRequires:    python-stevedore
 BuildRequires:    python-webob
 
 %description      doc
