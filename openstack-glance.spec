@@ -88,6 +88,7 @@ Requires:         python-retrying
 Requires:         python-six >= 1.9.0
 Requires:         python-posix_ipc
 Requires:         python-stevedore
+Requires:         python2-castellan
 Requires:         python-anyjson
 Requires:         python-netaddr
 Requires:         python-wsme >= 0.6
