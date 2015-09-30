@@ -1,18 +1,25 @@
-%global release_name kilo
+%global release_name liberty
 %global service glance
+%global milestone rc1
 
 %{!?upstream_version: %global upstream_version %{version}%{?milestone}}
 
 Name:             openstack-glance
-Version:          2015.1.0
-Release:          6%{?milestone}%{?dist}
+# Liberty semver reset
+# https://review.openstack.org/#/q/I6a35fa0dda798fad93b804d00a46af80f08d475c,n,z
+Epoch:            1
+Version:          11.0.0.0
+Release:          0.1%{?milestone}%{?dist}
 Summary:          OpenStack Image Service
 
 Group:            Applications/System
 License:          ASL 2.0
 URL:              http://glance.openstack.org
-Source0:          http://launchpad.net/%{service}/%{release_name}/%{version}/+download/%{service}-%{upstream_version}.tar.gz
+Source0:          https://launchpad.net/%{service}/%{release_name}/%{release_name}-%{milestone}/+download/%{service}-%{upstream_version}.tar.gz
 
+#
+# patches_base=11.0.0.0rc1
+#
 Patch0001: 0001-notify-calling-process-we-are-ready-to-serve.patch
 
 Source1:          openstack-glance-api.service
@@ -32,7 +39,7 @@ BuildRequires:    python-pbr
 BuildRequires:    intltool
 
 Requires(pre):    shadow-utils
-Requires:         python-glance = %{version}-%{release}
+Requires:         python-glance = %{epoch}:%{version}-%{release}
 Requires:         python-glanceclient >= 1:0
 Requires:         openstack-utils
 
@@ -90,6 +97,7 @@ Requires:         python-retrying
 Requires:         python-six >= 1.9.0
 Requires:         python-posix_ipc
 Requires:         python-stevedore
+Requires:         python2-castellan
 Requires:         python-anyjson
 Requires:         python-netaddr
 Requires:         python-wsme >= 0.6
@@ -115,7 +123,7 @@ This package contains the glance Python library.
 Summary:          Documentation for OpenStack Image Service
 Group:            Documentation
 
-Requires:         %{name} = %{version}-%{release}
+Requires:         %{name} = %{epoch}:%{version}-%{release}
 
 BuildRequires:    systemd-units
 BuildRequires:    python-sphinx
@@ -127,6 +135,7 @@ BuildRequires:    python-boto
 BuildRequires:    python-eventlet
 BuildRequires:    python-routes
 BuildRequires:    python-sqlalchemy
+BuildRequires:    python-stevedore
 BuildRequires:    python-webob
 
 %description      doc
@@ -202,6 +211,7 @@ rm -f %{buildroot}/usr/share/doc/glance/README.rst
 # Setup directories
 install -d -m 755 %{buildroot}%{_datadir}/glance
 install -d -m 755 %{buildroot}%{_sharedstatedir}/glance/images
+install -d -m 755 %{buildroot}%{_sysconfdir}/glance/metadefs
 
 # Config file
 install -p -D -m 640 etc/glance-api.conf %{buildroot}%{_sysconfdir}/glance/glance-api.conf
@@ -217,6 +227,9 @@ install -p -D -m 644 %{SOURCE8} %{buildroot}%{_datadir}/glance/glance-scrubber-d
 
 install -p -D -m 640 etc/policy.json %{buildroot}%{_sysconfdir}/glance/policy.json
 install -p -D -m 640 etc/schema-image.json %{buildroot}%{_sysconfdir}/glance/schema-image.json
+
+# Move metadefs
+install -p -D -m  640 etc/metadefs/*.json %{buildroot}%{_sysconfdir}/glance/metadefs/
 
 # systemd services
 install -p -D -m 644 %{SOURCE1} %{buildroot}%{_unitdir}/openstack-glance-api.service
@@ -249,6 +262,9 @@ for svc in api registry cache scrubber; do
   done < %{buildroot}%{_datadir}/glance/glance-$svc-dist.conf
 done
 
+# Cleanup
+rm -rf %{buildroot}%{_prefix}%{_sysconfdir}
+
 %pre
 getent group glance >/dev/null || groupadd -r glance -g 161
 getent passwd glance >/dev/null || \
@@ -276,6 +292,7 @@ exit 0
 %files
 %doc README.rst
 %{_bindir}/glance-api
+%{_bindir}/glance-artifacts
 %{_bindir}/glance-control
 %{_bindir}/glance-manage
 %{_bindir}/glance-registry
@@ -285,8 +302,6 @@ exit 0
 %{_bindir}/glance-cache-pruner
 %{_bindir}/glance-scrubber
 %{_bindir}/glance-replicator
-%{_bindir}/glance-index
-%{_bindir}/glance-search
 
 %{_datadir}/glance/glance-api-dist.conf
 %{_datadir}/glance/glance-registry-dist.conf
@@ -307,6 +322,7 @@ exit 0
 %config(noreplace) %attr(-, root, glance) %{_sysconfdir}/glance/glance-scrubber.conf
 %config(noreplace) %attr(-, root, glance) %{_sysconfdir}/glance/policy.json
 %config(noreplace) %attr(-, root, glance) %{_sysconfdir}/glance/schema-image.json
+%config(noreplace) %attr(-, root, glance) %{_sysconfdir}/glance/metadefs/*.json
 %config(noreplace) %attr(-, root, glance) %{_sysconfdir}/logrotate.d/openstack-glance
 %dir %attr(0755, glance, nobody) %{_sharedstatedir}/glance
 %dir %attr(0750, glance, glance) %{_localstatedir}/log/glance
@@ -314,12 +330,18 @@ exit 0
 %files -n python-glance
 %doc README.rst
 %{python2_sitelib}/glance
-%{python2_sitelib}/*.egg-info
+%{python2_sitelib}/glance-*.egg-info
 
 %files doc
 %doc doc/build/html
 
 %changelog
+* Wed Sep 30 2015 Haikel Guemar <hguemar@fedoraproject.org> 11.0.0-0.1rc1
+- Update to upstream 11.0.0.0rc1
+
+* Wed Sep 30 2015 Haikel Guemar <hguemar@fedoraproject.org> 11.0.0-0.1
+- Update to upstream 11.0.0.0rc1
+
 * Thu Jun 18 2015 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 2015.1.0-6
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_23_Mass_Rebuild
 

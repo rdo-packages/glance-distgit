@@ -1,4 +1,4 @@
-From a78616733f2ab4a5a75e9999d34a61c8ee82aadb Mon Sep 17 00:00:00 2001
+From d3f3d8947a9d8d8fbd662d30679bf46e9f29cd11 Mon Sep 17 00:00:00 2001
 From: Alan Pevec <apevec@redhat.com>
 Date: Tue, 11 Feb 2014 22:36:00 +0100
 Subject: [PATCH] notify calling process we are ready to serve
@@ -20,10 +20,10 @@ Conflicts:
  3 files changed, 6 insertions(+)
 
 diff --git a/glance/cmd/api.py b/glance/cmd/api.py
-index 28fdeaf..c219db9 100755
+index 9d64c13..56f202f 100755
 --- a/glance/cmd/api.py
 +++ b/glance/cmd/api.py
-@@ -50,6 +50,7 @@ from glance.common import config
+@@ -51,6 +51,7 @@ from glance.common import config
  from glance.common import exception
  from glance.common import wsgi
  from glance import notifier
@@ -31,7 +31,7 @@ index 28fdeaf..c219db9 100755
  
  CONF = cfg.CONF
  CONF.import_group("profiler", "glance.common.wsgi")
-@@ -85,6 +86,7 @@ def main():
+@@ -86,6 +87,7 @@ def main():
  
          server = wsgi.Server(initialize_glance_store=True)
          server.start(config.load_paste_app('glance-api'), default_port=9292)
@@ -40,42 +40,42 @@ index 28fdeaf..c219db9 100755
      except KNOWN_EXCEPTIONS as e:
          fail(e)
 diff --git a/glance/cmd/registry.py b/glance/cmd/registry.py
-index 58393b6..f95662e 100755
+index 4e4117a..a16495a 100755
 --- a/glance/cmd/registry.py
 +++ b/glance/cmd/registry.py
-@@ -46,6 +46,7 @@ from glance.common import config
- from glance.common import utils
+@@ -47,6 +47,7 @@ import osprofiler.web
+ from glance.common import config
  from glance.common import wsgi
  from glance import notifier
 +from glance.openstack.common import systemd
  
  CONF = cfg.CONF
  CONF.import_group("profiler", "glance.common.wsgi")
-@@ -72,6 +73,7 @@ def main():
+@@ -73,6 +74,7 @@ def main():
          server = wsgi.Server()
          server.start(config.load_paste_app('glance-registry'),
                       default_port=9191)
 +        systemd.notify_once()
          server.wait()
      except RuntimeError as e:
-         sys.exit("ERROR: %s" % utils.exception_to_str(e))
+         sys.exit("ERROR: %s" % encodeutils.exception_to_unicode(e))
 diff --git a/glance/cmd/scrubber.py b/glance/cmd/scrubber.py
-index e7b4a1b..aaae76e 100755
+index 1d2fa4c..609c9b7 100755
 --- a/glance/cmd/scrubber.py
 +++ b/glance/cmd/scrubber.py
-@@ -35,6 +35,7 @@ from oslo_config import cfg
+@@ -36,6 +36,7 @@ from oslo_config import cfg
  from oslo_log import log as logging
  
  from glance.common import config
 +from glance.openstack.common import systemd
  from glance import scrubber
  
- 
-@@ -59,6 +60,7 @@ def main():
+ eventlet.patcher.monkey_patch(all=False, socket=True, time=True, select=True,
+@@ -62,6 +63,7 @@ def main():
          if CONF.daemon:
              server = scrubber.Daemon(CONF.wakeup_time)
              server.start(app)
 +            systemd.notify_once()
              server.wait()
          else:
-             import eventlet
+             app.run()
