@@ -9,7 +9,7 @@ Name:             openstack-glance
 # https://review.openstack.org/#/q/I6a35fa0dda798fad93b804d00a46af80f08d475c,n,z
 Epoch:            1
 Version:          11.0.0.0
-Release:          0.1%{?milestone}%{?dist}
+Release:          0.2%{?milestone}%{?dist}
 Summary:          OpenStack Image Service
 
 Group:            Applications/System
@@ -88,6 +88,7 @@ Requires:         python-oslo-utils >= 1.4.0
 Requires:         python-oslo-log >= 1.0.0
 Requires:         python-oslo-policy >= 0.3.1
 Requires:         python-oslo-serialization >= 1.4.0
+Requires:         python-oslo-service >= 0.7.0
 Requires:         python-oslo-messaging >= 1.8.0
 Requires:         python-oslo-vmware >= 0.11.1
 Requires:         python-oslo-i18n >= 1.5.0

@@ -1,4 +1,4 @@
-From d3f3d8947a9d8d8fbd662d30679bf46e9f29cd11 Mon Sep 17 00:00:00 2001
+From ccc1006f53fa6b8506b08435bdd9e960bd696232 Mon Sep 17 00:00:00 2001
 From: Alan Pevec <apevec@redhat.com>
 Date: Tue, 11 Feb 2014 22:36:00 +0100
 Subject: [PATCH] notify calling process we are ready to serve
@@ -8,11 +8,6 @@ It does not have an effect when running the service outside
 the systemd environment.
 
 Change-Id: I80f325c9be9c171c2dc8d5526570bf64f0f87c78
-
-Conflicts:
-	glance/cmd/api.py
-	glance/cmd/registry.py
-	glance/cmd/scrubber.py
 ---
  glance/cmd/api.py      | 2 ++
  glance/cmd/registry.py | 2 ++
@@ -20,14 +15,14 @@ Conflicts:
  3 files changed, 6 insertions(+)
 
 diff --git a/glance/cmd/api.py b/glance/cmd/api.py
-index 9d64c13..56f202f 100755
+index 9d64c13..7e132c5 100755
 --- a/glance/cmd/api.py
 +++ b/glance/cmd/api.py
 @@ -51,6 +51,7 @@ from glance.common import config
  from glance.common import exception
  from glance.common import wsgi
  from glance import notifier
-+from glance.openstack.common import systemd
++from oslo_service import systemd
  
  CONF = cfg.CONF
  CONF.import_group("profiler", "glance.common.wsgi")
@@ -40,14 +35,14 @@ index 9d64c13..56f202f 100755
      except KNOWN_EXCEPTIONS as e:
          fail(e)
 diff --git a/glance/cmd/registry.py b/glance/cmd/registry.py
-index 4e4117a..a16495a 100755
+index 4e4117a..99bbc0d 100755
 --- a/glance/cmd/registry.py
 +++ b/glance/cmd/registry.py
 @@ -47,6 +47,7 @@ import osprofiler.web
  from glance.common import config
  from glance.common import wsgi
  from glance import notifier
-+from glance.openstack.common import systemd
++from oslo_service import systemd
  
  CONF = cfg.CONF
  CONF.import_group("profiler", "glance.common.wsgi")
@@ -60,14 +55,14 @@ index 4e4117a..a16495a 100755
      except RuntimeError as e:
          sys.exit("ERROR: %s" % encodeutils.exception_to_unicode(e))
 diff --git a/glance/cmd/scrubber.py b/glance/cmd/scrubber.py
-index 1d2fa4c..609c9b7 100755
+index 1d2fa4c..89f4be6 100755
 --- a/glance/cmd/scrubber.py
 +++ b/glance/cmd/scrubber.py
 @@ -36,6 +36,7 @@ from oslo_config import cfg
  from oslo_log import log as logging
  
  from glance.common import config
-+from glance.openstack.common import systemd
++from oslo_service import systemd
  from glance import scrubber
  
  eventlet.patcher.monkey_patch(all=False, socket=True, time=True, select=True,
