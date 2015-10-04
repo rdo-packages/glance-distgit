@@ -1,6 +1,6 @@
 %global release_name liberty
 %global service glance
-%global milestone rc1
+%global milestone .0rc1
 
 %{!?upstream_version: %global upstream_version %{version}%{?milestone}}
 
@@ -8,14 +8,14 @@ Name:             openstack-glance
 # Liberty semver reset
 # https://review.openstack.org/#/q/I6a35fa0dda798fad93b804d00a46af80f08d475c,n,z
 Epoch:            1
-Version:          11.0.0.0
+Version:          11.0.0
 Release:          0.2%{?milestone}%{?dist}
 Summary:          OpenStack Image Service
 
 Group:            Applications/System
 License:          ASL 2.0
 URL:              http://glance.openstack.org
-Source0:          https://launchpad.net/%{service}/%{release_name}/%{release_name}-%{milestone}/+download/%{service}-%{upstream_version}.tar.gz
+Source0:          http://launchpad.net/%{service}/%{release_name}/%{release_name}-rc1/+download/%{service}-%{upstream_version}.tar.gz
 
 #
 # patches_base=11.0.0.0rc1
