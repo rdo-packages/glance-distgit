@@ -1,6 +1,6 @@
 %global release_name liberty
 %global service glance
-%global milestone .0rc1
+%global milestone .0rc2
 
 %{!?upstream_version: %global upstream_version %{version}%{?milestone}}
 
@@ -9,16 +9,16 @@ Name:             openstack-glance
 # https://review.openstack.org/#/q/I6a35fa0dda798fad93b804d00a46af80f08d475c,n,z
 Epoch:            1
 Version:          11.0.0
-Release:          0.2%{?milestone}%{?dist}
+Release:          0.3%{?milestone}%{?dist}
 Summary:          OpenStack Image Service
 
 Group:            Applications/System
 License:          ASL 2.0
 URL:              http://glance.openstack.org
-Source0:          http://launchpad.net/%{service}/%{release_name}/%{release_name}-rc1/+download/%{service}-%{upstream_version}.tar.gz
+Source0:          http://launchpad.net/%{service}/%{release_name}/%{release_name}-rc2/+download/%{service}-%{upstream_version}.tar.gz
 
 #
-# patches_base=11.0.0.0rc1
+# patches_base=11.0.0.0rc2
 #
 Patch0001: 0001-notify-calling-process-we-are-ready-to-serve.patch
 
@@ -337,6 +337,9 @@ exit 0
 %doc doc/build/html
 
 %changelog
+* Fri Oct 09 2015 Alan Pevec <alan.pevec@redhat.com> 1:11.0.0-0.3.0rc2
+- Update to upstream 11.0.0.0rc2
+
 * Wed Sep 30 2015 Haikel Guemar <hguemar@fedoraproject.org> 11.0.0-0.1rc1
 - Update to upstream 11.0.0.0rc1
 
