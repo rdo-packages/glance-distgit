@@ -59,47 +59,49 @@ Group:            Applications/System
 
 Requires:         MySQL-python
 Requires:         pysendfile
-Requires:         python-eventlet
+Requires:         python-anyjson
+Requires:         python2-castellan
+Requires:         python-crypto
+Requires:         python-cryptography >= 1.0
+Requires:         python-elasticsearch
+Requires:         python-eventlet >= 0.17.4
+Requires:         python-glance-store >= 0.9.1
 Requires:         python-httplib2
 Requires:         python-iso8601
 Requires:         python-jsonschema
-Requires:         python-migrate >= 0.9.5
-Requires:         python-paste-deploy
-Requires:         python-routes
-Requires:         python-sqlalchemy >= 0.8.7
-Requires:         python-webob
-Requires:         python-crypto
-Requires:         pyxattr
-Requires:         python-cinderclient
-Requires:         python-glance-store >= 0.3.0
-Requires:         python-keystoneclient >= 1:1.1.0
-Requires:         python-keystonemiddleware
-Requires:         python-swiftclient >= 2.2.0
-Requires:         python-oslo-config >= 1:1.9.3
-Requires:         python-oslo-concurrency >= 1.8.0
-Requires:         python-oslo-context >= 0.2.0
-Requires:         python-oslo-utils >= 1.4.0
-Requires:         python-oslo-log >= 1.0.0
-Requires:         python-oslo-policy >= 0.3.1
-Requires:         python-oslo-serialization >= 1.4.0
-Requires:         python-oslo-messaging >= 1.8.0
-Requires:         python-oslo-vmware >= 0.11.1
-Requires:         python-oslo-i18n >= 1.5.0
-Requires:         python-oslo-db >= 1.7.0
-Requires:         python-osprofiler
-Requires:         python-retrying
-Requires:         python-six >= 1.9.0
-Requires:         python-posix_ipc
-Requires:         python-stevedore
-Requires:         python2-castellan
-Requires:         python-anyjson
+Requires:         python-keystoneclient >= 1:1.6.0
+Requires:         python-keystonemiddleware >= 2.0.0
+Requires:         python-migrate >= 0.9.6
 Requires:         python-netaddr
-Requires:         python-wsme >= 0.6
-Requires:         pyOpenSSL
+Requires:         python-oslo-concurrency >= 2.3.0
+Requires:         python-oslo-config >= 2:2.3.0
+Requires:         python-oslo-context >= 0.2.0
+Requires:         python-oslo-db >= 2.4.1
+Requires:         python-oslo-i18n >= 1.5.0
+Requires:         python-oslo-log >= 1.8.0
+Requires:         python-oslo-messaging >= 2.5.0
+Requires:         python-oslo-middleware >= 2.8.0
+Requires:         python-oslo-policy >= 0.5.0
+Requires:         python-oslo-serialization >= 1.4.0
+Requires:         python-oslo-service >= 0.7.0
+Requires:         python-oslo-utils >= 2.0.0
+Requires:         python-oslo-vmware >= 0.11.1
+Requires:         python-osprofiler
+Requires:         python-paste-deploy
 Requires:         python-pbr
+Requires:         python-posix_ipc
+Requires:         python-retrying
+Requires:         python-routes
 Requires:         python-semantic-version
-Requires:         python-elasticsearch
-Requires:         python-taskflow
+Requires:         python-six >= 1.9.0
+Requires:         python-sqlalchemy >= 0.9.9
+Requires:         python-stevedore >= 1.5.0
+Requires:         python-swiftclient >= 2.2.0
+Requires:         python-taskflow >= 1.16.0
+Requires:         python-webob
+Requires:         python-wsme >= 0.7
+Requires:         pyOpenSSL
+Requires:         pyxattr
 
 #test deps: python-mox python-nose python-requests
 #test and optional store:
