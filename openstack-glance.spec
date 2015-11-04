@@ -57,7 +57,6 @@ This package contains the API and registry servers.
 Summary:          Glance Python libraries
 Group:            Applications/System
 
-Requires:         MySQL-python
 Requires:         pysendfile
 Requires:         python-anyjson
 Requires:         python2-castellan
