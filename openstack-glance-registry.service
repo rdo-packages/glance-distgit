@@ -7,6 +7,7 @@ Type=simple
 User=glance
 ExecStart=/usr/bin/glance-registry
 PrivateTmp=true
+Restart=on-failure
 
 [Install]
 WantedBy=multi-user.target
