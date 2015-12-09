@@ -66,7 +66,6 @@ Requires:         python-elasticsearch
 Requires:         python-eventlet >= 0.17.4
 Requires:         python-glance-store >= 0.9.1
 Requires:         python-httplib2
-Requires:         python-iso8601
 Requires:         python-jsonschema
 Requires:         python-keystoneclient >= 1:1.6.0
 Requires:         python-keystonemiddleware >= 2.0.0
@@ -285,7 +284,6 @@ exit 0
 %files
 %doc README.rst
 %{_bindir}/glance-api
-%{_bindir}/glance-artifacts
 %{_bindir}/glance-control
 %{_bindir}/glance-manage
 %{_bindir}/glance-registry
