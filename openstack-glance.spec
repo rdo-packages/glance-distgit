@@ -7,7 +7,7 @@ Name:             openstack-glance
 # Liberty semver reset
 # https://review.openstack.org/#/q/I6a35fa0dda798fad93b804d00a46af80f08d475c,n,z
 Epoch:            1
-Version:          11.0.0
+Version:          11.0.1
 Release:          1%{?dist}
 Summary:          OpenStack Image Service
 
@@ -333,6 +333,9 @@ exit 0
 %doc doc/build/html
 
 %changelog
+* Mon Dec 21 2015 Haikel Guemar <hguemar@fedoraproject.org> 1:11.0.1-1
+- Update to 11.0.1
+
 * Fri Oct 16 2015 Haikel Guemar <hguemar@fedoraproject.org> 1:11.0.0-1
 - Update to upstream 11.0.0
 
