@@ -160,7 +160,7 @@ for svc in api registry cache scrubber; do
   sed -i '/^[^#[]/{s/^/#/; s/ //g}; /^#[^ ]/s/ = /=/' etc/glance-$svc.conf
 
   #  TODO: Make this more robust
-  #  Note it only edits the first occurance, so assumes a section ordering in sample
+  #  Note it only edits the first occurrence, so assumes a section ordering in sample
   #  and also doesn't support multi-valued variables like dhcpbridge_flagfile.
   eval dist_conf=\$${svc}_dist
   while read name eq value; do
@@ -240,7 +240,7 @@ install -d -m 755 %{buildroot}%{_localstatedir}/log/glance
 # Programmatically update defaults in sample config
 # which is installed at /etc/$project/$program.conf
 # TODO: Make this more robust
-# Note it only edits the first occurance, so assumes a section ordering in sample
+# Note it only edits the first occurrence, so assumes a section ordering in sample
 # and also doesn't support multi-valued variables.
 for svc in api registry cache scrubber; do
   cfg=%{buildroot}%{_sysconfdir}/glance/glance-$svc.conf
