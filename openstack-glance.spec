@@ -64,6 +64,7 @@ Requires:         python-crypto
 Requires:         python-cryptography >= 1.0
 Requires:         python-elasticsearch
 Requires:         python-eventlet >= 0.17.4
+Requires:         python-futurist >= 0.6.0
 Requires:         python-glance-store >= 0.9.1
 Requires:         python-httplib2
 Requires:         python-jsonschema
@@ -126,11 +127,31 @@ BuildRequires:    graphviz
 
 # Required to build module documents
 BuildRequires:    python-boto
+BuildRequires:    python2-castellan
+BuildRequires:    python-crypto
+BuildRequires:    python-cryptography >= 1.0
 BuildRequires:    python-eventlet
+BuildRequires:    python-futurist
+BuildRequires:    python-glance-store >= 0.9.1
+BuildRequires:    python-httplib2
+BuildRequires:    python-keystoneauth1
+BuildRequires:    python-keystonemiddleware >= 2.0.0
+BuildRequires:    python-oslo-config >= 2:2.3.0
+BuildRequires:    python-oslo-concurrency >= 2.3.0
+BuildRequires:    python-oslo-context >= 0.2.0
+BuildRequires:    python-oslo-db >= 2.4.1
+BuildRequires:    python-oslo-log >= 1.8.0
+BuildRequires:    python-oslo-messaging >= 2.5.0
+BuildRequires:    python-oslo-policy >= 0.5.0
+BuildRequires:    python-osprofiler
+BuildRequires:    python-paste-deploy
 BuildRequires:    python-routes
+BuildRequires:    python-semantic-version
 BuildRequires:    python-sqlalchemy
 BuildRequires:    python-stevedore
+BuildRequires:    python-taskflow >= 1.16.0
 BuildRequires:    python-webob
+BuildRequires:    python-wsme >= 0.7
 
 %description      doc
 OpenStack Image Service (code-named Glance) provides discovery, registration,
