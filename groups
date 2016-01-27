@@ -1,3 +1,5 @@
-# UUID                                  	Group Name
-#
-d25710cb403d81f0e16f27c8a30e49ccd4fbc7ae	glance-distgit-ptl
+# UUID          Group Name
+6ddfecad023c6f4fa3ac8c4d2583c502ea675a73 	Non-Interactive Users
+6202c6562a6de0d75290199365d8f11dd9b3a91e       	glance-distgit-core
+d25710cb403d81f0e16f27c8a30e49ccd4fbc7ae        	glance-distgit-ptl
+global:Registered-Users		Registered Users
