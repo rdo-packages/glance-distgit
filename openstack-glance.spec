@@ -306,6 +306,7 @@ exit 0
 %doc README.rst
 %{_bindir}/glance-api
 %{_bindir}/glance-control
+%{_bindir}/glance-glare
 %{_bindir}/glance-manage
 %{_bindir}/glance-registry
 %{_bindir}/glance-cache-cleaner
