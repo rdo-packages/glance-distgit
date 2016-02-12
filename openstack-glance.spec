@@ -11,20 +11,21 @@ Version:          XXX
 Release:          XXX
 Summary:          OpenStack Image Service
 
-Group:            Applications/System
 License:          ASL 2.0
 URL:              http://glance.openstack.org
 Source0:          https://launchpad.net/glance/%{release_name}/%{version}/+download/glance-%{version}.tar.gz
 
-Source1:          openstack-glance-api.service
-Source2:          openstack-glance-registry.service
-Source3:          openstack-glance-scrubber.service
-Source4:          openstack-glance.logrotate
+Source001:         openstack-glance-api.service
+Source002:         openstack-glance-glare.service
+Source003:         openstack-glance-registry.service
+Source004:         openstack-glance-scrubber.service
+Source010:         openstack-glance.logrotate
 
-Source5:          glance-api-dist.conf
-Source6:          glance-registry-dist.conf
-Source7:          glance-cache-dist.conf
-Source8:          glance-scrubber-dist.conf
+Source021:         glance-api-dist.conf
+Source022:         glance-cache-dist.conf
+Source023:         glance-glare-dist.conf
+Source024:         glance-registry-dist.conf
+Source025:         glance-scrubber-dist.conf
 
 BuildArch:        noarch
 BuildRequires:    python2-devel
@@ -55,7 +56,6 @@ This package contains the API and registry servers.
 
 %package -n       python-glance
 Summary:          Glance Python libraries
-Group:            Applications/System
 
 Requires:         pysendfile
 Requires:         python-anyjson
@@ -116,7 +116,6 @@ This package contains the glance Python library.
 
 %package doc
 Summary:          Documentation for OpenStack Image Service
-Group:            Documentation
 
 Requires:         %{name} = %{epoch}:%{version}-%{release}
 
@@ -168,29 +167,10 @@ sed -i '/\/usr\/bin\/env python/d' glance/common/config.py glance/common/crypt.p
 # to distutils requiers_dist config
 rm -rf {test-,}requirements.txt tools/{pip,test}-requires
 
-# Programmatically update defaults in example config
-api_dist=%{SOURCE5}
-registry_dist=%{SOURCE6}
-cache_dist=%{SOURCE7}
-scrubber_dist=%{SOURCE8}
-for svc in api registry cache scrubber; do
-  #  First we ensure all values are commented in appropriate format.
-  #  Since icehouse, there was an uncommented keystone_authtoken section
-  #  at the end of the file which mimics but also conflicted with our
-  #  distro editing that had been done for many releases.
-  sed -i '/^[^#[]/{s/^/#/; s/ //g}; /^#[^ ]/s/ = /=/' etc/glance-$svc.conf
-
-  #  TODO: Make this more robust
-  #  Note it only edits the first occurrence, so assumes a section ordering in sample
-  #  and also doesn't support multi-valued variables like dhcpbridge_flagfile.
-  eval dist_conf=\$${svc}_dist
-  while read name eq value; do
-    test "$name" && test "$value" || continue
-    sed -i "0,/^# *$name=/{s!^# *$name=.*!#$name=$value!}" etc/glance-$svc.conf
-  done < $dist_conf
-done
 
 %build
+PYTHONPATH=. oslo-config-generator --config-dir=etc/oslo-config-generator/
+
 %{__python2} setup.py build
 
 %install
@@ -214,11 +194,6 @@ popd
 
 # Fix hidden-file-or-dir warnings
 rm -fr doc/build/html/.doctrees doc/build/html/.buildinfo
-rm -f %{buildroot}%{_sysconfdir}/glance*.conf
-rm -f %{buildroot}%{_sysconfdir}/glance*.ini
-rm -f %{buildroot}%{_sysconfdir}/logging.cnf.sample
-rm -f %{buildroot}%{_sysconfdir}/policy.json
-rm -f %{buildroot}%{_sysconfdir}/schema-image.json
 rm -f %{buildroot}/usr/share/doc/glance/README.rst
 
 # Setup directories
@@ -228,15 +203,22 @@ install -d -m 755 %{buildroot}%{_sysconfdir}/glance/metadefs
 
 # Config file
 install -p -D -m 640 etc/glance-api.conf %{buildroot}%{_sysconfdir}/glance/glance-api.conf
-install -p -D -m 644 %{SOURCE5} %{buildroot}%{_datadir}/glance/glance-api-dist.conf
+install -p -D -m 644 %{SOURCE21} %{buildroot}%{_datadir}/glance/glance-api-dist.conf
 install -p -D -m 644 etc/glance-api-paste.ini %{buildroot}%{_datadir}/glance/glance-api-dist-paste.ini
-install -p -D -m 640 etc/glance-registry.conf %{buildroot}%{_sysconfdir}/glance/glance-registry.conf
-install -p -D -m 644 %{SOURCE6} %{buildroot}%{_datadir}/glance/glance-registry-dist.conf
-install -p -D -m 644 etc/glance-registry-paste.ini %{buildroot}%{_datadir}/glance/glance-registry-dist-paste.ini
+##
 install -p -D -m 640 etc/glance-cache.conf %{buildroot}%{_sysconfdir}/glance/glance-cache.conf
-install -p -D -m 644 %{SOURCE7} %{buildroot}%{_datadir}/glance/glance-cache-dist.conf
+install -p -D -m 644 %{SOURCE22} %{buildroot}%{_datadir}/glance/glance-cache-dist.conf
+##
+install -p -D -m 640 etc/glance-glare.conf %{buildroot}%{_sysconfdir}/glance/glance-glare.conf
+install -p -D -m 644 %{SOURCE23} %{buildroot}%{_datadir}/glance/glance-glare-dist.conf
+install -p -D -m 644 etc/glance-api-paste.ini %{buildroot}%{_datadir}/glance/glance-glare-dist-paste.ini
+##
+install -p -D -m 640 etc/glance-registry.conf %{buildroot}%{_sysconfdir}/glance/glance-registry.conf
+install -p -D -m 644 %{SOURCE24} %{buildroot}%{_datadir}/glance/glance-registry-dist.conf
+install -p -D -m 644 etc/glance-registry-paste.ini %{buildroot}%{_datadir}/glance/glance-registry-dist-paste.ini
+##
 install -p -D -m 640 etc/glance-scrubber.conf %{buildroot}%{_sysconfdir}/glance/glance-scrubber.conf
-install -p -D -m 644 %{SOURCE8} %{buildroot}%{_datadir}/glance/glance-scrubber-dist.conf
+install -p -D -m 644 %{SOURCE25} %{buildroot}%{_datadir}/glance/glance-scrubber-dist.conf
 
 install -p -D -m 640 etc/policy.json %{buildroot}%{_sysconfdir}/glance/policy.json
 install -p -D -m 640 etc/schema-image.json %{buildroot}%{_sysconfdir}/glance/schema-image.json
@@ -246,34 +228,18 @@ install -p -D -m  640 etc/metadefs/*.json %{buildroot}%{_sysconfdir}/glance/meta
 
 # systemd services
 install -p -D -m 644 %{SOURCE1} %{buildroot}%{_unitdir}/openstack-glance-api.service
-install -p -D -m 644 %{SOURCE2} %{buildroot}%{_unitdir}/openstack-glance-registry.service
-install -p -D -m 644 %{SOURCE3} %{buildroot}%{_unitdir}/openstack-glance-scrubber.service
+install -p -D -m 644 %{SOURCE2} %{buildroot}%{_unitdir}/openstack-glance-glare.service
+install -p -D -m 644 %{SOURCE3} %{buildroot}%{_unitdir}/openstack-glance-registry.service
+install -p -D -m 644 %{SOURCE4} %{buildroot}%{_unitdir}/openstack-glance-scrubber.service
 
 # Logrotate config
-install -p -D -m 644 %{SOURCE4} %{buildroot}%{_sysconfdir}/logrotate.d/openstack-glance
+install -p -D -m 644 %{SOURCE10} %{buildroot}%{_sysconfdir}/logrotate.d/openstack-glance
 
 # Install pid directory
 install -d -m 755 %{buildroot}%{_localstatedir}/run/glance
 
 # Install log directory
 install -d -m 755 %{buildroot}%{_localstatedir}/log/glance
-
-# Programmatically update defaults in sample config
-# which is installed at /etc/$project/$program.conf
-# TODO: Make this more robust
-# Note it only edits the first occurrence, so assumes a section ordering in sample
-# and also doesn't support multi-valued variables.
-for svc in api registry cache scrubber; do
-  cfg=%{buildroot}%{_sysconfdir}/glance/glance-$svc.conf
-  test -e $cfg || continue
-  while read name eq value; do
-    test "$name" && test "$value" || continue
-    # Note some values in upstream glance config may not be commented
-    # and if not, they might not match the default value in code.
-    # So we comment out both froms to have dist config take precedence.
-    sed -i "0,/^#* *$name *=/{s!^#* *$name *=.*!#$name=$value!}" $cfg
-  done < %{buildroot}%{_datadir}/glance/glance-$svc-dist.conf
-done
 
 # Cleanup
 rm -rf %{buildroot}%{_prefix}%{_sysconfdir}
@@ -288,17 +254,20 @@ exit 0
 %post
 # Initial installation
 %systemd_post openstack-glance-api.service
+%systemd_post openstack-glance-glare.service
 %systemd_post openstack-glance-registry.service
 %systemd_post openstack-glance-scrubber.service
 
 
 %preun
 %systemd_preun openstack-glance-api.service
+%systemd_preun openstack-glance-glare.service
 %systemd_preun openstack-glance-registry.service
 %systemd_preun openstack-glance-scrubber.service
 
 %postun
 %systemd_postun_with_restart openstack-glance-api.service
+%systemd_postun_with_restart openstack-glance-glare.service
 %systemd_postun_with_restart openstack-glance-registry.service
 %systemd_postun_with_restart openstack-glance-scrubber.service
 
@@ -317,21 +286,25 @@ exit 0
 %{_bindir}/glance-replicator
 
 %{_datadir}/glance/glance-api-dist.conf
-%{_datadir}/glance/glance-registry-dist.conf
 %{_datadir}/glance/glance-cache-dist.conf
+%{_datadir}/glance/glance-glare-dist.conf
+%{_datadir}/glance/glance-registry-dist.conf
 %{_datadir}/glance/glance-scrubber-dist.conf
 %{_datadir}/glance/glance-api-dist-paste.ini
+%{_datadir}/glance/glance-glare-dist-paste.ini
 %{_datadir}/glance/glance-registry-dist-paste.ini
 
 %{_unitdir}/openstack-glance-api.service
+%{_unitdir}/openstack-glance-glare.service
 %{_unitdir}/openstack-glance-registry.service
 %{_unitdir}/openstack-glance-scrubber.service
 
 %{_mandir}/man1/glance*.1.gz
 %dir %{_sysconfdir}/glance
 %config(noreplace) %attr(-, root, glance) %{_sysconfdir}/glance/glance-api.conf
-%config(noreplace) %attr(-, root, glance) %{_sysconfdir}/glance/glance-registry.conf
+%config(noreplace) %attr(-, root, glance) %{_sysconfdir}/glance/glance-glare.conf
 %config(noreplace) %attr(-, root, glance) %{_sysconfdir}/glance/glance-cache.conf
+%config(noreplace) %attr(-, root, glance) %{_sysconfdir}/glance/glance-registry.conf
 %config(noreplace) %attr(-, root, glance) %{_sysconfdir}/glance/glance-scrubber.conf
 %config(noreplace) %attr(-, root, glance) %{_sysconfdir}/glance/policy.json
 %config(noreplace) %attr(-, root, glance) %{_sysconfdir}/glance/schema-image.json
