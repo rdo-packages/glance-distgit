@@ -151,6 +151,8 @@ BuildRequires:    python-stevedore
 BuildRequires:    python-taskflow >= 1.16.0
 BuildRequires:    python-webob
 BuildRequires:    python-wsme >= 0.7
+# TODO remove when oslo.messaging is rebuilt
+BuildRequires:    python-pika_pool
 
 %description      doc
 OpenStack Image Service (code-named Glance) provides discovery, registration,
@@ -179,18 +181,11 @@ PYTHONPATH=. oslo-config-generator --config-dir=etc/oslo-config-generator/
 # Delete tests
 rm -fr %{buildroot}%{python2_sitelib}/glance/tests
 
-# Drop old glance CLI it has been deprecated
-# and replaced glanceclient
-rm -f %{buildroot}%{_bindir}/glance
-
 export PYTHONPATH="$( pwd ):$PYTHONPATH"
-pushd doc
-sphinx-build -b html source build/html
-sphinx-build -b man source build/man
-
+%{__python2} setup.py build_sphinx
+%{__python2} setup.py build_sphinx --builder man
 mkdir -p %{buildroot}%{_mandir}/man1
-install -p -D -m 644 build/man/*.1 %{buildroot}%{_mandir}/man1/
-popd
+install -p -D -m 644 doc/build/man/*.1 %{buildroot}%{_mandir}/man1/
 
 # Fix hidden-file-or-dir warnings
 rm -fr doc/build/html/.doctrees doc/build/html/.buildinfo
