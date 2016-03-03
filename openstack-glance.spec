@@ -160,6 +160,17 @@ and delivery services for virtual disk images.
 
 This package contains documentation files for glance.
 
+%package -n python-%{service}-tests
+Summary:        Glance tests
+Requires:       openstack-%{service} = %{epoch}:%{version}-%{release}
+
+%description -n python-%{service}-tests
+OpenStack Image Service (code-named Glance) provides discovery, registration,
+and delivery services for virtual disk images.
+
+This package contains the Glance test files.
+
+
 %prep
 %setup -q -n glance-%{upstream_version}
 
@@ -177,9 +188,6 @@ PYTHONPATH=. oslo-config-generator --config-dir=etc/oslo-config-generator/
 
 %install
 %{__python2} setup.py install -O1 --skip-build --root %{buildroot}
-
-# Delete tests
-rm -fr %{buildroot}%{python2_sitelib}/glance/tests
 
 export PYTHONPATH="$( pwd ):$PYTHONPATH"
 %{__python2} setup.py build_sphinx
@@ -312,6 +320,11 @@ exit 0
 %doc README.rst
 %{python2_sitelib}/glance
 %{python2_sitelib}/glance-*.egg-info
+%exclude %{python2_sitelib}/glance/tests
+
+%files -n python-%{service}-tests
+%license LICENSE
+%{python2_sitelib}/%{service}/tests
 
 %files doc
 %doc doc/build/html
