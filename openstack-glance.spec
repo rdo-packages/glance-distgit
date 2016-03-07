@@ -8,7 +8,7 @@ Name:             openstack-glance
 # https://review.openstack.org/#/q/I6a35fa0dda798fad93b804d00a46af80f08d475c,n,z
 Epoch:            1
 Version:          11.0.1
-Release:          2%{?dist}
+Release:          3%{?dist}
 Summary:          OpenStack Image Service
 
 Group:            Applications/System
@@ -332,6 +332,9 @@ exit 0
 %doc doc/build/html
 
 %changelog
+* Mon Mar  7 2016 Haïkel Guémar <hguemar@fedoraproject.org> - 1:11.0.1-3
+- Drop python-elasticsearch dependency (required for glance-search now searchlight)
+
 * Fri Feb  5 2016 hguemar <hguemar@senbonzakura> - 1:11.0.1-2
 - Fix Glance image status manipulation through locations
 - CVE-2016-0757
