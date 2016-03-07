@@ -62,7 +62,6 @@ Requires:         python-anyjson
 Requires:         python2-castellan
 Requires:         python-crypto
 Requires:         python-cryptography >= 1.0
-Requires:         python-elasticsearch
 Requires:         python-eventlet >= 0.17.4
 Requires:         python-glance-store >= 0.9.1
 Requires:         python-httplib2
