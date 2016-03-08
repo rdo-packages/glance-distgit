@@ -150,8 +150,6 @@ BuildRequires:    python-stevedore
 BuildRequires:    python-taskflow >= 1.16.0
 BuildRequires:    python-webob
 BuildRequires:    python-wsme >= 0.7
-# TODO remove when oslo.messaging is rebuilt
-BuildRequires:    python-pika_pool
 
 %description      doc
 OpenStack Image Service (code-named Glance) provides discovery, registration,
