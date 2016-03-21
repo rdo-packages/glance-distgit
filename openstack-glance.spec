@@ -211,7 +211,7 @@ install -p -D -m 644 %{SOURCE22} %{buildroot}%{_datadir}/glance/glance-cache-dis
 ##
 install -p -D -m 640 etc/glance-glare.conf %{buildroot}%{_sysconfdir}/glance/glance-glare.conf
 install -p -D -m 644 %{SOURCE23} %{buildroot}%{_datadir}/glance/glance-glare-dist.conf
-install -p -D -m 644 etc/glance-api-paste.ini %{buildroot}%{_datadir}/glance/glance-glare-dist-paste.ini
+install -p -D -m 644 etc/glance-glare-paste.ini %{buildroot}%{_datadir}/glance/glance-glare-dist-paste.ini
 ##
 install -p -D -m 640 etc/glance-registry.conf %{buildroot}%{_sysconfdir}/glance/glance-registry.conf
 install -p -D -m 644 %{SOURCE24} %{buildroot}%{_datadir}/glance/glance-registry-dist.conf
