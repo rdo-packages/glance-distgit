@@ -64,30 +64,30 @@ Summary:          Glance Python libraries
 
 Requires:         pysendfile
 Requires:         python-anyjson
-Requires:         python2-castellan
+Requires:         python2-castellan >= 0.3.1
 Requires:         python-crypto
 Requires:         python-cryptography >= 1.0
 Requires:         python-eventlet >= 0.17.4
-Requires:         python-futurist >= 0.6.0
-Requires:         python-glance-store >= 0.9.1
+Requires:         python-futurist >= 0.11.0
+Requires:         python-glance-store >= 0.13.0
 Requires:         python-httplib2
 Requires:         python-jsonschema
 Requires:         python-keystoneclient >= 1:1.6.0
-Requires:         python-keystonemiddleware >= 2.0.0
+Requires:         python-keystonemiddleware >= 4.0.0
 Requires:         python-migrate >= 0.9.6
 Requires:         python-netaddr
-Requires:         python-oslo-concurrency >= 2.3.0
-Requires:         python-oslo-config >= 2:2.3.0
+Requires:         python-oslo-concurrency >= 3.5.0
+Requires:         python-oslo-config >= 2:3.7.0
 Requires:         python-oslo-context >= 0.2.0
-Requires:         python-oslo-db >= 2.4.1
-Requires:         python-oslo-i18n >= 1.5.0
-Requires:         python-oslo-log >= 1.8.0
-Requires:         python-oslo-messaging >= 2.5.0
-Requires:         python-oslo-middleware >= 2.8.0
+Requires:         python-oslo-db >= 4.1.0
+Requires:         python-oslo-i18n >= 2.1.0
+Requires:         python-oslo-log >= 1.14.0
+Requires:         python-oslo-messaging >= 4.0.0
+Requires:         python-oslo-middleware >= 3.0.0
 Requires:         python-oslo-policy >= 0.5.0
-Requires:         python-oslo-serialization >= 1.4.0
-Requires:         python-oslo-service >= 0.7.0
-Requires:         python-oslo-utils >= 2.0.0
+Requires:         python-oslo-serialization >= 1.10.0
+Requires:         python-oslo-service >= 1.0.0
+Requires:         python-oslo-utils >= 3.5.0
 Requires:         python-oslo-vmware >= 0.11.1
 Requires:         python-osprofiler
 Requires:         python-paste-deploy
@@ -97,12 +97,12 @@ Requires:         python-retrying
 Requires:         python-routes
 Requires:         python-semantic-version
 Requires:         python-six >= 1.9.0
-Requires:         python-sqlalchemy >= 0.9.9
+Requires:         python-sqlalchemy >= 1.0.10
 Requires:         python-stevedore >= 1.5.0
 Requires:         python-swiftclient >= 2.2.0
-Requires:         python-taskflow >= 1.16.0
-Requires:         python-webob
-Requires:         python-wsme >= 0.7
+Requires:         python-taskflow >= 1.26.0
+Requires:         python-webob >= 1.2.3
+Requires:         python-wsme >= 0.8
 Requires:         pyOpenSSL
 Requires:         pyxattr
 
@@ -130,31 +130,31 @@ BuildRequires:    graphviz
 
 # Required to build module documents
 BuildRequires:    python-boto
-BuildRequires:    python2-castellan
+BuildRequires:    python2-castellan >= 0.3.1
 BuildRequires:    python-crypto
 BuildRequires:    python-cryptography >= 1.0
 BuildRequires:    python-eventlet
 BuildRequires:    python-futurist
-BuildRequires:    python-glance-store >= 0.9.1
+BuildRequires:    python-glance-store >= 0.13.0
 BuildRequires:    python-httplib2
 BuildRequires:    python-keystoneauth1
-BuildRequires:    python-keystonemiddleware >= 2.0.0
-BuildRequires:    python-oslo-config >= 2:2.3.0
-BuildRequires:    python-oslo-concurrency >= 2.3.0
+BuildRequires:    python-keystonemiddleware >= 4.0.0
+BuildRequires:    python-oslo-config >= 2:3.7.0
+BuildRequires:    python-oslo-concurrency >= 3.5.0
 BuildRequires:    python-oslo-context >= 0.2.0
-BuildRequires:    python-oslo-db >= 2.4.1
-BuildRequires:    python-oslo-log >= 1.8.0
-BuildRequires:    python-oslo-messaging >= 2.5.0
+BuildRequires:    python-oslo-db >= 4.1.0
+BuildRequires:    python-oslo-log >= 1.14.0
+BuildRequires:    python-oslo-messaging >= 4.0.0
 BuildRequires:    python-oslo-policy >= 0.5.0
 BuildRequires:    python-osprofiler
 BuildRequires:    python-paste-deploy
 BuildRequires:    python-routes
 BuildRequires:    python-semantic-version
-BuildRequires:    python-sqlalchemy
+BuildRequires:    python-sqlalchemy >= 1.0.10
 BuildRequires:    python-stevedore
-BuildRequires:    python-taskflow >= 1.16.0
-BuildRequires:    python-webob
-BuildRequires:    python-wsme >= 0.7
+BuildRequires:    python-taskflow >= 1.26.0
+BuildRequires:    python-webob >= 1.2.3
+BuildRequires:    python-wsme >= 0.8
 
 %description      doc
 OpenStack Image Service (code-named Glance) provides discovery, registration,
