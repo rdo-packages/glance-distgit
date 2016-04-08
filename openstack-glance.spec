@@ -187,10 +187,12 @@ PYTHONPATH=. oslo-config-generator --config-dir=etc/oslo-config-generator/
 %{__python2} setup.py install -O1 --skip-build --root %{buildroot}
 
 export PYTHONPATH="$( pwd ):$PYTHONPATH"
-%{__python2} setup.py build_sphinx
-%{__python2} setup.py build_sphinx --builder man
-mkdir -p %{buildroot}%{_mandir}/man1
-install -p -D -m 644 doc/build/man/*.1 %{buildroot}%{_mandir}/man1/
+#TODO(apevec) debug sphinx build failures in DLRN buildroot
+#             not reproducible locally
+#%{__python2} setup.py build_sphinx
+#%{__python2} setup.py build_sphinx --builder man
+#mkdir -p %{buildroot}%{_mandir}/man1
+#install -p -D -m 644 doc/build/man/*.1 %{buildroot}%{_mandir}/man1/
 
 # Fix hidden-file-or-dir warnings
 rm -fr doc/build/html/.doctrees doc/build/html/.buildinfo
@@ -299,7 +301,7 @@ exit 0
 %{_unitdir}/openstack-glance-registry.service
 %{_unitdir}/openstack-glance-scrubber.service
 
-%{_mandir}/man1/glance*.1.gz
+#%{_mandir}/man1/glance*.1.gz
 %dir %{_sysconfdir}/glance
 %config(noreplace) %attr(-, root, glance) %{_sysconfdir}/glance/glance-api.conf
 %config(noreplace) %attr(-, root, glance) %{_sysconfdir}/glance/glance-glare.conf
@@ -324,6 +326,6 @@ exit 0
 %{python2_sitelib}/%{service}/tests
 
 %files doc
-%doc doc/build/html
+#%doc doc/build/html
 
 %changelog
