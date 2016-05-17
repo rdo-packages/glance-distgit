@@ -150,6 +150,8 @@ BuildRequires:    python-stevedore
 BuildRequires:    python-taskflow >= 1.26.0
 BuildRequires:    python-webob >= 1.2.3
 BuildRequires:    python-wsme >= 0.8
+# Required to compile translation files
+BuildRequires:    python-babel
 
 %description      doc
 OpenStack Image Service (code-named Glance) provides discovery, registration,
@@ -181,6 +183,15 @@ rm -rf {test-,}requirements.txt tools/{pip,test}-requires
 %build
 PYTHONPATH=. oslo-config-generator --config-dir=etc/oslo-config-generator/
 
+# Generate i18n files
+
+%{__python2} setup.py compile_catalog
+echo >> glance.egg-info/SOURCES.txt
+ls glance/locale/*/LC_*/glance*mo >> glance.egg-info/SOURCES.txt
+sed -i '/glance\/locale\/.*\/LC_.*\/glance.*.po/d'  glance.egg-info/SOURCES.txt
+sed -i '/glance\/locale\/glance.*.pot/d'  glance.egg-info/SOURCES.txt
+
+# Build
 %{__python2} setup.py build
 
 %install
@@ -242,6 +253,13 @@ install -d -m 755 %{buildroot}%{_localstatedir}/run/glance
 
 # Install log directory
 install -d -m 755 %{buildroot}%{_localstatedir}/log/glance
+
+# Install i18n files
+install -d -m 755 %{buildroot}%{_datadir}
+mv %{buildroot}%{python2_sitelib}/glance/locale %{buildroot}%{_datadir}/locale
+
+# Find language files
+%find_lang glance
 
 # Cleanup
 rm -rf %{buildroot}%{_prefix}%{_sysconfdir}
@@ -315,7 +333,7 @@ exit 0
 %dir %attr(0755, glance, nobody) %{_sharedstatedir}/glance
 %dir %attr(0750, glance, glance) %{_localstatedir}/log/glance
 
-%files -n python-glance
+%files -n python-glance -f glance.lang
 %doc README.rst
 %{python2_sitelib}/glance
 %{python2_sitelib}/glance-*.egg-info
