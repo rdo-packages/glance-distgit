@@ -150,6 +150,8 @@ BuildRequires:    python-stevedore
 BuildRequires:    python-taskflow >= 1.26.0
 BuildRequires:    python-webob >= 1.2.3
 BuildRequires:    python-wsme >= 0.8
+# Required to compile translation files
+BuildRequires:    python-babel
 
 %description      doc
 OpenStack Image Service (code-named Glance) provides discovery, registration,
@@ -169,7 +171,7 @@ This package contains the Glance test files.
 
 
 %prep
-%setup -q -n glance-%{upstream_version}
+%autosetup -n glance-%{upstream_version} -S git
 
 sed -i '/\/usr\/bin\/env python/d' glance/common/config.py glance/common/crypt.py glance/db/sqlalchemy/migrate_repo/manage.py
 
@@ -181,6 +183,10 @@ rm -rf {test-,}requirements.txt tools/{pip,test}-requires
 %build
 PYTHONPATH=. oslo-config-generator --config-dir=etc/oslo-config-generator/
 
+# Generate i18n files
+%{__python2} setup.py compile_catalog
+
+# Build
 %{__python2} setup.py build
 
 %install
@@ -242,6 +248,15 @@ install -d -m 755 %{buildroot}%{_localstatedir}/run/glance
 
 # Install log directory
 install -d -m 755 %{buildroot}%{_localstatedir}/log/glance
+
+# Install i18n .mo files (.po and .pot are not required)
+install -d -m 755 %{buildroot}%{_datadir}
+rm %{buildroot}%{python2_sitelib}/%{service}/locale/*/LC_*/%{service}*po
+rm %{buildroot}%{python2_sitelib}/%{service}/locale/*pot || : #pot files are being removed from source git trees
+mv %{buildroot}%{python2_sitelib}/%{service}/locale %{buildroot}%{_datadir}/locale
+
+# Find language files
+%find_lang %{service} --all-name
 
 # Cleanup
 rm -rf %{buildroot}%{_prefix}%{_sysconfdir}
@@ -315,7 +330,7 @@ exit 0
 %dir %attr(0755, glance, nobody) %{_sharedstatedir}/glance
 %dir %attr(0750, glance, glance) %{_localstatedir}/log/glance
 
-%files -n python-glance
+%files -n python-glance -f %{service}.lang
 %doc README.rst
 %{python2_sitelib}/glance
 %{python2_sitelib}/glance-*.egg-info
