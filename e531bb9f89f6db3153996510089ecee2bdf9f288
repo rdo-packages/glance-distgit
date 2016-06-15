@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a6b29fe_d672a448",
+        "filename": "openstack-glance-api.service",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 85
+      },
+      "writtenOn": "2016-06-15T09:02:03Z",
+      "side": 1,
+      "message": "I had question how users can override this values provided by the package, answer is:\n\nhttps://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/7/html/System_Administrators_Guide/sect-Managing_Services_with_systemd-Unit_Files.html#brid-Managing_Services_with_systemd-Extending_Unit_Config\n\nor systemctl edit \u003cservicename\u003e available since EL7.2\nwhich creates /etc/systemd/system/\u003cservicename\u003e.service.d/override.conf\nwith values overriding those provided by the package e.g. override.conf could have:\n[Service]\nLimitNOFILE\u003d524288",
+      "revId": "e531bb9f89f6db3153996510089ecee2bdf9f288",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    }
+  ]
+}
