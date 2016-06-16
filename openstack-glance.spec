@@ -36,7 +36,6 @@ BuildRequires:    intltool
 Requires(pre):    shadow-utils
 Requires:         python-glance = %{epoch}:%{version}-%{release}
 Requires:         python-glanceclient >= 1:0
-Requires:         openstack-utils
 
 Requires(post): systemd
 Requires(preun): systemd
