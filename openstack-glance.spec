@@ -3,6 +3,10 @@
 
 %{!?upstream_version: %global upstream_version %{version}%{?milestone}}
 
+#TODO(apevec) debug sphinx build failures in DLRN buildroot
+#             not reproducible locally
+%global with_doc 0
+
 Name:             openstack-glance
 # Liberty semver reset
 # https://review.openstack.org/#/q/I6a35fa0dda798fad93b804d00a46af80f08d475c,n,z
@@ -112,6 +116,7 @@ and delivery services for virtual disk images.
 
 This package contains the glance Python library.
 
+%if 0%{?with_doc}
 %package doc
 Summary:          Documentation for OpenStack Image Service
 
@@ -157,6 +162,7 @@ OpenStack Image Service (code-named Glance) provides discovery, registration,
 and delivery services for virtual disk images.
 
 This package contains documentation files for glance.
+%endif
 
 %package -n python-%{service}-tests
 Summary:        Glance tests
@@ -192,12 +198,12 @@ PYTHONPATH=. oslo-config-generator --config-dir=etc/oslo-config-generator/
 %{__python2} setup.py install -O1 --skip-build --root %{buildroot}
 
 export PYTHONPATH="$( pwd ):$PYTHONPATH"
-#TODO(apevec) debug sphinx build failures in DLRN buildroot
-#             not reproducible locally
-#%{__python2} setup.py build_sphinx
-#%{__python2} setup.py build_sphinx --builder man
-#mkdir -p %{buildroot}%{_mandir}/man1
-#install -p -D -m 644 doc/build/man/*.1 %{buildroot}%{_mandir}/man1/
+%if 0%{?with_doc}
+%{__python2} setup.py build_sphinx
+%{__python2} setup.py build_sphinx --builder man
+mkdir -p %{buildroot}%{_mandir}/man1
+install -p -D -m 644 doc/build/man/*.1 %{buildroot}%{_mandir}/man1/
+%endif
 
 # Fix hidden-file-or-dir warnings
 rm -fr doc/build/html/.doctrees doc/build/html/.buildinfo
@@ -339,7 +345,9 @@ exit 0
 %license LICENSE
 %{python2_sitelib}/%{service}/tests
 
+%if 0{?with_doc}
 %files doc
-#%doc doc/build/html
+%doc doc/build/html
+%endif
 
 %changelog
