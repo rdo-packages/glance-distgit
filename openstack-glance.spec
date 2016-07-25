@@ -3,6 +3,10 @@
 
 %{!?upstream_version: %global upstream_version %{version}%{?milestone}}
 
+#TODO(apevec) debug sphinx build failures in DLRN buildroot
+#             not reproducible locally
+%global with_doc 0
+
 Name:             openstack-glance
 # Liberty semver reset
 # https://review.openstack.org/#/q/I6a35fa0dda798fad93b804d00a46af80f08d475c,n,z
@@ -55,6 +59,34 @@ This package contains the API and registry servers.
 
 %package -n       python-glance
 Summary:          Glance Python libraries
+
+# Required to build module documents
+BuildRequires:    python-boto
+BuildRequires:    python-castellan >= 0.3.1
+BuildRequires:    python-crypto
+BuildRequires:    python-cryptography >= 1.0
+BuildRequires:    python-eventlet
+BuildRequires:    python-futurist
+BuildRequires:    python-glance-store >= 0.13.0
+BuildRequires:    python-httplib2
+BuildRequires:    python-keystoneauth1
+BuildRequires:    python-keystonemiddleware >= 4.0.0
+BuildRequires:    python-oslo-concurrency >= 3.5.0
+BuildRequires:    python-oslo-config >= 2:3.7.0
+BuildRequires:    python-oslo-context >= 0.2.0
+BuildRequires:    python-oslo-db >= 4.1.0
+BuildRequires:    python-oslo-log >= 1.14.0
+BuildRequires:    python-oslo-messaging >= 4.0.0
+BuildRequires:    python-oslo-policy >= 0.5.0
+BuildRequires:    python-osprofiler
+BuildRequires:    python-paste-deploy
+BuildRequires:    python-routes
+BuildRequires:    python-semantic-version
+BuildRequires:    python-sqlalchemy >= 1.0.10
+BuildRequires:    python-stevedore
+BuildRequires:    python-taskflow >= 1.26.0
+BuildRequires:    python-webob >= 1.2.3
+BuildRequires:    python-wsme >= 0.8
 
 Requires:         pysendfile
 Requires:         python-anyjson
@@ -112,6 +144,7 @@ and delivery services for virtual disk images.
 
 This package contains the glance Python library.
 
+%if 0%{?with_doc}
 %package doc
 Summary:          Documentation for OpenStack Image Service
 
@@ -122,41 +155,12 @@ BuildRequires:    python-sphinx
 BuildRequires:    python-oslo-sphinx
 BuildRequires:    graphviz
 
-# Required to build module documents
-BuildRequires:    python-boto
-BuildRequires:    python2-castellan >= 0.3.1
-BuildRequires:    python-crypto
-BuildRequires:    python-cryptography >= 1.0
-BuildRequires:    python-eventlet
-BuildRequires:    python-futurist
-BuildRequires:    python-glance-store >= 0.13.0
-BuildRequires:    python-httplib2
-BuildRequires:    python-keystoneauth1
-BuildRequires:    python-keystonemiddleware >= 4.0.0
-BuildRequires:    python-oslo-config >= 2:3.7.0
-BuildRequires:    python-oslo-concurrency >= 3.5.0
-BuildRequires:    python-oslo-context >= 0.2.0
-BuildRequires:    python-oslo-db >= 4.1.0
-BuildRequires:    python-oslo-log >= 1.14.0
-BuildRequires:    python-oslo-messaging >= 4.0.0
-BuildRequires:    python-oslo-policy >= 0.5.0
-BuildRequires:    python-osprofiler
-BuildRequires:    python-paste-deploy
-BuildRequires:    python-routes
-BuildRequires:    python-semantic-version
-BuildRequires:    python-sqlalchemy >= 1.0.10
-BuildRequires:    python-stevedore
-BuildRequires:    python-taskflow >= 1.26.0
-BuildRequires:    python-webob >= 1.2.3
-BuildRequires:    python-wsme >= 0.8
-# Required to compile translation files
-BuildRequires:    python-babel
-
 %description      doc
 OpenStack Image Service (code-named Glance) provides discovery, registration,
 and delivery services for virtual disk images.
 
 This package contains documentation files for glance.
+%endif
 
 %package -n python-%{service}-tests
 Summary:        Glance tests
@@ -192,12 +196,12 @@ PYTHONPATH=. oslo-config-generator --config-dir=etc/oslo-config-generator/
 %{__python2} setup.py install -O1 --skip-build --root %{buildroot}
 
 export PYTHONPATH="$( pwd ):$PYTHONPATH"
-#TODO(apevec) debug sphinx build failures in DLRN buildroot
-#             not reproducible locally
-#%{__python2} setup.py build_sphinx
-#%{__python2} setup.py build_sphinx --builder man
-#mkdir -p %{buildroot}%{_mandir}/man1
-#install -p -D -m 644 doc/build/man/*.1 %{buildroot}%{_mandir}/man1/
+%if 0%{?with_doc}
+%{__python2} setup.py build_sphinx
+%{__python2} setup.py build_sphinx --builder man
+mkdir -p %{buildroot}%{_mandir}/man1
+install -p -D -m 644 doc/build/man/*.1 %{buildroot}%{_mandir}/man1/
+%endif
 
 # Fix hidden-file-or-dir warnings
 rm -fr doc/build/html/.doctrees doc/build/html/.buildinfo
@@ -315,7 +319,9 @@ exit 0
 %{_unitdir}/openstack-glance-registry.service
 %{_unitdir}/openstack-glance-scrubber.service
 
-#%{_mandir}/man1/glance*.1.gz
+%if 0%{?with_doc}
+%{_mandir}/man1/glance*.1.gz
+%endif
 %dir %{_sysconfdir}/glance
 %config(noreplace) %attr(-, root, glance) %{_sysconfdir}/glance/glance-api.conf
 %config(noreplace) %attr(-, root, glance) %{_sysconfdir}/glance/glance-glare.conf
@@ -339,7 +345,9 @@ exit 0
 %license LICENSE
 %{python2_sitelib}/%{service}/tests
 
+%if 0%{?with_doc}
 %files doc
-#%doc doc/build/html
+%doc doc/build/html
+%endif
 
 %changelog
