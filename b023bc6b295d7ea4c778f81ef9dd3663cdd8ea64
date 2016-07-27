@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a106d94_a34a3a25",
+        "filename": "openstack-glance.spec",
+        "patchSetId": 4
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 87
+      },
+      "writtenOn": "2016-07-27T21:19:20Z",
+      "side": 1,
+      "message": "to be consistent w/ keystone change, shouldn\u0027t we keep the man page?",
+      "revId": "b023bc6b295d7ea4c778f81ef9dd3663cdd8ea64",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    }
+  ]
+}
