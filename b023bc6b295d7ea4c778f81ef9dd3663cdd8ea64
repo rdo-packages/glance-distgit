@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "1a106d94_2305aac2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 85
+      },
+      "writtenOn": "2016-07-27T21:45:48Z",
+      "side": 1,
+      "message": "BuildRequires are global, doesn\u0027t matter where they appear in the spec, so it\u0027s actually moving them outside %if conditional which matters here.",
+      "revId": "b023bc6b295d7ea4c778f81ef9dd3663cdd8ea64",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a106d94_c368168a",
+        "filename": "openstack-glance.spec",
+        "patchSetId": 4
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 85
+      },
+      "writtenOn": "2016-07-27T21:45:48Z",
+      "side": 1,
+      "message": "I must say I do not remember what was that anymore :)\nSo let\u0027s try one patchset with_doc 1 here.",
+      "revId": "b023bc6b295d7ea4c778f81ef9dd3663cdd8ea64",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a106d94_a34a3a25",
         "filename": "openstack-glance.spec",
         "patchSetId": 4
