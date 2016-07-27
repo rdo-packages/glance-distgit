@@ -16,6 +16,24 @@
       "revId": "b023bc6b295d7ea4c778f81ef9dd3663cdd8ea64",
       "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a106d94_836e1e95",
+        "filename": "openstack-glance.spec",
+        "patchSetId": 4
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 85
+      },
+      "writtenOn": "2016-07-27T21:39:37Z",
+      "side": 1,
+      "message": "yes, keep man pages",
+      "parentUuid": "1a106d94_a34a3a25",
+      "revId": "b023bc6b295d7ea4c778f81ef9dd3663cdd8ea64",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
     }
   ]
 }
