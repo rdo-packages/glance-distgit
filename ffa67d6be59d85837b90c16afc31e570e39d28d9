@@ -16,6 +16,24 @@
       "revId": "ffa67d6be59d85837b90c16afc31e570e39d28d9",
       "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a106d94_23e92a1b",
+        "filename": "openstack-glance.spec",
+        "patchSetId": 3
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 127
+      },
+      "writtenOn": "2016-07-27T18:17:50Z",
+      "side": 1,
+      "message": "I\u0027ll do the finer grained check now",
+      "parentUuid": "3a1371a2_18d57543",
+      "revId": "ffa67d6be59d85837b90c16afc31e570e39d28d9",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
     }
   ]
 }
