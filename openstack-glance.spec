@@ -35,7 +35,7 @@ BuildRequires:    python-setuptools
 BuildRequires:    python-pbr
 BuildRequires:    intltool
 # Required for config generation
-BuildRequires:    python2-castellan >= 0.3.1
+BuildRequires:    python-cursive
 BuildRequires:    python-crypto
 BuildRequires:    python-eventlet
 BuildRequires:    python-futurist
@@ -80,7 +80,7 @@ Summary:          Glance Python libraries
 
 Requires:         pysendfile
 Requires:         python-anyjson
-Requires:         python2-castellan >= 0.3.1
+Requires:         python-cursive
 Requires:         python-crypto
 Requires:         python-cryptography >= 1.0
 Requires:         python-eventlet >= 0.17.4
