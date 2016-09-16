@@ -15,7 +15,7 @@ Summary:          OpenStack Image Service
 
 License:          ASL 2.0
 URL:              http://glance.openstack.org
-Source0:          https://launchpad.net/glance/%{release_name}/%{version}/+download/glance-%{version}.tar.gz
+Source0:          https://tarballs.openstack.org/%{service}/%{service}-%{upstream_version}.tar.gz
 
 Source001:         openstack-glance-api.service
 Source002:         openstack-glance-glare.service
