@@ -55,6 +55,7 @@ BuildRequires:    python-eventlet
 BuildRequires:    python-futurist
 BuildRequires:    python-glance-store >= 0.13.0
 BuildRequires:    python-httplib2
+BuildRequires:    python-os-client-config >= 1.13.1
 BuildRequires:    python-oslo-config >= 2:3.7.0
 BuildRequires:    python-oslo-log
 BuildRequires:    python-oslo-middleware >= 3.0.0
@@ -104,6 +105,7 @@ Requires:         python-keystonemiddleware >= 4.12.0
 Requires:         python-migrate >= 0.9.6
 Requires:         python-monotonic >= 0.6
 Requires:         python-netaddr
+Requires:         python-os-client-config >= 1.13.1
 Requires:         python-oslo-concurrency >= 3.8.0
 Requires:         python-oslo-config >= 2:3.14.0
 Requires:         python-oslo-context >= 2.9.0
