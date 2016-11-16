@@ -29,6 +29,8 @@ Source023:         glance-glare-dist.conf
 Source024:         glance-registry-dist.conf
 Source025:         glance-scrubber-dist.conf
 
+Source030:         glance-sudoers
+
 BuildArch:        noarch
 BuildRequires:    python2-devel
 BuildRequires:    python-setuptools
@@ -127,6 +129,7 @@ Requires:         python-webob >= 1.2.3
 Requires:         python-wsme >= 0.8
 Requires:         pyOpenSSL
 Requires:         pyxattr
+Requires:         python-os-brick >= 1.8.0
 
 #test deps: python-mox python-nose python-requests
 #test and optional store:
@@ -269,6 +272,15 @@ install -d -m 755 %{buildroot}%{_localstatedir}/run/glance
 # Install log directory
 install -d -m 755 %{buildroot}%{_localstatedir}/log/glance
 
+# Install sudoers
+install -p -D -m 440 %{SOURCE30} %{buildroot}%{_sysconfdir}/sudoers.d/glance
+
+# Symlinks to rootwrap config files
+mkdir -p %{buildroot}%{_sysconfdir}/glance/rootwrap.d
+for filter in %{_datarootdir}/os-brick/rootwrap/*.filters; do
+  ln -s $filter %{buildroot}%{_sysconfdir}/glance/rootwrap.d
+done
+
 # Install i18n .mo files (.po and .pot are not required)
 install -d -m 755 %{buildroot}%{_datadir}
 rm -f %{buildroot}%{python2_sitelib}/%{service}/locale/*/LC_*/%{service}*po
@@ -349,8 +361,10 @@ exit 0
 %config(noreplace) %attr(-, root, glance) %{_sysconfdir}/glance/schema-image.json
 %config(noreplace) %attr(-, root, glance) %{_sysconfdir}/glance/metadefs/*.json
 %config(noreplace) %attr(-, root, glance) %{_sysconfdir}/logrotate.d/openstack-glance
+%{_sysconfdir}/glance/rootwrap.d/
 %dir %attr(0755, glance, nobody) %{_sharedstatedir}/glance
 %dir %attr(0750, glance, glance) %{_localstatedir}/log/glance
+%config(noreplace) %{_sysconfdir}/sudoers.d/glance
 
 %files -n python-glance -f %{service}.lang
 %doc README.rst
