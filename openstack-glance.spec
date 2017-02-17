@@ -10,7 +10,7 @@ Name:             openstack-glance
 # https://review.openstack.org/#/q/I6a35fa0dda798fad93b804d00a46af80f08d475c,n,z
 Epoch:            1
 Version:          14.0.0
-Release:          1%{?dist}
+Release:          2%{?dist}
 Summary:          OpenStack Image Service
 
 License:          ASL 2.0
@@ -382,6 +382,9 @@ exit 0
 %endif
 
 %changelog
+* Wed Mar 08 2017 Eric Harney <eharney@redhat.com> 1:14.0.0-2
+- Remove privsep-helper from sudo config
+
 * Wed Feb 22 2017 Alfredo Moralejo <amoralej@redhat.com> 1:14.0.0-1
 - Update to 14.0.0
 
