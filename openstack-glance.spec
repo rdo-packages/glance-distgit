@@ -37,6 +37,7 @@ BuildRequires:    python-setuptools
 BuildRequires:    python-pbr
 BuildRequires:    intltool
 # Required for config generation
+BuildRequires:    python-alembic
 BuildRequires:    python-cursive
 BuildRequires:    python-crypto
 BuildRequires:    python-eventlet
@@ -164,7 +165,6 @@ BuildRequires:    python-oslo-db >= 4.1.0
 BuildRequires:    python-sqlalchemy >= 1.0.10
 BuildRequires:    python-stevedore
 BuildRequires:    python-webob >= 1.2.3
-# Required for man page building
 BuildRequires:    python-oslotest
 BuildRequires:    python-psutil
 BuildRequires:    python-testresources
@@ -216,9 +216,6 @@ PYTHONPATH=. oslo-config-generator --config-dir=etc/oslo-config-generator/
 export PYTHONPATH="$( pwd ):$PYTHONPATH"
 %if 0%{?with_doc}
 %{__python2} setup.py build_sphinx
-%{__python2} setup.py build_sphinx --builder man
-mkdir -p %{buildroot}%{_mandir}/man1
-install -p -D -m 644 doc/build/man/*.1 %{buildroot}%{_mandir}/man1/
 %endif
 
 # Fix hidden-file-or-dir warnings
@@ -348,9 +345,6 @@ exit 0
 %{_unitdir}/openstack-glance-registry.service
 %{_unitdir}/openstack-glance-scrubber.service
 
-%if 0%{?with_doc}
-%{_mandir}/man1/glance*.1.gz
-%endif
 %dir %{_sysconfdir}/glance
 %config(noreplace) %attr(-, root, glance) %{_sysconfdir}/glance/glance-api.conf
 %config(noreplace) %attr(-, root, glance) %{_sysconfdir}/glance/glance-glare.conf
