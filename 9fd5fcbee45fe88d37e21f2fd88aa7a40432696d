@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ac4a560_697cad73",
+        "filename": "openstack-glance.spec",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 85
+      },
+      "writtenOn": "2017-03-01T01:48:27Z",
+      "side": 1,
+      "message": "how is this related?",
+      "revId": "9fd5fcbee45fe88d37e21f2fd88aa7a40432696d",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac4a560_8981094d",
+        "filename": "openstack-glance.spec",
+        "patchSetId": 2
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 85
+      },
+      "writtenOn": "2017-03-01T01:48:27Z",
+      "side": 1,
+      "message": "remove",
+      "revId": "9fd5fcbee45fe88d37e21f2fd88aa7a40432696d",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    }
+  ]
+}
