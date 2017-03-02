@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5ac4a560_8949098e",
+        "filename": "openstack-glance.spec",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 128
+      },
+      "writtenOn": "2017-03-02T09:17:46Z",
+      "side": 1,
+      "message": "According to commit message: \"Add BR: python-alembic to fix a warning during documentation build\"",
+      "parentUuid": "5ac4a560_e980bd8d",
+      "revId": "f7c585a4dfa2cef33da8525723c164be98211c99",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ac4a560_c97301e6",
         "filename": "openstack-glance.spec",
         "patchSetId": 3
