@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "5ac4a560_c95a2150",
+        "filename": "openstack-glance.spec",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 113
+      },
+      "writtenOn": "2017-03-02T09:24:51Z",
+      "side": 1,
+      "message": "Ok, need more coffee :). Then we just need to remove the comment at the end of the spec.",
+      "parentUuid": "5ac4a560_8949098e",
+      "revId": "f7c585a4dfa2cef33da8525723c164be98211c99",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ac4a560_c97301e6",
         "filename": "openstack-glance.spec",
         "patchSetId": 3
