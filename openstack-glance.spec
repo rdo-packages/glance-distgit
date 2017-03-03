@@ -18,14 +18,12 @@ URL:              http://glance.openstack.org
 Source0:          https://tarballs.openstack.org/%{service}/%{service}-%{upstream_version}.tar.gz
 
 Source001:         openstack-glance-api.service
-Source002:         openstack-glance-glare.service
 Source003:         openstack-glance-registry.service
 Source004:         openstack-glance-scrubber.service
 Source010:         openstack-glance.logrotate
 
 Source021:         glance-api-dist.conf
 Source022:         glance-cache-dist.conf
-Source023:         glance-glare-dist.conf
 Source024:         glance-registry-dist.conf
 Source025:         glance-scrubber-dist.conf
 
@@ -237,10 +235,6 @@ install -p -D -m 644 etc/glance-api-paste.ini %{buildroot}%{_datadir}/glance/gla
 install -p -D -m 640 etc/glance-cache.conf %{buildroot}%{_sysconfdir}/glance/glance-cache.conf
 install -p -D -m 644 %{SOURCE22} %{buildroot}%{_datadir}/glance/glance-cache-dist.conf
 ##
-install -p -D -m 640 etc/glance-glare.conf %{buildroot}%{_sysconfdir}/glance/glance-glare.conf
-install -p -D -m 644 %{SOURCE23} %{buildroot}%{_datadir}/glance/glance-glare-dist.conf
-install -p -D -m 644 etc/glance-glare-paste.ini %{buildroot}%{_datadir}/glance/glance-glare-dist-paste.ini
-##
 install -p -D -m 640 etc/glance-registry.conf %{buildroot}%{_sysconfdir}/glance/glance-registry.conf
 install -p -D -m 644 %{SOURCE24} %{buildroot}%{_datadir}/glance/glance-registry-dist.conf
 install -p -D -m 644 etc/glance-registry-paste.ini %{buildroot}%{_datadir}/glance/glance-registry-dist-paste.ini
@@ -256,7 +250,6 @@ install -p -D -m  640 etc/metadefs/*.json %{buildroot}%{_sysconfdir}/glance/meta
 
 # systemd services
 install -p -D -m 644 %{SOURCE1} %{buildroot}%{_unitdir}/openstack-glance-api.service
-install -p -D -m 644 %{SOURCE2} %{buildroot}%{_unitdir}/openstack-glance-glare.service
 install -p -D -m 644 %{SOURCE3} %{buildroot}%{_unitdir}/openstack-glance-registry.service
 install -p -D -m 644 %{SOURCE4} %{buildroot}%{_unitdir}/openstack-glance-scrubber.service
 
@@ -300,20 +293,17 @@ exit 0
 %post
 # Initial installation
 %systemd_post openstack-glance-api.service
-%systemd_post openstack-glance-glare.service
 %systemd_post openstack-glance-registry.service
 %systemd_post openstack-glance-scrubber.service
 
 
 %preun
 %systemd_preun openstack-glance-api.service
-%systemd_preun openstack-glance-glare.service
 %systemd_preun openstack-glance-registry.service
 %systemd_preun openstack-glance-scrubber.service
 
 %postun
 %systemd_postun_with_restart openstack-glance-api.service
-%systemd_postun_with_restart openstack-glance-glare.service
 %systemd_postun_with_restart openstack-glance-registry.service
 %systemd_postun_with_restart openstack-glance-scrubber.service
 
@@ -321,6 +311,8 @@ exit 0
 %doc README.rst
 %{_bindir}/glance-api
 %{_bindir}/glance-control
+# TODO(jpena): glance-glare should have been removed
+# see https://review.openstack.org/441268
 %{_bindir}/glance-glare
 %{_bindir}/glance-manage
 %{_bindir}/glance-registry
@@ -333,21 +325,17 @@ exit 0
 
 %{_datadir}/glance/glance-api-dist.conf
 %{_datadir}/glance/glance-cache-dist.conf
-%{_datadir}/glance/glance-glare-dist.conf
 %{_datadir}/glance/glance-registry-dist.conf
 %{_datadir}/glance/glance-scrubber-dist.conf
 %{_datadir}/glance/glance-api-dist-paste.ini
-%{_datadir}/glance/glance-glare-dist-paste.ini
 %{_datadir}/glance/glance-registry-dist-paste.ini
 
 %{_unitdir}/openstack-glance-api.service
-%{_unitdir}/openstack-glance-glare.service
 %{_unitdir}/openstack-glance-registry.service
 %{_unitdir}/openstack-glance-scrubber.service
 
 %dir %{_sysconfdir}/glance
 %config(noreplace) %attr(-, root, glance) %{_sysconfdir}/glance/glance-api.conf
-%config(noreplace) %attr(-, root, glance) %{_sysconfdir}/glance/glance-glare.conf
 %config(noreplace) %attr(-, root, glance) %{_sysconfdir}/glance/glance-cache.conf
 %config(noreplace) %attr(-, root, glance) %{_sysconfdir}/glance/glance-registry.conf
 %config(noreplace) %attr(-, root, glance) %{_sysconfdir}/glance/glance-scrubber.conf
