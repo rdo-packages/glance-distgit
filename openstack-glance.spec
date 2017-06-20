@@ -310,6 +310,7 @@ exit 0
 %files
 %doc README.rst
 %{_bindir}/glance-api
+%{_bindir}/glance-wsgi-api
 %{_bindir}/glance-control
 %{_bindir}/glance-manage
 %{_bindir}/glance-registry
