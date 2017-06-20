@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9aa7fdbe_c48832ea",
+        "filename": "openstack-glance.spec",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 128
+      },
+      "writtenOn": "2017-06-20T08:24:09Z",
+      "side": 1,
+      "message": "It\u0027d be nice if we could use the upstream file glance-swift.conf.sample but config options are uncommented, so i guess we can\u0027t, right?",
+      "range": {
+        "startLine": 29,
+        "startChar": 19,
+        "endLine": 29,
+        "endChar": 36
+      },
+      "revId": "23f6aac6ee3cbe421e6155847e0ebc38d5850886",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9aa7fdbe_847e2ae3",
+        "filename": "openstack-glance.spec",
+        "patchSetId": 1
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 128
+      },
+      "writtenOn": "2017-06-20T08:24:09Z",
+      "side": 1,
+      "message": "iiuc, this should be _sysconfdir.",
+      "range": {
+        "startLine": 246,
+        "startChar": 47,
+        "endLine": 246,
+        "endChar": 55
+      },
+      "revId": "23f6aac6ee3cbe421e6155847e0ebc38d5850886",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9aa7fdbe_a4832ecb",
+        "filename": "openstack-glance.spec",
+        "patchSetId": 1
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 128
+      },
+      "writtenOn": "2017-06-20T08:24:09Z",
+      "side": 1,
+      "message": "this line should be removed, this is only for non-configurable files, as per-distribution ones.",
+      "range": {
+        "startLine": 330,
+        "startChar": 0,
+        "endLine": 330,
+        "endChar": 36
+      },
+      "revId": "23f6aac6ee3cbe421e6155847e0ebc38d5850886",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    }
+  ]
+}
