@@ -31,6 +31,8 @@ Source026:         glance-swift.conf
 Source030:         glance-sudoers
 
 BuildArch:        noarch
+
+BuildRequires:    git
 BuildRequires:    python2-devel
 BuildRequires:    python-setuptools
 BuildRequires:    python-pbr
@@ -151,7 +153,7 @@ Requires:         %{name} = %{epoch}:%{version}-%{release}
 
 BuildRequires:    systemd-units
 BuildRequires:    python-sphinx
-BuildRequires:    python-oslo-sphinx
+BuildRequires:    python-openstackdocstheme
 BuildRequires:    graphviz
 # Required to build module documents
 BuildRequires:    python-boto
@@ -191,7 +193,7 @@ This package contains the Glance test files.
 
 
 %prep
-%setup -q -n glance-%{upstream_version}
+%autosetup -n glance-%{upstream_version} -S git
 
 sed -i '/\/usr\/bin\/env python/d' glance/common/config.py glance/common/crypt.py glance/db/sqlalchemy/migrate_repo/manage.py
 
