@@ -214,7 +214,7 @@ PYTHONPATH=. oslo-config-generator --config-dir=etc/oslo-config-generator/
 
 export PYTHONPATH="$( pwd ):$PYTHONPATH"
 %if 0%{?with_doc}
-%{__python2} setup.py build_sphinx
+%{__python2} setup.py build_sphinx -b html
 %endif
 
 # Fix hidden-file-or-dir warnings
