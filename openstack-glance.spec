@@ -151,7 +151,7 @@ Requires:         %{name} = %{epoch}:%{version}-%{release}
 
 BuildRequires:    systemd-units
 BuildRequires:    python-sphinx
-BuildRequires:    python-oslo-sphinx
+BuildRequires:    python-openstackdocstheme
 BuildRequires:    graphviz
 # Required to build module documents
 BuildRequires:    python-boto
