@@ -366,3 +366,4 @@ exit 0
 %endif
 
 %changelog
+# REMOVEME: error caused by commit http://git.openstack.org/cgit/openstack/glance/commit/?id=10edf27c7fb43cd026164e7815c676eb3fad256a
