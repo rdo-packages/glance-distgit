@@ -47,6 +47,7 @@ BuildRequires:    python-setuptools
 BuildRequires:    python-pbr
 BuildRequires:    intltool
 # Required for config generation
+BuildRequires:    openstack-macros
 BuildRequires:    python-alembic
 BuildRequires:    python-cursive
 BuildRequires:    python-crypto
@@ -199,8 +200,7 @@ sed -i '/\/usr\/bin\/env python/d' glance/common/config.py glance/common/crypt.p
 
 # Remove the requirements file so that pbr hooks don't add it
 # to distutils requiers_dist config
-rm -rf {test-,}requirements.txt tools/{pip,test}-requires
-
+%py_req_cleanup
 
 %build
 PYTHONPATH=. oslo-config-generator --config-dir=etc/oslo-config-generator/
