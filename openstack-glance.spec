@@ -151,6 +151,7 @@ Summary:          Documentation for OpenStack Image Service
 
 Requires:         %{name} = %{epoch}:%{version}-%{release}
 
+BuildRequires:    openstack-macros
 BuildRequires:    systemd-units
 BuildRequires:    python-sphinx
 BuildRequires:    python-openstackdocstheme
@@ -199,8 +200,7 @@ sed -i '/\/usr\/bin\/env python/d' glance/common/config.py glance/common/crypt.p
 
 # Remove the requirements file so that pbr hooks don't add it
 # to distutils requiers_dist config
-rm -rf {test-,}requirements.txt tools/{pip,test}-requires
-
+%py_req_cleanup
 
 %build
 PYTHONPATH=. oslo-config-generator --config-dir=etc/oslo-config-generator/
