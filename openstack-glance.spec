@@ -5,6 +5,15 @@
 
 %global with_doc 1
 
+%global common_desc \
+OpenStack Image Service (code-named Glance) provides discovery, registration, \
+and delivery services for virtual disk images. The Image Service API server \
+provides a standard REST interface for querying information about virtual disk \
+images stored in a variety of back-end stores, including OpenStack Object \
+Storage. Clients can register new virtual disk images with the Image Service, \
+query for information on publicly available disk images, and use the Image \
+Service's client library for streaming virtual disk images.
+
 Name:             openstack-glance
 # Liberty semver reset
 # https://review.openstack.org/#/q/I6a35fa0dda798fad93b804d00a46af80f08d475c,n,z
@@ -69,13 +78,7 @@ Requires(postun): systemd
 BuildRequires: systemd
 
 %description
-OpenStack Image Service (code-named Glance) provides discovery, registration,
-and delivery services for virtual disk images. The Image Service API server
-provides a standard REST interface for querying information about virtual disk
-images stored in a variety of back-end stores, including OpenStack Object
-Storage. Clients can register new virtual disk images with the Image Service,
-query for information on publicly available disk images, and use the Image
-Service's client library for streaming virtual disk images.
+%{common_desc}
 
 This package contains the API and registry servers.
 
@@ -140,8 +143,7 @@ Requires:         python-os-brick >= 1.8.0
 Requires:         python-boto
 
 %description -n   python-glance
-OpenStack Image Service (code-named Glance) provides discovery, registration,
-and delivery services for virtual disk images.
+%{common_desc}
 
 This package contains the glance Python library.
 
@@ -175,8 +177,7 @@ BuildRequires:    python-pep8
 BuildRequires:    python-babel
 
 %description      doc
-OpenStack Image Service (code-named Glance) provides discovery, registration,
-and delivery services for virtual disk images.
+%{common_desc}
 
 This package contains documentation files for glance.
 %endif
@@ -186,8 +187,7 @@ Summary:        Glance tests
 Requires:       openstack-%{service} = %{epoch}:%{version}-%{release}
 
 %description -n python-%{service}-tests
-OpenStack Image Service (code-named Glance) provides discovery, registration,
-and delivery services for virtual disk images.
+%{common_desc}
 
 This package contains the Glance test files.
 
