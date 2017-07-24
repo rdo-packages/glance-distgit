@@ -275,6 +275,9 @@ mkdir -p %{buildroot}%{_sysconfdir}/glance/rootwrap.d
 for filter in %{_datarootdir}/os-brick/rootwrap/*.filters; do
   ln -s $filter %{buildroot}%{_sysconfdir}/glance/rootwrap.d
 done
+for filter in %{_datarootdir}/glance_store/rootwrap/*.filters; do
+  test -f $filter && ln -s $filter %{buildroot}%{_sysconfdir}/glance/rootwrap.d
+done
 
 # Install i18n .mo files (.po and .pot are not required)
 install -d -m 755 %{buildroot}%{_datadir}
