@@ -173,7 +173,6 @@ BuildRequires:    python-oslotest
 BuildRequires:    python-psutil
 BuildRequires:    python-testresources
 BuildRequires:    pyxattr
-BuildRequires:    python-pep8
 # Required to compile translation files
 BuildRequires:    python-babel
 
