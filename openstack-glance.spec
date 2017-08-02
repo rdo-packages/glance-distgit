@@ -203,7 +203,6 @@ sed -i '/\/usr\/bin\/env python/d' glance/common/config.py glance/common/crypt.p
 
 %build
 PYTHONPATH=. oslo-config-generator --config-dir=etc/oslo-config-generator/
-
 # Build
 %{__python2} setup.py build
 
@@ -213,7 +212,6 @@ PYTHONPATH=. oslo-config-generator --config-dir=etc/oslo-config-generator/
 %install
 %{__python2} setup.py install -O1 --skip-build --root %{buildroot}
 
-export PYTHONPATH="$( pwd ):$PYTHONPATH"
 %if 0%{?with_doc}
 %{__python2} setup.py build_sphinx -b html
 %endif
