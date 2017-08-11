@@ -53,25 +53,25 @@ BuildRequires:    python-cursive
 BuildRequires:    python-crypto
 BuildRequires:    python-eventlet
 BuildRequires:    python-futurist
-BuildRequires:    python-glance-store >= 0.13.0
+BuildRequires:    python-glance-store >= 0.21.0
 BuildRequires:    python-httplib2
-BuildRequires:    python-oslo-config >= 2:3.7.0
+BuildRequires:    python-oslo-config >= 2:4.0.0
 BuildRequires:    python-oslo-log
-BuildRequires:    python-oslo-middleware >= 3.0.0
-BuildRequires:    python-oslo-policy >= 0.5.0
-BuildRequires:    python-oslo-utils >= 3.5.0
+BuildRequires:    python-oslo-middleware >= 3.27.0
+BuildRequires:    python-oslo-policy >= 1.23.0
+BuildRequires:    python-oslo-utils >= 3.20.0
 BuildRequires:    python-osprofiler
 BuildRequires:    python-paste-deploy
 BuildRequires:    python-requests
 BuildRequires:    python-routes
-BuildRequires:    python-oslo-messaging >= 4.0.0
+BuildRequires:    python-oslo-messaging >= 5.24.2
 BuildRequires:    python-semantic-version
-BuildRequires:    python-taskflow >= 1.26.0
+BuildRequires:    python-taskflow >= 2.7.0
 BuildRequires:    python-wsme >= 0.8
 
 Requires(pre):    shadow-utils
 Requires:         python-glance = %{epoch}:%{version}-%{release}
-Requires:         python-glanceclient >= 1:0
+Requires:         python-glanceclient >= 1:2.8.0
 
 Requires(post): systemd
 Requires(preun): systemd
@@ -87,55 +87,52 @@ This package contains the API and registry servers.
 Summary:          Glance Python libraries
 
 Requires:         pysendfile
-Requires:         python-anyjson
 Requires:         python-cursive
-Requires:         python-crypto
-Requires:         python-cryptography >= 1.0
+Requires:         python-cryptography >= 1.6
 Requires:         python-debtcollector >= 1.2.0
 Requires:         python-eventlet >= 0.18.2
 Requires:         python-futurist >= 0.11.0
-Requires:         python-glance-store >= 0.18.0
+Requires:         python-glance-store >= 0.21.0
 Requires:         python-httplib2
 Requires:         python-iso8601 >= 0.1.11
 Requires:         python-jsonschema
-Requires:         python-keystoneauth1 >= 2.18.0
+Requires:         python-keystoneauth1 >= 3.1.0
 Requires:         python-keystoneclient >= 1:3.8.0
 Requires:         python-keystonemiddleware >= 4.12.0
-Requires:         python-migrate >= 0.9.6
+Requires:         python-migrate >= 0.11.0
 Requires:         python-monotonic >= 0.6
-Requires:         python-netaddr
 Requires:         python-oslo-concurrency >= 3.8.0
-Requires:         python-oslo-config >= 2:3.14.0
-Requires:         python-oslo-context >= 2.9.0
-Requires:         python-oslo-db >= 4.15.0
+Requires:         python-oslo-config >= 2:4.0.0
+Requires:         python-oslo-context >= 2.14.0
+Requires:         python-oslo-db >= 4.24.0
 Requires:         python-oslo-i18n >= 2.1.0
-Requires:         python-oslo-log >= 3.11.0
-Requires:         python-oslo-messaging >= 5.14.0
-Requires:         python-oslo-middleware >= 3.0.0
-Requires:         python-oslo-policy >= 1.17.0
+Requires:         python-oslo-log >= 3.22.0
+Requires:         python-oslo-messaging >= 5.24.2
+Requires:         python-oslo-middleware >= 3.27.0
+Requires:         python-oslo-policy >= 1.23.0
 Requires:         python-oslo-serialization >= 1.10.0
-Requires:         python-oslo-service >= 1.10.0
-Requires:         python-oslo-utils >= 3.18.0
+Requires:         python-oslo-utils >= 3.20.0
 Requires:         python-oslo-vmware >= 0.11.1
 Requires:         python-osprofiler
 Requires:         python-paste
 Requires:         python-paste-deploy
 Requires:         python-pbr
-Requires:         python-posix_ipc
 Requires:         python-prettytable
 Requires:         python-retrying
 Requires:         python-routes
 Requires:         python-semantic-version
 Requires:         python-six >= 1.9.0
 Requires:         python-sqlalchemy >= 1.0.10
-Requires:         python-stevedore >= 1.17.1
+Requires:         python-stevedore >= 1.20.0
 Requires:         python-swiftclient >= 2.2.0
 Requires:         python-taskflow >= 2.7.0
-Requires:         python-webob >= 1.6.0
+Requires:         python-webob >= 1.7.1
 Requires:         python-wsme >= 0.8
 Requires:         pyOpenSSL
 Requires:         pyxattr
 Requires:         python-os-brick >= 1.8.0
+Requires:         python-alembic >= 0.8.7
+Requires:         python-sqlparse
 
 #test deps: python-mox python-nose python-requests
 #test and optional store:
@@ -160,7 +157,7 @@ BuildRequires:    python-openstackdocstheme
 BuildRequires:    graphviz
 # Required to build module documents
 BuildRequires:    python-boto
-BuildRequires:    python-cryptography >= 1.0
+BuildRequires:    python-cryptography >= 1.6
 BuildRequires:    python-keystoneauth1
 BuildRequires:    python-keystonemiddleware
 BuildRequires:    python-oslo-concurrency >= 3.5.0
