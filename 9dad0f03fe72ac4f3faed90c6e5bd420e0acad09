@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a890539_813c5c95",
+        "filename": "openstack-glance.spec",
+        "patchSetId": 2
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 128
+      },
+      "writtenOn": "2017-08-14T10:22:38Z",
+      "side": 1,
+      "message": "For the record, version in u-c is 0.22.0, however there is a problem with releases in glance_store where last tag in master is 0.21.0. Reported upstream in https://bugs.launchpad.net/glance-store/+bug/1710590",
+      "revId": "9dad0f03fe72ac4f3faed90c6e5bd420e0acad09",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a890539_01486c2c",
+        "filename": "openstack-glance.spec",
+        "patchSetId": 2
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 128
+      },
+      "writtenOn": "2017-08-14T10:22:38Z",
+      "side": 1,
+      "message": "This has been removed as req in pike.",
+      "range": {
+        "startLine": 123,
+        "startChar": 0,
+        "endLine": 123,
+        "endChar": 41
+      },
+      "revId": "9dad0f03fe72ac4f3faed90c6e5bd420e0acad09",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    }
+  ]
+}
