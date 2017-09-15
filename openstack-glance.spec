@@ -72,9 +72,7 @@ Requires(pre):    shadow-utils
 Requires:         python-glance = %{epoch}:%{version}-%{release}
 Requires:         python-glanceclient >= 1:2.8.0
 
-Requires(post): systemd
-Requires(preun): systemd
-Requires(postun): systemd
+%{?systemd_requires}
 BuildRequires: systemd
 
 %description
