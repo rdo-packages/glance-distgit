@@ -19,7 +19,7 @@ Name:             openstack-glance
 # https://review.openstack.org/#/q/I6a35fa0dda798fad93b804d00a46af80f08d475c,n,z
 Epoch:            1
 Version:          15.0.0
-Release:          1%{?dist}
+Release:          2%{?dist}
 Summary:          OpenStack Image Service
 
 License:          ASL 2.0
@@ -367,6 +367,9 @@ exit 0
 %endif
 
 %changelog
+* Tue Oct 31 2017 Alan Bishop <abishop@redhat.com> 1:15.0.0-2
+- Fix glance_store rootwrap filter path
+
 * Wed Aug 30 2017 rdo-trunk <javier.pena@redhat.com> 1:15.0.0-1
 - Update to 15.0.0
 
