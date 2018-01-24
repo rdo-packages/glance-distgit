@@ -222,6 +222,7 @@ install -d -m 755 %{buildroot}%{_sysconfdir}/glance/metadefs
 
 # Config file
 install -p -D -m 640 etc/glance-api.conf %{buildroot}%{_sysconfdir}/glance/glance-api.conf
+install -p -D -m 640 etc/glance-image-import.conf.sample %{buildroot}%{_sysconfdir}/glance/glance-image-import.conf
 install -p -D -m 644 %{SOURCE21} %{buildroot}%{_datadir}/glance/glance-api-dist.conf
 install -p -D -m 644 etc/glance-api-paste.ini %{buildroot}%{_datadir}/glance/glance-api-dist-paste.ini
 ##
@@ -333,6 +334,7 @@ exit 0
 
 %dir %{_sysconfdir}/glance
 %config(noreplace) %attr(-, root, glance) %{_sysconfdir}/glance/glance-api.conf
+%config(noreplace) %attr(-, root, glance) %{_sysconfdir}/glance/glance-image-import.conf
 %config(noreplace) %attr(-, root, glance) %{_sysconfdir}/glance/glance-cache.conf
 %config(noreplace) %attr(-, root, glance) %{_sysconfdir}/glance/glance-registry.conf
 %config(noreplace) %attr(-, root, glance) %{_sysconfdir}/glance/glance-scrubber.conf
