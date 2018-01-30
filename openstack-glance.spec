@@ -147,7 +147,6 @@ Summary:          Documentation for OpenStack Image Service
 
 Requires:         %{name} = %{epoch}:%{version}-%{release}
 
-BuildRequires:    systemd-units
 BuildRequires:    python-sphinx
 BuildRequires:    python-openstackdocstheme
 BuildRequires:    graphviz
