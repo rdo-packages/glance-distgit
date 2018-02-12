@@ -9,8 +9,8 @@ Name:             openstack-glance
 # Liberty semver reset
 # https://review.openstack.org/#/q/I6a35fa0dda798fad93b804d00a46af80f08d475c,n,z
 Epoch:            1
-Version:          14.0.0
-Release:          2%{?dist}
+Version:          14.0.1
+Release:          1%{?dist}
 Summary:          OpenStack Image Service
 
 License:          ASL 2.0
@@ -382,6 +382,9 @@ exit 0
 %endif
 
 %changelog
+* Mon Feb 12 2018 RDO <dev@lists.rdoproject.org> 1:14.0.1-1
+- Update to 14.0.1
+
 * Wed Mar 08 2017 Eric Harney <eharney@redhat.com> 1:14.0.0-2
 - Remove privsep-helper from sudo config
 
