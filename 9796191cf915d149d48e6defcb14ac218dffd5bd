@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7aaa499b_d4d5b9b9",
+        "filename": "openstack-glance.spec",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 403
+      },
+      "writtenOn": "2018-02-14T04:51:44Z",
+      "side": 1,
+      "message": "can be removed as upstream removed:-https://github.com/openstack/glance/commit/9ed758a1219f302dd4785e0f49c1166f9bebc2e2#diff-b4ef698db8ca845e5845c4618278f29a",
+      "range": {
+        "startLine": 53,
+        "startChar": 0,
+        "endLine": 53,
+        "endChar": 32
+      },
+      "revId": "9796191cf915d149d48e6defcb14ac218dffd5bd",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7aaa499b_74e5c5a6",
+        "filename": "openstack-glance.spec",
+        "patchSetId": 3
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 403
+      },
+      "writtenOn": "2018-02-14T04:51:44Z",
+      "side": 1,
+      "message": "python2-pyOpenSSL is available.",
+      "range": {
+        "startLine": 128,
+        "startChar": 18,
+        "endLine": 128,
+        "endChar": 27
+      },
+      "revId": "9796191cf915d149d48e6defcb14ac218dffd5bd",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7aaa499b_14f32175",
+        "filename": "openstack-glance.spec",
+        "patchSetId": 3
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 403
+      },
+      "writtenOn": "2018-02-14T04:51:44Z",
+      "side": 1,
+      "message": "python2-boto",
+      "range": {
+        "startLine": 138,
+        "startChar": 18,
+        "endLine": 138,
+        "endChar": 29
+      },
+      "revId": "9796191cf915d149d48e6defcb14ac218dffd5bd",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7aaa499b_54e2c9a0",
+        "filename": "openstack-glance.spec",
+        "patchSetId": 3
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 403
+      },
+      "writtenOn": "2018-02-14T04:51:44Z",
+      "side": 1,
+      "message": "python2-psutil is available",
+      "range": {
+        "startLine": 166,
+        "startChar": 18,
+        "endLine": 166,
+        "endChar": 31
+      },
+      "revId": "9796191cf915d149d48e6defcb14ac218dffd5bd",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    }
+  ]
+}
