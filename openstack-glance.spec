@@ -20,7 +20,7 @@ Name:             openstack-glance
 # https://review.openstack.org/#/q/I6a35fa0dda798fad93b804d00a46af80f08d475c,n,z
 Epoch:            1
 Version:          16.0.0
-Release:          0.1%{?milestone}%{?dist}
+Release:          0.2%{?milestone}%{?dist}
 Summary:          OpenStack Image Service
 
 License:          ASL 2.0
@@ -43,6 +43,9 @@ Source025:         glance-scrubber-dist.conf
 Source026:         glance-swift.conf
 
 Source030:         glance-sudoers
+
+#FIXME(ykarel) Remove patch once https://review.openstack.org/#/c/546480/ merges
+Patch0001:         0001-Triggers-shouldn-t-be-execute-in-offline-migration.patch
 
 BuildArch:        noarch
 
@@ -367,6 +370,9 @@ exit 0
 %endif
 
 %changelog
+* Wed Feb 21 2018 Yatin Karel <ykarel@redhat.com> - 16.0.0-0.2
+- Add temporary patch to fix blocker issue
+
 * Sat Feb 17 2018 RDO <dev@lists.rdoproject.org> 1:16.0.0-0.1.0rc2
 - Update to 16.0.0.0rc2
 
