@@ -1,0 +1,104 @@
+From cb60dce974bea175b73aae3c71d70e9e90a201d6 Mon Sep 17 00:00:00 2001
+From: Abhishek Kekane <akekane@redhat.com>
+Date: Tue, 20 Feb 2018 15:32:00 +0000
+Subject: [PATCH] Triggers shouldn't be execute in offline migration
+
+Recently this change [1] in glance-manage db_sync is internally
+using Expand, Migrate and Contract. EMC is explicitly used for
+online migration for which glance uses triggers to sync data
+between old columns and new columns. DB Sync is used for
+offline migartion for which adding triggers is not required.
+
+Made provision to execute triggers explicitly in case of
+online migration (EMC pattern) and skip the same in
+case of offline migration (db sync).
+
+[1] https://review.openstack.org/#/c/433934/
+
+Closes-Bug: #1749640
+
+Conflicts:
+      glance/cmd/manage.py
+
+Change-Id: I816c73405dd61d933182ad5efc24445a0add4eea
+(cherry picked from commit 14e8a7b53ba7ee6e6c3b9265c819bd9acc5274a1)
+---
+ glance/cmd/manage.py                                       | 14 ++++++++------
+ .../versions/ocata_contract01_drop_is_public.py            |  4 +++-
+ .../versions/ocata_expand01_add_visibility.py              |  4 +++-
+ 3 files changed, 14 insertions(+), 8 deletions(-)
+
+diff --git a/glance/cmd/manage.py b/glance/cmd/manage.py
+index 57bd087b..f9b6cfb7 100644
+--- a/glance/cmd/manage.py
++++ b/glance/cmd/manage.py
+@@ -59,6 +59,7 @@ from glance.i18n import _
+ 
+ 
+ CONF = cfg.CONF
++USE_TRIGGERS = True
+ 
+ 
+ # Decorators for actions
+@@ -141,12 +142,13 @@ class DbCommands(object):
+ 
+     @args('--version', metavar='<version>', help='Database version')
+     def sync(self, version=None):
+-        engine = db_api.get_engine().engine
+-        if engine.name == 'postgresql':
+-            if version is None:
+-                version = db_migration.LATEST_REVISION
+-                self._sync(version)
+-                return
++        global USE_TRIGGERS
++
++        # This flags let's us bypass trigger setup & teardown for non-rolling
++        # upgrades. We set this as a global variable immediately before handing
++        # off to sqlalchemy-migrate, because we can't pass arguments directly
++        # to migrations that depend on it.
++        USE_TRIGGERS = False
+ 
+         curr_heads = alembic_migrations.get_current_alembic_heads()
+         contract = alembic_migrations.get_alembic_branch_head(
+diff --git a/glance/db/sqlalchemy/alembic_migrations/versions/ocata_contract01_drop_is_public.py b/glance/db/sqlalchemy/alembic_migrations/versions/ocata_contract01_drop_is_public.py
+index 8f382bae..800b23e6 100644
+--- a/glance/db/sqlalchemy/alembic_migrations/versions/ocata_contract01_drop_is_public.py
++++ b/glance/db/sqlalchemy/alembic_migrations/versions/ocata_contract01_drop_is_public.py
+@@ -21,6 +21,7 @@ Create Date: 2017-01-27 12:58:16.647499
+ from alembic import op
+ from sqlalchemy import MetaData, Enum
+ 
++from glance.cmd import manage
+ from glance.db import migration
+ 
+ # revision identifiers, used by Alembic.
+@@ -70,5 +71,6 @@ def upgrade():
+     meta = MetaData(bind=migrate_engine)
+ 
+     _drop_column()
+-    _drop_triggers(migrate_engine)
++    if manage.USE_TRIGGERS:
++        _drop_triggers(migrate_engine)
+     _set_nullability_and_default_on_visibility(meta)
+diff --git a/glance/db/sqlalchemy/alembic_migrations/versions/ocata_expand01_add_visibility.py b/glance/db/sqlalchemy/alembic_migrations/versions/ocata_expand01_add_visibility.py
+index 665f260c..dfdba9fc 100644
+--- a/glance/db/sqlalchemy/alembic_migrations/versions/ocata_expand01_add_visibility.py
++++ b/glance/db/sqlalchemy/alembic_migrations/versions/ocata_expand01_add_visibility.py
+@@ -21,6 +21,7 @@ Create Date: 2017-01-27 12:58:16.647499
+ from alembic import op
+ from sqlalchemy import Column, Enum, MetaData, Table
+ 
++from glance.cmd import manage
+ from glance.db import migration
+ 
+ # revision identifiers, used by Alembic.
+@@ -148,4 +149,5 @@ def upgrade():
+ 
+     _add_visibility_column(meta)
+     _change_nullability_and_default_on_is_public(meta)
+-    _add_triggers(migrate_engine)
++    if manage.USE_TRIGGERS:
++        _add_triggers(migrate_engine)
+-- 
+2.13.6
+
