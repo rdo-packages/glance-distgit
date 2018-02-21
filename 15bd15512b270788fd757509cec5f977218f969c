@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7aaa499b_a2765d3c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 403
+      },
+      "writtenOn": "2018-02-21T09:24:38Z",
+      "side": 1,
+      "message": "Not working: Multiple changes found for I816c73405dd61d933182ad5efc24445a0add4eea\n\n https://review.rdoproject.org/jenkins/job/DLRN-rpmbuild/24772/consoleText",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 54
+      },
+      "revId": "15bd15512b270788fd757509cec5f977218f969c",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    }
+  ]
+}
