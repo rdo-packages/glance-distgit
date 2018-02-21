@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7aaa499b_22f36d0c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 85
+      },
+      "writtenOn": "2018-02-21T08:47:18Z",
+      "side": 1,
+      "message": "https://review.openstack.org/546502 which depends on ^",
+      "revId": "dd4d6084f21f309d3475c8c09f7ee5ac9ff57f29",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    }
+  ]
+}
