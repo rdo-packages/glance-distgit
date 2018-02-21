@@ -44,6 +44,8 @@ Source026:         glance-swift.conf
 
 Source030:         glance-sudoers
 
+Patch0001:        0001-Triggers-shouldn-t-be-execute-in-offline-migration.patch
+
 BuildArch:        noarch
 
 BuildRequires:    git
@@ -191,6 +193,8 @@ This package contains the Glance test files.
 
 %prep
 %autosetup -n glance-%{upstream_version} -S git
+
+%patch0001 -p1
 
 sed -i '/\/usr\/bin\/env python/d' glance/common/config.py glance/common/crypt.py glance/db/sqlalchemy/migrate_repo/manage.py
 
