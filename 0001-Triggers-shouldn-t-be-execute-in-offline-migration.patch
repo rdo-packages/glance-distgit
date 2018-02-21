@@ -1,4 +1,4 @@
-From cb60dce974bea175b73aae3c71d70e9e90a201d6 Mon Sep 17 00:00:00 2001
+From 6cb77a80b02d339d7e66a9d82a0a38366bb13df0 Mon Sep 17 00:00:00 2001
 From: Abhishek Kekane <akekane@redhat.com>
 Date: Tue, 20 Feb 2018 15:32:00 +0000
 Subject: [PATCH] Triggers shouldn't be execute in offline migration
@@ -16,20 +16,16 @@ case of offline migration (db sync).
 [1] https://review.openstack.org/#/c/433934/
 
 Closes-Bug: #1749640
-
-Conflicts:
-      glance/cmd/manage.py
-
 Change-Id: I816c73405dd61d933182ad5efc24445a0add4eea
 (cherry picked from commit 14e8a7b53ba7ee6e6c3b9265c819bd9acc5274a1)
 ---
- glance/cmd/manage.py                                       | 14 ++++++++------
- .../versions/ocata_contract01_drop_is_public.py            |  4 +++-
- .../versions/ocata_expand01_add_visibility.py              |  4 +++-
- 3 files changed, 14 insertions(+), 8 deletions(-)
+ glance/cmd/manage.py                                              | 8 ++++++++
+ .../versions/ocata_contract01_drop_is_public.py                   | 4 +++-
+ .../alembic_migrations/versions/ocata_expand01_add_visibility.py  | 4 +++-
+ 3 files changed, 14 insertions(+), 2 deletions(-)
 
 diff --git a/glance/cmd/manage.py b/glance/cmd/manage.py
-index 57bd087b..f9b6cfb7 100644
+index 5b45658a..cefa8927 100644
 --- a/glance/cmd/manage.py
 +++ b/glance/cmd/manage.py
 @@ -59,6 +59,7 @@ from glance.i18n import _
@@ -40,16 +36,10 @@ index 57bd087b..f9b6cfb7 100644
  
  
  # Decorators for actions
-@@ -141,12 +142,13 @@ class DbCommands(object):
- 
+@@ -142,6 +143,13 @@ class DbCommands(object):
      @args('--version', metavar='<version>', help='Database version')
      def sync(self, version=None):
--        engine = db_api.get_engine().engine
--        if engine.name == 'postgresql':
--            if version is None:
--                version = db_migration.LATEST_REVISION
--                self._sync(version)
--                return
+         """Perform a complete (offline) database migration"""
 +        global USE_TRIGGERS
 +
 +        # This flags let's us bypass trigger setup & teardown for non-rolling
