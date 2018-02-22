@@ -44,9 +44,6 @@ Source026:         glance-swift.conf
 
 Source030:         glance-sudoers
 
-#FIXME(ykarel) Remove patch once https://review.openstack.org/#/c/546502/ merges
-Patch0001:         0001-Triggers-shouldn-t-be-execute-in-offline-migration.patch
-
 BuildArch:        noarch
 
 BuildRequires:    git
@@ -370,9 +367,6 @@ exit 0
 %endif
 
 %changelog
-* Wed Feb 21 2018 Yatin Karel <ykarel@redhat.com> - 16.0.0-0.2
-- Add temporary patch to fix blocker issue
-
 * Sat Feb 17 2018 RDO <dev@lists.rdoproject.org> 1:16.0.0-0.1.0rc2
 - Update to 16.0.0.0rc2
 
