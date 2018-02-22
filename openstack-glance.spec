@@ -376,3 +376,4 @@ exit 0
 * Sat Feb 17 2018 RDO <dev@lists.rdoproject.org> 1:16.0.0-0.1.0rc2
 - Update to 16.0.0.0rc2
 
+# REMOVEME: error caused by commit http://git.openstack.org/cgit/openstack/glance/commit/?id=71534b9d704a9c362800ddb39af100543c90a794
