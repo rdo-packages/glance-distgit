@@ -1,5 +1,6 @@
 %global release_name liberty
 %global service glance
+%global rhosp 0
 
 %{!?upstream_version: %global upstream_version %{version}%{?milestone}}
 
@@ -124,11 +125,16 @@ Requires:         python2-swiftclient >= 2.2.0
 Requires:         python2-taskflow >= 2.16.0
 Requires:         python-webob >= 1.7.1
 Requires:         python2-wsme >= 0.8
-Requires:         python2-pyOpenSSL
 Requires:         pyxattr
 Requires:         python2-os-brick >= 1.8.0
 Requires:         python2-alembic >= 0.8.10
 Requires:         python-sqlparse
+
+%if 0%{?rhosp} == 0
+Requires:         python2-pyOpenSSL
+%else
+Requires:         python-pyOpenSSL
+%endif
 
 #test deps: python-mox python-nose python-requests
 #test and optional store:
