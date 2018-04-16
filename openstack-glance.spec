@@ -4,7 +4,9 @@
 
 %{!?upstream_version: %global upstream_version %{version}%{?milestone}}
 
-%global with_doc 1
+# FIXME(ykarel) Disable doc build until sphinxcontrib-apidoc package is available
+# https://review.rdoproject.org/r/#/c/13280/
+%global with_doc 0
 
 %global common_desc \
 OpenStack Image Service (code-named Glance) provides discovery, registration, \
