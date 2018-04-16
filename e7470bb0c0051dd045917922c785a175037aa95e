@@ -1,0 +1,8 @@
+Code-Review+2: Emilien Macchi <emilien@redhat.com>
+Workflow+1: Emilien Macchi <emilien@redhat.com>
+Verified+2: Jenkins CI <admin@rpmfactory.beta.rdoproject.org>
+Submitted-by: Jenkins CI <admin@rpmfactory.beta.rdoproject.org>
+Submitted-at: Mon, 16 Apr 2018 04:37:50 +0000
+Reviewed-on: https://review.rdoproject.org/r/13387
+Project: openstack/glance-distgit
+Branch: refs/heads/rpm-master
