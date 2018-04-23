@@ -6,7 +6,7 @@
 
 # FIXME(ykarel) Disable doc build until sphinxcontrib-apidoc package is available
 # https://review.rdoproject.org/r/#/c/13280/
-%global with_doc 0
+%global with_doc 1
 
 %global common_desc \
 OpenStack Image Service (code-named Glance) provides discovery, registration, \
@@ -157,6 +157,7 @@ Requires:         %{name} = %{epoch}:%{version}-%{release}
 
 BuildRequires:    python2-sphinx
 BuildRequires:    python2-openstackdocstheme
+BuildRequires:    python2-sphinxcontrib-apidoc
 BuildRequires:    graphviz
 # Required to build module documents
 BuildRequires:    python2-boto
@@ -213,7 +214,8 @@ PYTHONPATH=. oslo-config-generator --config-dir=etc/oslo-config-generator/
 %{__python2} setup.py install -O1 --skip-build --root %{buildroot}
 
 %if 0%{?with_doc}
-%{__python2} setup.py build_sphinx -b html
+export PYTHONPATH=.
+sphinx-build -W -b html doc/source doc/build/html
 %endif
 
 # Fix hidden-file-or-dir warnings
