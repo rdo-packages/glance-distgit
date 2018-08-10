@@ -56,13 +56,13 @@ BuildRequires:    python2-cursive
 BuildRequires:    python2-defusedxml
 BuildRequires:    python2-eventlet
 BuildRequires:    python2-futurist
-BuildRequires:    python2-glance-store >= 0.21.0
+BuildRequires:    python2-glance-store >= 0.26.1
 BuildRequires:    python-httplib2
-BuildRequires:    python2-oslo-config >= 2:4.0.0
+BuildRequires:    python2-oslo-config >= 2:5.2.0
 BuildRequires:    python2-oslo-log
 BuildRequires:    python2-oslo-middleware >= 3.27.0
 BuildRequires:    python2-oslo-policy >= 1.23.0
-BuildRequires:    python2-oslo-utils >= 3.20.0
+BuildRequires:    python2-oslo-utils >= 3.33.0
 BuildRequires:    python2-osprofiler
 BuildRequires:    python-paste-deploy
 BuildRequires:    python2-requests
@@ -88,22 +88,21 @@ Summary:          Glance Python libraries
 
 Requires:         pysendfile
 Requires:         python2-cursive
-Requires:         python2-cryptography >= 1.6
+Requires:         python2-cryptography >= 2.1
 Requires:         python2-debtcollector >= 1.2.0
 Requires:         python2-defusedxml >= 0.5.0
 Requires:         python2-eventlet >= 0.18.2
 Requires:         python2-futurist >= 1.2.0
-Requires:         python2-glance-store >= 0.22.0
+Requires:         python2-glance-store >= 0.26.1
 Requires:         python-httplib2
 Requires:         python2-iso8601 >= 0.1.11
 Requires:         python2-jsonschema
-Requires:         python2-keystoneauth1 >= 3.3.0
-Requires:         python2-keystoneclient >= 1:3.8.0
+Requires:         python2-keystoneauth1 >= 3.4.0
 Requires:         python2-keystonemiddleware >= 4.17.0
 Requires:         python-migrate >= 0.11.0
 Requires:         python-monotonic >= 0.6
-Requires:         python2-oslo-concurrency >= 3.25.0
-Requires:         python2-oslo-config >= 2:5.1.0
+Requires:         python2-oslo-concurrency >= 3.26.0
+Requires:         python2-oslo-config >= 2:5.2.0
 Requires:         python2-oslo-context >= 2.19.2
 Requires:         python2-oslo-db >= 4.27.0
 Requires:         python2-oslo-i18n >= 3.15.3
@@ -161,10 +160,10 @@ BuildRequires:    python2-sphinxcontrib-apidoc
 BuildRequires:    graphviz
 # Required to build module documents
 BuildRequires:    python2-boto
-BuildRequires:    python2-cryptography >= 1.6
+BuildRequires:    python2-cryptography >= 2.1
 BuildRequires:    python2-keystoneauth1
 BuildRequires:    python2-keystonemiddleware
-BuildRequires:    python2-oslo-concurrency >= 3.5.0
+BuildRequires:    python2-oslo-concurrency >= 3.26.0
 BuildRequires:    python2-oslo-context >= 0.2.0
 BuildRequires:    python2-oslo-db >= 4.1.0
 BuildRequires:    python2-sqlalchemy >= 1.0.10
