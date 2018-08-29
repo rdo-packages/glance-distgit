@@ -41,6 +41,7 @@ Source025:         glance-scrubber-dist.conf
 Source026:         glance-swift.conf
 
 Source030:         glance-sudoers
+Source031:         glance-rootwrap.conf
 
 BuildArch:        noarch
 
@@ -196,6 +197,8 @@ This package contains the Glance test files.
 %autosetup -n glance-%{upstream_version} -S git
 
 sed -i '/\/usr\/bin\/env python/d' glance/common/config.py glance/common/crypt.py glance/db/sqlalchemy/migrate_repo/manage.py
+# Until cleared upstream: https://github.com/openstack/glance/blob/master/setup.cfg#L30
+sed -i '/rootwrap.conf/d' setup.cfg
 
 # Remove the requirements file so that pbr hooks don't add it
 # to distutils requiers_dist config
@@ -246,7 +249,7 @@ install -p -D -m 644 %{SOURCE25} %{buildroot}%{_datadir}/glance/glance-scrubber-
 install -p -D -m 644 %{SOURCE26} %{buildroot}%{_sysconfdir}/glance/glance-swift.conf
 
 install -p -D -m 640 etc/policy.json %{buildroot}%{_sysconfdir}/glance/policy.json
-install -p -D -m 640 etc/rootwrap.conf %{buildroot}%{_sysconfdir}/glance/rootwrap.conf
+install -p -D -m 640 %{SOURCE31} %{buildroot}%{_sysconfdir}/glance/rootwrap.conf
 install -p -D -m 640 etc/schema-image.json %{buildroot}%{_sysconfdir}/glance/schema-image.json
 
 # Move metadefs
