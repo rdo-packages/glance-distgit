@@ -41,6 +41,7 @@ Source025:         glance-scrubber-dist.conf
 Source026:         glance-swift.conf
 
 Source030:         glance-sudoers
+Source031:         glance-rootwrap.conf
 
 BuildArch:        noarch
 
@@ -246,7 +247,7 @@ install -p -D -m 644 %{SOURCE25} %{buildroot}%{_datadir}/glance/glance-scrubber-
 install -p -D -m 644 %{SOURCE26} %{buildroot}%{_sysconfdir}/glance/glance-swift.conf
 
 install -p -D -m 640 etc/policy.json %{buildroot}%{_sysconfdir}/glance/policy.json
-install -p -D -m 640 etc/rootwrap.conf %{buildroot}%{_sysconfdir}/glance/rootwrap.conf
+install -p -D -m 640 %{SOURCE31} %{buildroot}%{_sysconfdir}/glance/rootwrap.conf
 install -p -D -m 640 etc/schema-image.json %{buildroot}%{_sysconfdir}/glance/schema-image.json
 
 # Move metadefs
