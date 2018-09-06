@@ -39,6 +39,7 @@ Source022:         glance-cache-dist.conf
 Source024:         glance-registry-dist.conf
 Source025:         glance-scrubber-dist.conf
 Source026:         glance-swift.conf
+Source027:         glance-image-import.conf
 
 Source030:         glance-sudoers
 Source031:         glance-rootwrap.conf
@@ -247,6 +248,8 @@ install -p -D -m 640 etc/glance-scrubber.conf %{buildroot}%{_sysconfdir}/glance/
 install -p -D -m 644 %{SOURCE25} %{buildroot}%{_datadir}/glance/glance-scrubber-dist.conf
 ##
 install -p -D -m 644 %{SOURCE26} %{buildroot}%{_sysconfdir}/glance/glance-swift.conf
+##
+install -p -D -m 644 %{SOURCE27} %{buildroot}%{_sysconfdir}/glance/glance-image-import.conf
 
 install -p -D -m 640 etc/policy.json %{buildroot}%{_sysconfdir}/glance/policy.json
 install -p -D -m 640 %{SOURCE31} %{buildroot}%{_sysconfdir}/glance/rootwrap.conf
@@ -348,6 +351,7 @@ exit 0
 %config(noreplace) %attr(-, root, glance) %{_sysconfdir}/glance/glance-registry.conf
 %config(noreplace) %attr(-, root, glance) %{_sysconfdir}/glance/glance-scrubber.conf
 %config(noreplace) %attr(-, root, glance) %{_sysconfdir}/glance/glance-swift.conf
+%config(noreplace) %attr(-, root, glance) %{_sysconfdir}/glance/glance-image-import.conf
 %config(noreplace) %attr(-, root, glance) %{_sysconfdir}/glance/policy.json
 %config(noreplace) %attr(-, root, glance) %{_sysconfdir}/glance/rootwrap.conf
 %config(noreplace) %attr(-, root, glance) %{_sysconfdir}/glance/schema-image.json
