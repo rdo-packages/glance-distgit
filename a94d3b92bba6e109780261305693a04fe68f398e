@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9abe1de1_65216c4d",
+        "filename": "glance-image-import.conf",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 403
+      },
+      "writtenOn": "2018-09-06T06:52:06Z",
+      "side": 1,
+      "message": "Looks like glance have ways to generator config file from code(using oslo-config-generator) so would be good to use dynamically generated file instead of some sample config file as parameters are updated with time.",
+      "revId": "a94d3b92bba6e109780261305693a04fe68f398e",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    }
+  ]
+}
