@@ -22,7 +22,7 @@ Name:             openstack-glance
 # https://review.openstack.org/#/q/I6a35fa0dda798fad93b804d00a46af80f08d475c,n,z
 Epoch:            1
 Version:          17.0.0
-Release:          1%{?dist}
+Release:          2%{?dist}
 Summary:          OpenStack Image Service
 
 License:          ASL 2.0
@@ -246,6 +246,8 @@ install -p -D -m 640 etc/glance-scrubber.conf %{buildroot}%{_sysconfdir}/glance/
 install -p -D -m 644 %{SOURCE25} %{buildroot}%{_datadir}/glance/glance-scrubber-dist.conf
 ##
 install -p -D -m 644 %{SOURCE26} %{buildroot}%{_sysconfdir}/glance/glance-swift.conf
+##
+install -p -D -m 644 etc/glance-image-import.conf.sample %{buildroot}%{_sysconfdir}/glance/glance-image-import.conf
 
 install -p -D -m 640 etc/policy.json %{buildroot}%{_sysconfdir}/glance/policy.json
 install -p -D -m 640 etc/rootwrap.conf %{buildroot}%{_sysconfdir}/glance/rootwrap.conf
@@ -347,6 +349,7 @@ exit 0
 %config(noreplace) %attr(-, root, glance) %{_sysconfdir}/glance/glance-registry.conf
 %config(noreplace) %attr(-, root, glance) %{_sysconfdir}/glance/glance-scrubber.conf
 %config(noreplace) %attr(-, root, glance) %{_sysconfdir}/glance/glance-swift.conf
+%config(noreplace) %attr(-, root, glance) %{_sysconfdir}/glance/glance-image-import.conf
 %config(noreplace) %attr(-, root, glance) %{_sysconfdir}/glance/policy.json
 %config(noreplace) %attr(-, root, glance) %{_sysconfdir}/glance/rootwrap.conf
 %config(noreplace) %attr(-, root, glance) %{_sysconfdir}/glance/schema-image.json
@@ -373,6 +376,9 @@ exit 0
 %endif
 
 %changelog
+* Thu Sep 20 2018 Pranali Deore <pdeore@redhat.com> 1:17.0.0-2
+- Add default glance-image-import.conf file
+
 * Thu Aug 30 2018 RDO <dev@lists.rdoproject.org> 1:17.0.0-1
 - Update to 17.0.0
 
