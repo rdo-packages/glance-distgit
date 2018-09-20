@@ -1,0 +1,9 @@
+Code-Review+2: Yatin Karel <ykarel@redhat.com>
+Code-Review+2: chkumar246 <chkumar@redhat.com>
+Workflow+1: chkumar246 <chkumar@redhat.com>
+Verified+2: Zuul CI <zuul@review.rdoproject.org>
+Submitted-by: Zuul CI <zuul@review.rdoproject.org>
+Submitted-at: Thu, 20 Sep 2018 07:28:26 +0000
+Reviewed-on: https://review.rdoproject.org/r/16177
+Project: openstack/glance-distgit
+Branch: refs/heads/rocky-rdo
