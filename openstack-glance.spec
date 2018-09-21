@@ -1,3 +1,16 @@
+# Macros for py2/py3 compatibility
+%if 0%{?fedora} || 0%{?rhel} > 7
+%global pyver %{python3_pkgversion}
+%else
+%global pyver 2
+%endif
+
+%global pyver_bin python%{pyver}
+%global pyver_sitelib %python%{pyver}_sitelib
+%global pyver_install %py%{pyver}_install
+%global pyver_build %py%{pyver}_build
+# End of macros for py2/py3 compatibility
+
 %global release_name liberty
 %global service glance
 %global rhosp 0
@@ -46,35 +59,43 @@ Source031:         glance-rootwrap.conf
 BuildArch:        noarch
 
 BuildRequires:    git
-BuildRequires:    python2-devel
-BuildRequires:    python2-setuptools
-BuildRequires:    python2-pbr
+BuildRequires:    python%{pyver}-devel
+BuildRequires:    python%{pyver}-setuptools
+BuildRequires:    python%{pyver}-pbr
 BuildRequires:    intltool
 # Required for config generation
 BuildRequires:    openstack-macros
-BuildRequires:    python2-alembic
-BuildRequires:    python2-cursive
-BuildRequires:    python2-defusedxml
-BuildRequires:    python2-eventlet
-BuildRequires:    python2-futurist
-BuildRequires:    python2-glance-store >= 0.26.1
+BuildRequires:    python%{pyver}-alembic
+BuildRequires:    python%{pyver}-cursive
+BuildRequires:    python%{pyver}-defusedxml
+BuildRequires:    python%{pyver}-eventlet
+BuildRequires:    python%{pyver}-futurist
+BuildRequires:    python%{pyver}-glance-store >= 0.26.1
+BuildRequires:    python%{pyver}-oslo-config >= 2:5.2.0
+BuildRequires:    python%{pyver}-oslo-log
+BuildRequires:    python%{pyver}-oslo-middleware >= 3.27.0
+BuildRequires:    python%{pyver}-oslo-policy >= 1.23.0
+BuildRequires:    python%{pyver}-oslo-utils >= 3.33.0
+BuildRequires:    python%{pyver}-osprofiler
+BuildRequires:    python%{pyver}-requests
+BuildRequires:    python%{pyver}-routes
+BuildRequires:    python%{pyver}-oslo-messaging >= 5.24.2
+BuildRequires:    python%{pyver}-taskflow >= 2.7.0
+BuildRequires:    python%{pyver}-wsme >= 0.8
+
+# Handle python2 exception
+%if %{pyver} == 2
 BuildRequires:    python-httplib2
-BuildRequires:    python2-oslo-config >= 2:5.2.0
-BuildRequires:    python2-oslo-log
-BuildRequires:    python2-oslo-middleware >= 3.27.0
-BuildRequires:    python2-oslo-policy >= 1.23.0
-BuildRequires:    python2-oslo-utils >= 3.33.0
-BuildRequires:    python2-osprofiler
 BuildRequires:    python-paste-deploy
-BuildRequires:    python2-requests
-BuildRequires:    python2-routes
-BuildRequires:    python2-oslo-messaging >= 5.24.2
-BuildRequires:    python2-taskflow >= 2.7.0
-BuildRequires:    python2-wsme >= 0.8
+%else
+BuildRequires:    python%{pyver}-httplib2
+BuildRequires:    python%{pyver}-paste-deploy
+%endif
+
 
 Requires(pre):    shadow-utils
-Requires:         python-glance = %{epoch}:%{version}-%{release}
-Requires:         python2-glanceclient >= 1:2.8.0
+Requires:         python%{pyver}-glance = %{epoch}:%{version}-%{release}
+Requires:         python%{pyver}-glanceclient >= 1:2.8.0
 
 %{?systemd_requires}
 BuildRequires: systemd
@@ -84,67 +105,82 @@ BuildRequires: systemd
 
 This package contains the API and registry servers.
 
-%package -n       python-glance
+%package -n       python%{pyver}-glance
 Summary:          Glance Python libraries
+%{?python_provide:%python_provide python%{pyver}-glance}
 
-Requires:         pysendfile
-Requires:         python2-cursive
-Requires:         python2-cryptography >= 2.1
-Requires:         python2-debtcollector >= 1.2.0
-Requires:         python2-defusedxml >= 0.5.0
-Requires:         python2-eventlet >= 0.18.2
-Requires:         python2-futurist >= 1.2.0
-Requires:         python2-glance-store >= 0.26.1
-Requires:         python-httplib2
-Requires:         python2-iso8601 >= 0.1.11
-Requires:         python2-jsonschema
-Requires:         python2-keystoneauth1 >= 3.4.0
-Requires:         python2-keystonemiddleware >= 4.17.0
-Requires:         python-migrate >= 0.11.0
-Requires:         python-monotonic >= 0.6
-Requires:         python2-oslo-concurrency >= 3.26.0
-Requires:         python2-oslo-config >= 2:5.2.0
-Requires:         python2-oslo-context >= 2.19.2
-Requires:         python2-oslo-db >= 4.27.0
-Requires:         python2-oslo-i18n >= 3.15.3
-Requires:         python2-oslo-log >= 3.36.0
-Requires:         python2-oslo-messaging >= 5.29.0
-Requires:         python2-oslo-middleware >= 3.31.0
-Requires:         python2-oslo-policy >= 1.30.0
-Requires:         python2-oslo-utils >= 3.33.0
-Requires:         python2-oslo-vmware >= 0.11.1
-Requires:         python2-osprofiler
-Requires:         python-paste
-Requires:         python-paste-deploy
-Requires:         python2-pbr
-Requires:         python2-prettytable
-Requires:         python-retrying
-Requires:         python2-routes
-Requires:         python2-six >= 1.10.0
-Requires:         python2-sqlalchemy >= 1.0.10
-Requires:         python2-stevedore >= 1.20.0
-Requires:         python2-swiftclient >= 2.2.0
-Requires:         python2-taskflow >= 2.16.0
-Requires:         python-webob >= 1.7.1
-Requires:         python2-wsme >= 0.8
-Requires:         pyxattr
-Requires:         python2-os-brick >= 1.8.0
-Requires:         python2-alembic >= 0.8.10
-Requires:         python-sqlparse
+Requires:         python%{pyver}-cursive
+Requires:         python%{pyver}-cryptography >= 2.1
+Requires:         python%{pyver}-debtcollector >= 1.2.0
+Requires:         python%{pyver}-defusedxml >= 0.5.0
+Requires:         python%{pyver}-eventlet >= 0.18.2
+Requires:         python%{pyver}-futurist >= 1.2.0
+Requires:         python%{pyver}-glance-store >= 0.26.1
+Requires:         python%{pyver}-iso8601 >= 0.1.11
+Requires:         python%{pyver}-jsonschema
+Requires:         python%{pyver}-keystoneauth1 >= 3.4.0
+Requires:         python%{pyver}-keystonemiddleware >= 4.17.0
+Requires:         python%{pyver}-monotonic >= 0.6
+Requires:         python%{pyver}-oslo-concurrency >= 3.26.0
+Requires:         python%{pyver}-oslo-config >= 2:5.2.0
+Requires:         python%{pyver}-oslo-context >= 2.19.2
+Requires:         python%{pyver}-oslo-db >= 4.27.0
+Requires:         python%{pyver}-oslo-i18n >= 3.15.3
+Requires:         python%{pyver}-oslo-log >= 3.36.0
+Requires:         python%{pyver}-oslo-messaging >= 5.29.0
+Requires:         python%{pyver}-oslo-middleware >= 3.31.0
+Requires:         python%{pyver}-oslo-policy >= 1.30.0
+Requires:         python%{pyver}-oslo-utils >= 3.33.0
+Requires:         python%{pyver}-oslo-vmware >= 0.11.1
+Requires:         python%{pyver}-osprofiler
+Requires:         python%{pyver}-pbr
+Requires:         python%{pyver}-prettytable
+Requires:         python%{pyver}-routes
+Requires:         python%{pyver}-six >= 1.10.0
+Requires:         python%{pyver}-sqlalchemy >= 1.0.10
+Requires:         python%{pyver}-stevedore >= 1.20.0
+Requires:         python%{pyver}-swiftclient >= 2.2.0
+Requires:         python%{pyver}-taskflow >= 2.16.0
+Requires:         python%{pyver}-webob >= 1.7.1
+Requires:         python%{pyver}-wsme >= 0.8
+Requires:         python%{pyver}-os-brick >= 1.8.0
+Requires:         python%{pyver}-alembic >= 0.8.10
 
 %if 0%{?rhosp} == 0
-Requires:         python2-pyOpenSSL
+Requires:         python%{pyver}-pyOpenSSL
 %else
 Requires:         python-pyOpenSSL
 %endif
+
+# Handle python2 exception
+%if %{pyver} == 2
+Requires:         pysendfile
+Requires:         python-httplib2
+Requires:         python-migrate >= 0.11.0
+Requires:         python-paste
+Requires:         python-paste-deploy
+Requires:         python-retrying
+Requires:         python-sqlparse
+Requires:         pyxattr
+%else
+Requires:         python%{pyver}-pysendfile
+Requires:         python%{pyver}-httplib2
+Requires:         python%{pyver}-migrate >= 0.11.0
+Requires:         python%{pyver}-paste
+Requires:         python%{pyver}-paste-deploy
+Requires:         python%{pyver}-retrying
+Requires:         python%{pyver}-sqlparse
+Requires:         python%{pyver}-pyxattr
+%endif
+
 
 #test deps: python-mox python-nose python-requests
 #test and optional store:
 #ceph - glance.store.rdb
 #python-boto - glance.store.s3
-Requires:         python2-boto
+Requires:         python%{pyver}-boto
 
-%description -n   python-glance
+%description -n   python%{pyver}-glance
 %{common_desc}
 
 This package contains the glance Python library.
@@ -155,27 +191,35 @@ Summary:          Documentation for OpenStack Image Service
 
 Requires:         %{name} = %{epoch}:%{version}-%{release}
 
-BuildRequires:    python2-sphinx
-BuildRequires:    python2-openstackdocstheme
-BuildRequires:    python2-sphinxcontrib-apidoc
+BuildRequires:    python%{pyver}-sphinx
+BuildRequires:    python%{pyver}-openstackdocstheme
+BuildRequires:    python%{pyver}-sphinxcontrib-apidoc
 BuildRequires:    graphviz
 # Required to build module documents
-BuildRequires:    python2-boto
-BuildRequires:    python2-cryptography >= 2.1
-BuildRequires:    python2-keystoneauth1
-BuildRequires:    python2-keystonemiddleware
-BuildRequires:    python2-oslo-concurrency >= 3.26.0
-BuildRequires:    python2-oslo-context >= 0.2.0
-BuildRequires:    python2-oslo-db >= 4.1.0
-BuildRequires:    python2-sqlalchemy >= 1.0.10
-BuildRequires:    python2-stevedore
-BuildRequires:    python-webob >= 1.2.3
-BuildRequires:    python2-oslotest
-BuildRequires:    python2-psutil
-BuildRequires:    python2-testresources
-BuildRequires:    pyxattr
+BuildRequires:    python%{pyver}-boto
+BuildRequires:    python%{pyver}-cryptography >= 2.1
+BuildRequires:    python%{pyver}-keystoneauth1
+BuildRequires:    python%{pyver}-keystonemiddleware
+BuildRequires:    python%{pyver}-oslo-concurrency >= 3.26.0
+BuildRequires:    python%{pyver}-oslo-context >= 0.2.0
+BuildRequires:    python%{pyver}-oslo-db >= 4.1.0
+BuildRequires:    python%{pyver}-sqlalchemy >= 1.0.10
+BuildRequires:    python%{pyver}-stevedore
+BuildRequires:    python%{pyver}-webob >= 1.2.3
+BuildRequires:    python%{pyver}-oslotest
+BuildRequires:    python%{pyver}-psutil
+BuildRequires:    python%{pyver}-testresources
 # Required to compile translation files
-BuildRequires:    python2-babel
+BuildRequires:    python%{pyver}-babel
+
+# Handle python2 exception
+%if %{pyver} == 2
+BuildRequires:    pyxattr
+%else
+BuildRequires:    python%{pyver}-pyxattr
+%endif
+
+
 
 %description      doc
 %{common_desc}
@@ -183,11 +227,12 @@ BuildRequires:    python2-babel
 This package contains documentation files for glance.
 %endif
 
-%package -n python-%{service}-tests
+%package -n python%{pyver}-%{service}-tests
 Summary:        Glance tests
+%{?python_provide:%python_provide python%{pyver}-%{service}-tests}
 Requires:       openstack-%{service} = %{epoch}:%{version}-%{release}
 
-%description -n python-%{service}-tests
+%description -n python%{pyver}-%{service}-tests
 %{common_desc}
 
 This package contains the Glance test files.
@@ -205,19 +250,19 @@ sed -i '/rootwrap.conf/d' setup.cfg
 %py_req_cleanup
 
 %build
-PYTHONPATH=. oslo-config-generator --config-dir=etc/oslo-config-generator/
+PYTHONPATH=. oslo-config-generator-%{pyver} --config-dir=etc/oslo-config-generator-%{pyver}/
 # Build
-%{__python2} setup.py build
+%{pyver_build}
 
 # Generate i18n files
-%{__python2} setup.py compile_catalog -d build/lib/%{service}/locale
+%{pyver_bin} setup.py compile_catalog -d build/lib/%{service}/locale
 
 %install
-%{__python2} setup.py install -O1 --skip-build --root %{buildroot}
+%{pyver_install}
 
 %if 0%{?with_doc}
 export PYTHONPATH=.
-sphinx-build -W -b html doc/source doc/build/html
+sphinx-build-%{pyver} -W -b html doc/source doc/build/html
 %endif
 
 # Fix hidden-file-or-dir warnings
@@ -285,9 +330,9 @@ done
 
 # Install i18n .mo files (.po and .pot are not required)
 install -d -m 755 %{buildroot}%{_datadir}
-rm -f %{buildroot}%{python2_sitelib}/%{service}/locale/*/LC_*/%{service}*po
-rm -f %{buildroot}%{python2_sitelib}/%{service}/locale/*pot
-mv %{buildroot}%{python2_sitelib}/%{service}/locale %{buildroot}%{_datadir}/locale
+rm -f %{buildroot}%{pyver_sitelib}/%{service}/locale/*/LC_*/%{service}*po
+rm -f %{buildroot}%{pyver_sitelib}/%{service}/locale/*pot
+mv %{buildroot}%{pyver_sitelib}/%{service}/locale %{buildroot}%{_datadir}/locale
 
 # Find language files
 %find_lang %{service} --all-name
@@ -361,15 +406,15 @@ exit 0
 %dir %attr(0750, glance, glance) %{_localstatedir}/log/glance
 %config(noreplace) %{_sysconfdir}/sudoers.d/glance
 
-%files -n python-glance -f %{service}.lang
+%files -n python%{pyver}-glance -f %{service}.lang
 %doc README.rst
-%{python2_sitelib}/glance
-%{python2_sitelib}/glance-*.egg-info
-%exclude %{python2_sitelib}/glance/tests
+%{pyver_sitelib}/glance
+%{pyver_sitelib}/glance-*.egg-info
+%exclude %{pyver_sitelib}/glance/tests
 
-%files -n python-%{service}-tests
+%files -n python%{pyver}-%{service}-tests
 %license LICENSE
-%{python2_sitelib}/%{service}/tests
+%{pyver_sitelib}/%{service}/tests
 
 %if 0%{?with_doc}
 %files doc
