@@ -1,0 +1,9 @@
+Code-Review+2: User CyrilRoelandteNovance <cyril@redhat.com>
+Code-Review+2: hguemar <hguemar@fedoraproject.org>
+Workflow+1: hguemar <hguemar@fedoraproject.org>
+Verified+2: Zuul CI <zuul@review.rdoproject.org>
+Submitted-by: Zuul CI <zuul@review.rdoproject.org>
+Submitted-at: Tue, 16 Oct 2018 16:23:12 +0000
+Reviewed-on: https://review.rdoproject.org/r/16988
+Project: openstack/glance-distgit
+Branch: refs/heads/rocky-rdo
