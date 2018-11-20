@@ -17,8 +17,6 @@
 
 %{!?upstream_version: %global upstream_version %{version}%{?milestone}}
 
-# FIXME(ykarel) Disable doc build until sphinxcontrib-apidoc package is available
-# https://review.rdoproject.org/r/#/c/13280/
 %global with_doc 1
 
 %global common_desc \
@@ -262,7 +260,8 @@ PYTHONPATH=. oslo-config-generator-%{pyver} --config-dir=etc/oslo-config-generat
 
 %if 0%{?with_doc}
 export PYTHONPATH=.
-sphinx-build-%{pyver} -W -b html doc/source doc/build/html
+# FIXME(ykarel) remove warning is error flag until we have Sphinx >= 1.8.2
+sphinx-build-%{pyver} -b html doc/source doc/build/html
 %endif
 
 # Fix hidden-file-or-dir warnings
