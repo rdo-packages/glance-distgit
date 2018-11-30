@@ -95,7 +95,11 @@ Requires(pre):    shadow-utils
 Requires:         python%{pyver}-glance = %{epoch}:%{version}-%{release}
 Requires:         python%{pyver}-glanceclient >= 1:2.8.0
 
+%if 0%{?rhel} && 0%{?rhel} < 8
 %{?systemd_requires}
+%else
+%{?systemd_ordering} # does not exist on EL7
+%endif
 BuildRequires: systemd
 
 %description
