@@ -74,6 +74,7 @@ BuildRequires:    python%{pyver}-oslo-log
 BuildRequires:    python%{pyver}-oslo-middleware >= 3.27.0
 BuildRequires:    python%{pyver}-oslo-policy >= 1.23.0
 BuildRequires:    python%{pyver}-oslo-utils >= 3.33.0
+BuildRequires:    python%{pyver}-oslo-upgradecheck >= 0.1.0
 BuildRequires:    python%{pyver}-osprofiler
 BuildRequires:    python%{pyver}-requests
 BuildRequires:    python%{pyver}-routes
@@ -130,6 +131,7 @@ Requires:         python%{pyver}-oslo-middleware >= 3.31.0
 Requires:         python%{pyver}-oslo-policy >= 1.30.0
 Requires:         python%{pyver}-oslo-utils >= 3.33.0
 Requires:         python%{pyver}-oslo-vmware >= 0.11.1
+Requires:         python%{pyver}-oslo-upgradecheck >= 0.1.0
 Requires:         python%{pyver}-osprofiler
 Requires:         python%{pyver}-pbr
 Requires:         python%{pyver}-prettytable
@@ -239,7 +241,7 @@ This package contains the Glance test files.
 %prep
 %autosetup -n glance-%{upstream_version} -S git
 
-sed -i '/\/usr\/bin\/env python/d' glance/common/config.py glance/common/crypt.py glance/db/sqlalchemy/migrate_repo/manage.py
+sed -i '/\/usr\/bin\/env python/d' glance/common/config.py glance/common/crypt.py glance/db/sqlalchemy/migrate_repo/manage.py glance/cmd/status.py
 # Until cleared upstream: https://github.com/openstack/glance/blob/master/setup.cfg#L30
 sed -i '/rootwrap.conf/d' setup.cfg
 
@@ -376,6 +378,7 @@ exit 0
 %{_bindir}/glance-cache-pruner
 %{_bindir}/glance-scrubber
 %{_bindir}/glance-replicator
+%{_bindir}/glance-status
 
 %{_datadir}/glance/glance-api-dist.conf
 %{_datadir}/glance/glance-cache-dist.conf
