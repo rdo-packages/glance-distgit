@@ -153,8 +153,12 @@ Requires:         python%{pyver}-alembic >= 0.8.10
 %if 0%{?rhosp} == 0
 Requires:         python%{pyver}-pyOpenSSL
 %else
+%if 0%{?rhel} > 7
+Requires:         python%{pyver}-pyOpenSSL
+%else
 Requires:         python-pyOpenSSL
-%endif
+%endif # rhel
+%endif # rhosp
 
 # Handle python2 exception
 %if %{pyver} == 2
