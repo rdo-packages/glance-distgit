@@ -150,11 +150,11 @@ Requires:         python%{pyver}-wsme >= 0.8
 Requires:         python%{pyver}-os-brick >= 1.8.0
 Requires:         python%{pyver}-alembic >= 0.8.10
 
-%if 0%{?rhosp} == 0
+%if 0%{?rhosp} == 0 || 0%{?rhel} > 7
 Requires:         python%{pyver}-pyOpenSSL
 %else
 Requires:         python-pyOpenSSL
-%endif
+%endif # rhosp
 
 # Handle python2 exception
 %if %{pyver} == 2
