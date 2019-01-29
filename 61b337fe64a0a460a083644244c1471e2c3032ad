@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ad0253b_25d143ce",
+        "filename": "openstack-glance.spec",
+        "patchSetId": 1
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 403
+      },
+      "writtenOn": "2019-01-29T06:33:53Z",
+      "side": 1,
+      "message": "good to combine with the rhosp conditional with OR.",
+      "range": {
+        "startLine": 156,
+        "startChar": 0,
+        "endLine": 156,
+        "endChar": 17
+      },
+      "revId": "61b337fe64a0a460a083644244c1471e2c3032ad",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    }
+  ]
+}
