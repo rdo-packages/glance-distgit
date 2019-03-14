@@ -71,16 +71,16 @@ BuildRequires:    python%{pyver}-futurist
 BuildRequires:    python%{pyver}-glance-store >= 0.26.1
 BuildRequires:    python%{pyver}-oslo-config >= 2:5.2.0
 BuildRequires:    python%{pyver}-oslo-log
-BuildRequires:    python%{pyver}-oslo-middleware >= 3.27.0
-BuildRequires:    python%{pyver}-oslo-policy >= 1.23.0
+BuildRequires:    python%{pyver}-oslo-middleware >= 3.31.0
+BuildRequires:    python%{pyver}-oslo-policy >= 1.30.0
 BuildRequires:    python%{pyver}-oslo-utils >= 3.33.0
 BuildRequires:    python%{pyver}-oslo-upgradecheck >= 0.1.0
 BuildRequires:    python%{pyver}-osprofiler
 BuildRequires:    python%{pyver}-requests
 BuildRequires:    python%{pyver}-routes
-BuildRequires:    python%{pyver}-oslo-messaging >= 5.24.2
-BuildRequires:    python%{pyver}-taskflow >= 2.7.0
-BuildRequires:    python%{pyver}-wsme >= 0.8
+BuildRequires:    python%{pyver}-oslo-messaging >= 5.29.0
+BuildRequires:    python%{pyver}-taskflow >= 2.16.0
+BuildRequires:    python%{pyver}-wsme >= 0.8.0
 
 # Handle python2 exception
 %if %{pyver} == 2
@@ -123,7 +123,6 @@ Requires:         python%{pyver}-iso8601 >= 0.1.11
 Requires:         python%{pyver}-jsonschema
 Requires:         python%{pyver}-keystoneauth1 >= 3.4.0
 Requires:         python%{pyver}-keystonemiddleware >= 4.17.0
-Requires:         python%{pyver}-monotonic >= 0.6
 Requires:         python%{pyver}-oslo-concurrency >= 3.26.0
 Requires:         python%{pyver}-oslo-config >= 2:5.2.0
 Requires:         python%{pyver}-oslo-context >= 2.19.2
@@ -145,10 +144,11 @@ Requires:         python%{pyver}-sqlalchemy >= 1.0.10
 Requires:         python%{pyver}-stevedore >= 1.20.0
 Requires:         python%{pyver}-swiftclient >= 2.2.0
 Requires:         python%{pyver}-taskflow >= 2.16.0
-Requires:         python%{pyver}-webob >= 1.7.1
-Requires:         python%{pyver}-wsme >= 0.8
+Requires:         python%{pyver}-webob >= 1.8.1
+Requires:         python%{pyver}-wsme >= 0.8.0
 Requires:         python%{pyver}-os-brick >= 1.8.0
 Requires:         python%{pyver}-alembic >= 0.8.10
+Requires:         python%{pyver}-os-win >= 3.0.0
 
 %if 0%{?rhosp} == 0 || 0%{?rhel} > 7
 Requires:         python%{pyver}-pyOpenSSL
@@ -205,11 +205,11 @@ BuildRequires:    python%{pyver}-cryptography >= 2.1
 BuildRequires:    python%{pyver}-keystoneauth1
 BuildRequires:    python%{pyver}-keystonemiddleware
 BuildRequires:    python%{pyver}-oslo-concurrency >= 3.26.0
-BuildRequires:    python%{pyver}-oslo-context >= 0.2.0
-BuildRequires:    python%{pyver}-oslo-db >= 4.1.0
+BuildRequires:    python%{pyver}-oslo-context >= 2.19.2
+BuildRequires:    python%{pyver}-oslo-db >= 4.27.0
 BuildRequires:    python%{pyver}-sqlalchemy >= 1.0.10
 BuildRequires:    python%{pyver}-stevedore
-BuildRequires:    python%{pyver}-webob >= 1.2.3
+BuildRequires:    python%{pyver}-webob >= 1.8.1
 BuildRequires:    python%{pyver}-oslotest
 BuildRequires:    python%{pyver}-psutil
 BuildRequires:    python%{pyver}-testresources
