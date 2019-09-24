@@ -68,7 +68,7 @@ BuildRequires:    python%{pyver}-cursive
 BuildRequires:    python%{pyver}-defusedxml
 BuildRequires:    python%{pyver}-eventlet
 BuildRequires:    python%{pyver}-futurist
-BuildRequires:    python%{pyver}-glance-store >= 0.26.1
+BuildRequires:    python%{pyver}-glance-store >= 1.0.0
 BuildRequires:    python%{pyver}-oslo-config >= 2:5.2.0
 BuildRequires:    python%{pyver}-oslo-log
 BuildRequires:    python%{pyver}-oslo-middleware >= 3.31.0
@@ -81,6 +81,7 @@ BuildRequires:    python%{pyver}-routes
 BuildRequires:    python%{pyver}-oslo-messaging >= 5.29.0
 BuildRequires:    python%{pyver}-taskflow >= 2.16.0
 BuildRequires:    python%{pyver}-wsme >= 0.8.0
+BuildRequires:    python%{pyver}-castellan >= 0.17.0
 
 # Handle python2 exception
 %if %{pyver} == 2
@@ -116,9 +117,9 @@ Requires:         python%{pyver}-cursive
 Requires:         python%{pyver}-cryptography >= 2.1
 Requires:         python%{pyver}-debtcollector >= 1.2.0
 Requires:         python%{pyver}-defusedxml >= 0.5.0
-Requires:         python%{pyver}-eventlet >= 0.18.2
+Requires:         python%{pyver}-eventlet >= 0.22.0
 Requires:         python%{pyver}-futurist >= 1.2.0
-Requires:         python%{pyver}-glance-store >= 0.26.1
+Requires:         python%{pyver}-glance-store >= 1.0.0
 Requires:         python%{pyver}-iso8601 >= 0.1.11
 Requires:         python%{pyver}-jsonschema
 Requires:         python%{pyver}-keystoneauth1 >= 3.4.0
@@ -149,6 +150,7 @@ Requires:         python%{pyver}-wsme >= 0.8.0
 Requires:         python%{pyver}-os-brick >= 1.8.0
 Requires:         python%{pyver}-alembic >= 0.8.10
 Requires:         python%{pyver}-os-win >= 3.0.0
+Requires:         python%{pyver}-castellan >= 0.17.0
 
 %if 0%{?rhosp} == 0 || 0%{?rhel} > 7
 Requires:         python%{pyver}-pyOpenSSL
