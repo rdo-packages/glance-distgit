@@ -34,7 +34,7 @@ Name:             openstack-glance
 # https://review.openstack.org/#/q/I6a35fa0dda798fad93b804d00a46af80f08d475c,n,z
 Epoch:            1
 Version:          19.0.0
-Release:          0.1%{?milestone}%{?dist}
+Release:          0.2%{?milestone}%{?dist}
 Summary:          OpenStack Image Service
 
 License:          ASL 2.0
@@ -138,6 +138,7 @@ Requires:         python%{pyver}-oslo-log >= 3.36.0
 Requires:         python%{pyver}-oslo-messaging >= 5.29.0
 Requires:         python%{pyver}-oslo-middleware >= 3.31.0
 Requires:         python%{pyver}-oslo-policy >= 1.30.0
+Requires:         python%{pyver}-oslo-reports >= 1.18.0
 Requires:         python%{pyver}-oslo-utils >= 3.33.0
 Requires:         python%{pyver}-oslo-vmware >= 0.11.1
 Requires:         python%{pyver}-oslo-upgradecheck >= 0.1.0
@@ -435,6 +436,9 @@ exit 0
 %endif
 
 %changelog
+* Wed Oct  9 2019 Alan Bishop <abishop@redhat.com> 1:19.0.0-0.2.0rc1
+- Require oslo-reports
+
 * Thu Oct 03 2019 RDO <dev@lists.rdoproject.org> 1:19.0.0-0.1.0rc1
 - Update to 19.0.0.0rc1
 
