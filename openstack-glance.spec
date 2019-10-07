@@ -133,6 +133,7 @@ Requires:         python%{pyver}-oslo-log >= 3.36.0
 Requires:         python%{pyver}-oslo-messaging >= 5.29.0
 Requires:         python%{pyver}-oslo-middleware >= 3.31.0
 Requires:         python%{pyver}-oslo-policy >= 1.30.0
+Requires:         python%{pyver}-oslo-reports >= 1.18.0
 Requires:         python%{pyver}-oslo-utils >= 3.33.0
 Requires:         python%{pyver}-oslo-vmware >= 0.11.1
 Requires:         python%{pyver}-oslo-upgradecheck >= 0.1.0
