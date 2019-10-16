@@ -1,4 +1,3 @@
-%global milestone .0rc2
 # Macros for py2/py3 compatibility
 %if 0%{?fedora} || 0%{?rhel} > 7
 %global pyver %{python3_pkgversion}
@@ -34,15 +33,13 @@ Name:             openstack-glance
 # https://review.openstack.org/#/q/I6a35fa0dda798fad93b804d00a46af80f08d475c,n,z
 Epoch:            1
 Version:          19.0.0
-Release:          0.3%{?milestone}%{?dist}
+Release:          1%{?dist}
 Summary:          OpenStack Image Service
 
 License:          ASL 2.0
 URL:              http://glance.openstack.org
 Source0:          https://tarballs.openstack.org/%{service}/%{service}-%{upstream_version}.tar.gz
 
-#
-# patches_base=19.0.0.0rc2
 #
 
 Source001:         openstack-glance-api.service
@@ -436,6 +433,9 @@ exit 0
 %endif
 
 %changelog
+* Wed Oct 16 2019 RDO <dev@lists.rdoproject.org> 1:19.0.0-1
+- Update to 19.0.0
+
 * Fri Oct 11 2019 RDO <dev@lists.rdoproject.org> 1:19.0.0-0.3.0rc1
 - Update to 19.0.0.0rc2
 
