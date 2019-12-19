@@ -82,6 +82,10 @@ BuildRequires:    python%{pyver}-oslo-messaging >= 5.29.0
 BuildRequires:    python%{pyver}-taskflow >= 2.16.0
 BuildRequires:    python%{pyver}-wsme >= 0.8.0
 BuildRequires:    python%{pyver}-castellan >= 0.17.0
+# Required for tests
+BuildRequires:    python%{pyver}-stestr
+BuildRequires:    python%{pyver}-oslo-reports
+BuildRequires:    python%{pyver}-ddt
 
 # Handle python2 exception
 %if %{pyver} == 2
@@ -266,6 +270,9 @@ PYTHONPATH=. oslo-config-generator-%{pyver} --config-dir=etc/oslo-config-generat
 
 %install
 %{pyver_install}
+
+%check
+stestr-%{pyver} run
 
 %if 0%{?with_doc}
 export PYTHONPATH=.
