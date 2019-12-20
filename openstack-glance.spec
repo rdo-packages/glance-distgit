@@ -86,6 +86,19 @@ BuildRequires:    python%{pyver}-castellan >= 0.17.0
 BuildRequires:    python%{pyver}-stestr
 BuildRequires:    python%{pyver}-oslo-reports
 BuildRequires:    python%{pyver}-ddt
+BuildRequires:    python%{pyver}-cryptography >= 2.1
+BuildRequires:    python%{pyver}-keystoneauth1
+BuildRequires:    python%{pyver}-keystonemiddleware
+BuildRequires:    python%{pyver}-mock
+BuildRequires:    python%{pyver}-oslo-concurrency >= 3.26.0
+BuildRequires:    python%{pyver}-oslo-context >= 2.19.2
+BuildRequires:    python%{pyver}-oslo-db >= 4.27.0
+BuildRequires:    python%{pyver}-sqlalchemy >= 1.0.10
+BuildRequires:    python%{pyver}-stevedore
+BuildRequires:    python%{pyver}-webob >= 1.8.1
+BuildRequires:    python%{pyver}-oslotest
+BuildRequires:    python%{pyver}-psutil
+BuildRequires:    python%{pyver}-testresources
 
 # Handle python2 exception
 %if %{pyver} == 2
@@ -206,20 +219,7 @@ BuildRequires:    python%{pyver}-sphinx
 BuildRequires:    python%{pyver}-openstackdocstheme
 BuildRequires:    python%{pyver}-sphinxcontrib-apidoc
 BuildRequires:    graphviz
-# Required to build module documents
 BuildRequires:    python%{pyver}-boto
-BuildRequires:    python%{pyver}-cryptography >= 2.1
-BuildRequires:    python%{pyver}-keystoneauth1
-BuildRequires:    python%{pyver}-keystonemiddleware
-BuildRequires:    python%{pyver}-oslo-concurrency >= 3.26.0
-BuildRequires:    python%{pyver}-oslo-context >= 2.19.2
-BuildRequires:    python%{pyver}-oslo-db >= 4.27.0
-BuildRequires:    python%{pyver}-sqlalchemy >= 1.0.10
-BuildRequires:    python%{pyver}-stevedore
-BuildRequires:    python%{pyver}-webob >= 1.8.1
-BuildRequires:    python%{pyver}-oslotest
-BuildRequires:    python%{pyver}-psutil
-BuildRequires:    python%{pyver}-testresources
 # Required to compile translation files
 BuildRequires:    python%{pyver}-babel
 
