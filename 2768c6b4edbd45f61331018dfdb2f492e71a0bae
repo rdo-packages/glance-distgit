@@ -1,0 +1,8 @@
+Code-Review+2: Yatin Karel <ykarel@redhat.com>
+Workflow+1: Yatin Karel <ykarel@redhat.com>
+Verified+2: Zuul CI <zuul@review.rdoproject.org>
+Submitted-by: Zuul CI <zuul@review.rdoproject.org>
+Submitted-at: Tue, 21 Jan 2020 18:05:02 +0000
+Reviewed-on: https://review.rdoproject.org/r/24610
+Project: openstack/glance-distgit
+Branch: refs/heads/stein-rdo
