@@ -310,7 +310,6 @@ install -p -D -m 644 %{SOURCE26} %{buildroot}%{_sysconfdir}/glance/glance-swift.
 ##
 install -p -D -m 644 etc/glance-image-import.conf.sample %{buildroot}%{_sysconfdir}/glance/glance-image-import.conf
 
-install -p -D -m 640 etc/policy.json %{buildroot}%{_sysconfdir}/glance/policy.json
 install -p -D -m 640 %{SOURCE31} %{buildroot}%{_sysconfdir}/glance/rootwrap.conf
 install -p -D -m 640 etc/schema-image.json %{buildroot}%{_sysconfdir}/glance/schema-image.json
 
@@ -412,7 +411,6 @@ exit 0
 %config(noreplace) %attr(-, root, glance) %{_sysconfdir}/glance/glance-scrubber.conf
 %config(noreplace) %attr(-, root, glance) %{_sysconfdir}/glance/glance-swift.conf
 %config(noreplace) %attr(-, root, glance) %{_sysconfdir}/glance/glance-image-import.conf
-%config(noreplace) %attr(-, root, glance) %{_sysconfdir}/glance/policy.json
 %config(noreplace) %attr(-, root, glance) %{_sysconfdir}/glance/rootwrap.conf
 %config(noreplace) %attr(-, root, glance) %{_sysconfdir}/glance/schema-image.json
 %config(noreplace) %attr(-, root, glance) %{_sysconfdir}/glance/metadefs/*.json
