@@ -1,0 +1,9 @@
+Code-Review+2: Alfredo Moralejo <amoralej@redhat.com>
+Code-Review+2: Chandan Kumar <chkumar@redhat.com>
+Verified+2: Alfredo Moralejo <amoralej@redhat.com>
+Workflow+1: Alfredo Moralejo <amoralej@redhat.com>
+Submitted-by: Alfredo Moralejo <amoralej@redhat.com>
+Submitted-at: Thu, 12 Mar 2020 14:08:57 +0000
+Reviewed-on: https://review.rdoproject.org/r/25863
+Project: openstack/glance-distgit
+Branch: refs/heads/rpm-master
