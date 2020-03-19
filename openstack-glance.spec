@@ -21,8 +21,8 @@ Name:             openstack-glance
 # Liberty semver reset
 # https://review.openstack.org/#/q/I6a35fa0dda798fad93b804d00a46af80f08d475c,n,z
 Epoch:            1
-Version:          17.0.0
-Release:          2%{?dist}
+Version:          17.0.1
+Release:          1%{?dist}
 Summary:          OpenStack Image Service
 
 License:          ASL 2.0
@@ -376,6 +376,9 @@ exit 0
 %endif
 
 %changelog
+* Thu Mar 19 2020 RDO <dev@lists.rdoproject.org> 1:17.0.1-1
+- Update to 17.0.1
+
 * Thu Sep 20 2018 Pranali Deore <pdeore@redhat.com> 1:17.0.0-2
 - Add default glance-image-import.conf file
 
