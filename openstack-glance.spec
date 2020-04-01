@@ -352,9 +352,7 @@ mv %{buildroot}%{pyver_sitelib}/%{service}/locale %{buildroot}%{_datadir}/locale
 rm -rf %{buildroot}%{_prefix}%{_sysconfdir}
 
 %check
-# NOTE(jpena): we are hitting https://bugs.launchpad.net/glance/+bug/1813147
-# in some builders. Skip unit tests until this is fixed.
-#stestr-%{pyver} run
+stestr-%{pyver} run
 
 %pre
 getent group glance >/dev/null || groupadd -r glance -g 161
