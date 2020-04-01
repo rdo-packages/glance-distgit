@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "53a9cae9_2101d0ea",
+        "filename": "openstack-glance.spec",
+        "patchSetId": 1
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 113
+      },
+      "writtenOn": "2020-04-01T12:57:02Z",
+      "side": 1,
+      "message": "The %check section is in the wrong position, actually. Let\u0027s use this review to move it to its place, too (it was fine before the revert).",
+      "range": {
+        "startLine": 274,
+        "startChar": 0,
+        "endLine": 275,
+        "endChar": 19
+      },
+      "revId": "6f9404553cee4c48c462e25e0538e027bb7dc478",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    }
+  ]
+}
