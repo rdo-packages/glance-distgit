@@ -1,0 +1,9 @@
+Code-Review+2: Javier Peña <jpena@redhat.com>
+Code-Review+2: Chandan Kumar <chkumar@redhat.com>
+Workflow+1: Chandan Kumar <chkumar@redhat.com>
+Verified+2: Zuul CI <zuul@review.rdoproject.org>
+Submitted-by: Zuul CI <zuul@review.rdoproject.org>
+Submitted-at: Thu, 02 Apr 2020 05:13:31 +0000
+Reviewed-on: https://review.rdoproject.org/r/26196
+Project: openstack/glance-distgit
+Branch: refs/heads/rpm-master
