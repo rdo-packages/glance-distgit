@@ -1,3 +1,4 @@
+%global milestone .0rc1
 
 %global release_name liberty
 %global service glance
@@ -20,13 +21,17 @@ Name:             openstack-glance
 # Liberty semver reset
 # https://review.openstack.org/#/q/I6a35fa0dda798fad93b804d00a46af80f08d475c,n,z
 Epoch:            1
-Version:          XXX
-Release:          XXX
+Version:          20.0.0
+Release:          0.1%{?milestone}%{?dist}
 Summary:          OpenStack Image Service
 
 License:          ASL 2.0
 URL:              http://glance.openstack.org
 Source0:          https://tarballs.openstack.org/%{service}/%{service}-%{upstream_version}.tar.gz
+
+#
+# patches_base=20.0.0.0rc1
+#
 
 Source001:         openstack-glance-api.service
 Source003:         openstack-glance-registry.service
@@ -401,3 +406,6 @@ exit 0
 %endif
 
 %changelog
+* Wed Apr 29 2020 RDO <dev@lists.rdoproject.org> 1:20.0.0-0.1.0rc1
+- Update to 20.0.0.0rc1
+
