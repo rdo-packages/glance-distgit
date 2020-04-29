@@ -1,9 +1,9 @@
 # UUID Group Name
 global:Registered-Users	Registered Users
-4572c517702492251ad622a289176552a8acbbb2	rdo-superusers
-global:Anonymous-Users	Anonymous Users
-05a678d3d4a168e149d5e8a0063bbd1b1c5526da	Administrators
 401cf37bee35d1c809d4d957e55f2a304f8eed69	rdo-provenpackagers
+global:Anonymous-Users	Anonymous Users
 6ddfecad023c6f4fa3ac8c4d2583c502ea675a73	Non-Interactive Users
+05a678d3d4a168e149d5e8a0063bbd1b1c5526da	Administrators
 b27c56b6d31c31e219e958473b3ad0fea9b003de	openstack/glance-ptl
 c2a85eb7441dcf389d8253d1d920a9282b6abe22	openstack/glance-core
+4572c517702492251ad622a289176552a8acbbb2	rdo-superusers
