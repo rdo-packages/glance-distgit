@@ -1,0 +1,8 @@
+Code-Review+2: Alfredo Moralejo <amoralej@redhat.com>
+Workflow+1: Alfredo Moralejo <amoralej@redhat.com>
+Verified+2: Zuul CI <zuul@review.rdoproject.org>
+Submitted-by: Zuul CI <zuul@review.rdoproject.org>
+Submitted-at: Wed, 29 Apr 2020 16:54:43 +0000
+Reviewed-on: https://review.rdoproject.org/r/27024
+Project: openstack/glance-distgit
+Branch: refs/heads/ussuri-rdo
