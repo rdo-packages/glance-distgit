@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "5fb00d9e_bd5ac2e4",
+        "filename": "openstack-glance.spec",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 403
+      },
+      "writtenOn": "2020-04-29T05:54:24Z",
+      "side": 1,
+      "message": "Ok will add with a comment here.",
+      "parentUuid": "6dbc8e1b_596fdd86",
+      "range": {
+        "startLine": 97,
+        "startChar": 17,
+        "endLine": 97,
+        "endChar": 38
+      },
+      "revId": "fd80e9c39e0e21d8410a7ca36be42735d3677ca1",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a60a74a_d94c3395",
         "filename": "openstack-glance.spec",
         "patchSetId": 1
