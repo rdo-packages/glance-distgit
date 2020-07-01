@@ -87,6 +87,7 @@ BuildRequires:    python3-webob >= 1.8.1
 BuildRequires:    python3-oslotest
 BuildRequires:    python3-psutil
 BuildRequires:    python3-testresources
+BuildRequires:    python3-retrying
 
 BuildRequires:    python3-httplib2
 BuildRequires:    python3-paste-deploy
