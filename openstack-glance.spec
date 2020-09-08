@@ -232,7 +232,7 @@ PYTHONPATH=. oslo-config-generator --config-dir=etc/oslo-config-generator/
 %{py3_build}
 
 # Generate i18n files
-%{__python3} setup.py compile_catalog -d build/lib/%{service}/locale
+%{__python3} setup.py compile_catalog -d build/lib/%{service}/locale --domain glance
 
 %install
 %{py3_install}
