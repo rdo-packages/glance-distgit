@@ -231,9 +231,6 @@ PYTHONPATH=. oslo-config-generator --config-dir=etc/oslo-config-generator/
 # Build
 %{py3_build}
 
-# Generate i18n files
-%{__python3} setup.py compile_catalog -d build/lib/%{service}/locale
-
 %install
 %{py3_install}
 
@@ -300,15 +297,6 @@ for filter in %{_datarootdir}/glance_store/*.filters; do
   test -f $filter && ln -s $filter %{buildroot}%{_sysconfdir}/glance/rootwrap.d
 done
 
-# Install i18n .mo files (.po and .pot are not required)
-install -d -m 755 %{buildroot}%{_datadir}
-rm -f %{buildroot}%{python3_sitelib}/%{service}/locale/*/LC_*/%{service}*po
-rm -f %{buildroot}%{python3_sitelib}/%{service}/locale/*pot
-mv %{buildroot}%{python3_sitelib}/%{service}/locale %{buildroot}%{_datadir}/locale
-
-# Find language files
-%find_lang %{service} --all-name
-
 # Cleanup
 rm -rf %{buildroot}%{_prefix}%{_sysconfdir}
 
@@ -373,7 +361,7 @@ exit 0
 %dir %attr(0750, glance, glance) %{_localstatedir}/log/glance
 %config(noreplace) %{_sysconfdir}/sudoers.d/glance
 
-%files -n python3-glance -f %{service}.lang
+%files -n python3-glance
 %doc README.rst
 %{python3_sitelib}/glance
 %{python3_sitelib}/glance-*.egg-info
