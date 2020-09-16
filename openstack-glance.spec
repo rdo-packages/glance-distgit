@@ -117,10 +117,10 @@ Summary:          Glance Python libraries
 Requires:         python3-cursive
 Requires:         python3-cryptography >= 2.1
 Requires:         python3-debtcollector >= 1.2.0
-Requires:         python3-defusedxml >= 0.5.0
-Requires:         python3-eventlet >= 0.22.0
+Requires:         python3-defusedxml >= 0.6.0
+Requires:         python3-eventlet >= 0.25.1
 Requires:         python3-futurist >= 1.2.0
-Requires:         python3-glance-store >= 1.0.0
+Requires:         python3-glance-store >= 2.3.0
 Requires:         python3-iso8601 >= 0.1.11
 Requires:         python3-jsonschema
 Requires:         python3-keystoneauth1 >= 3.4.0
@@ -128,7 +128,7 @@ Requires:         python3-keystonemiddleware >= 4.17.0
 Requires:         python3-oslo-concurrency >= 3.26.0
 Requires:         python3-oslo-config >= 2:5.2.0
 Requires:         python3-oslo-context >= 2.19.2
-Requires:         python3-oslo-db >= 4.27.0
+Requires:         python3-oslo-db >= 5.0.0
 Requires:         python3-oslo-i18n >= 3.15.3
 Requires:         python3-oslo-log >= 3.36.0
 Requires:         python3-oslo-messaging >= 5.29.0
