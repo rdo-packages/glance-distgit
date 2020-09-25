@@ -1,3 +1,4 @@
+%global milestone .0rc1
 
 %global release_name liberty
 %global service glance
@@ -20,8 +21,8 @@ Name:             openstack-glance
 # Liberty semver reset
 # https://review.openstack.org/#/q/I6a35fa0dda798fad93b804d00a46af80f08d475c,n,z
 Epoch:            1
-Version:          XXX
-Release:          XXX
+Version:          21.0.0
+Release:          0.1%{?milestone}%{?dist}
 Summary:          OpenStack Image Service
 
 License:          ASL 2.0
@@ -239,6 +240,7 @@ PYTHONPATH=. oslo-config-generator --config-dir=etc/oslo-config-generator/
 
 %if 0%{?with_doc}
 export PYTHONPATH=.
+# patches_base=21.0.0.0rc1
 # FIXME(ykarel) remove warning is error flag until we have Sphinx >= 1.8.2
 sphinx-build -b html doc/source doc/build/html
 %endif
@@ -389,3 +391,6 @@ exit 0
 %endif
 
 %changelog
+* Fri Sep 25 2020 RDO <dev@lists.rdoproject.org> 1:21.0.0-0.1.0rc1
+- Update to 21.0.0.0rc1
+
