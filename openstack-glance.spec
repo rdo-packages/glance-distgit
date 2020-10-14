@@ -1,4 +1,6 @@
 %global milestone .0rc2
+%{!?sources_gpg: %{!?dlrn:%global sources_gpg 1} }
+%global sources_gpg_sign 0x2426b928085a020d8a90d0d879ab7008d0896c8a
 
 %global release_name liberty
 %global service glance
@@ -40,8 +42,18 @@ Source026:         glance-swift.conf
 
 Source030:         glance-sudoers
 Source031:         glance-rootwrap.conf
+# Required for tarball sources verification
+%if 0%{?sources_gpg} == 1
+Source101:        https://tarballs.openstack.org/%{service}/%{service}-%{upstream_version}.tar.gz.asc
+Source102:        https://releases.openstack.org/_static/%{sources_gpg_sign}.txt
+%endif
 
 BuildArch:        noarch
+
+# Required for tarball sources verification
+%if 0%{?sources_gpg} == 1
+BuildRequires:  /usr/bin/gpgv2
+%endif
 
 BuildRequires:    git
 BuildRequires:    python3-devel
@@ -217,6 +229,10 @@ This package contains the Glance test files.
 
 
 %prep
+# Required for tarball sources verification
+%if 0%{?sources_gpg} == 1
+%{gpgverify}  --keyring=%{SOURCE102} --signature=%{SOURCE101} --data=%{SOURCE0}
+%endif
 %autosetup -n glance-%{upstream_version} -S git
 
 sed -i '/\/usr\/bin\/env python/d' glance/common/config.py glance/common/crypt.py glance/db/sqlalchemy/migrate_repo/manage.py glance/cmd/status.py
@@ -391,6 +407,9 @@ exit 0
 %endif
 
 %changelog
+* Wed Oct 14 2020 Joel Capitao <jcapitao@redhat.com> 1:21.0.0-0.2.0rc1
+- Enable sources tarball validation using GPG signature.
+
 * Mon Oct 05 2020 RDO <dev@lists.rdoproject.org> 1:21.0.0-0.2.0rc1
 - Update to 21.0.0.0rc2
 
