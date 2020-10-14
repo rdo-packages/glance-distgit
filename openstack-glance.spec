@@ -1,4 +1,3 @@
-%global milestone .0rc2
 %{!?sources_gpg: %{!?dlrn:%global sources_gpg 1} }
 %global sources_gpg_sign 0x2426b928085a020d8a90d0d879ab7008d0896c8a
 
@@ -24,7 +23,7 @@ Name:             openstack-glance
 # https://review.openstack.org/#/q/I6a35fa0dda798fad93b804d00a46af80f08d475c,n,z
 Epoch:            1
 Version:          21.0.0
-Release:          0.2%{?milestone}%{?dist}
+Release:          1%{?dist}
 Summary:          OpenStack Image Service
 
 License:          ASL 2.0
@@ -256,7 +255,6 @@ PYTHONPATH=. oslo-config-generator --config-dir=etc/oslo-config-generator/
 
 %if 0%{?with_doc}
 export PYTHONPATH=.
-# patches_base=21.0.0.0rc2
 # FIXME(ykarel) remove warning is error flag until we have Sphinx >= 1.8.2
 sphinx-build -b html doc/source doc/build/html
 %endif
@@ -407,7 +405,8 @@ exit 0
 %endif
 
 %changelog
-* Wed Oct 14 2020 Joel Capitao <jcapitao@redhat.com> 1:21.0.0-0.2.0rc1
+* Wed Oct 14 2020 RDO <dev@lists.rdoproject.org> 1:21.0.0-1
+- Update to 21.0.0
 - Enable sources tarball validation using GPG signature.
 
 * Mon Oct 05 2020 RDO <dev@lists.rdoproject.org> 1:21.0.0-0.2.0rc1
