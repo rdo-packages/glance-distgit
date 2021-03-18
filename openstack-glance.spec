@@ -67,7 +67,7 @@ BuildRequires:    python3-defusedxml
 BuildRequires:    python3-eventlet
 BuildRequires:    python3-futurist
 BuildRequires:    python3-glance-store >= 1.0.0
-BuildRequires:    python3-oslo-config >= 2:5.2.0
+BuildRequires:    python3-oslo-config >= 2:8.1.0
 BuildRequires:    python3-oslo-log
 BuildRequires:    python3-oslo-middleware >= 3.31.0
 BuildRequires:    python3-oslo-policy >= 1.30.0
@@ -126,58 +126,58 @@ This package contains the API server.
 Summary:          Glance Python libraries
 %{?python_provide:%python_provide python3-glance}
 
-Requires:         python3-cursive
-Requires:         python3-cryptography >= 2.1
-Requires:         python3-debtcollector >= 1.2.0
+Requires:         python3-cursive >= 0.2.1
+Requires:         python3-cryptography >= 2.6.1
+Requires:         python3-debtcollector >= 1.19.0
 Requires:         python3-defusedxml >= 0.6.0
 Requires:         python3-eventlet >= 0.25.1
 Requires:         python3-futurist >= 1.2.0
 Requires:         python3-glance-store >= 2.3.0
 Requires:         python3-iso8601 >= 0.1.11
-Requires:         python3-jsonschema
+Requires:         python3-jsonschema >= 3.2.0
 Requires:         python3-keystoneauth1 >= 3.4.0
-Requires:         python3-keystonemiddleware >= 4.17.0
+Requires:         python3-keystonemiddleware >= 5.1.0
 Requires:         python3-oslo-concurrency >= 3.26.0
-Requires:         python3-oslo-config >= 2:5.2.0
-Requires:         python3-oslo-context >= 2.19.2
+Requires:         python3-oslo-config >= 2:8.1.0
+Requires:         python3-oslo-context >= 2.22.0
 Requires:         python3-oslo-db >= 5.0.0
-Requires:         python3-oslo-i18n >= 3.15.3
-Requires:         python3-oslo-log >= 3.36.0
+Requires:         python3-oslo-i18n >= 5.0.0
+Requires:         python3-oslo-log >= 4.3.0
 Requires:         python3-oslo-messaging >= 5.29.0
 Requires:         python3-oslo-middleware >= 3.31.0
-Requires:         python3-oslo-policy >= 2.4.1
+Requires:         python3-oslo-policy >= 3.6.2
 Requires:         python3-oslo-reports >= 1.18.0
-Requires:         python3-oslo-utils >= 3.33.0
+Requires:         python3-oslo-utils >= 4.7.0
 Requires:         python3-oslo-vmware >= 0.11.1
-Requires:         python3-oslo-upgradecheck >= 0.1.0
-Requires:         python3-osprofiler
-Requires:         python3-pbr
-Requires:         python3-prettytable
-Requires:         python3-routes
-Requires:         python3-six >= 1.10.0
+Requires:         python3-oslo-upgradecheck >= 1.3.0
+Requires:         python3-osprofiler >= 1.4.0
+Requires:         python3-pbr >= 3.1.1
+Requires:         python3-prettytable >= 0.7.1
+Requires:         python3-routes >= 2.3.1
+Requires:         python3-six >= 1.11.0
 Requires:         python3-sqlalchemy >= 1.0.10
 Requires:         python3-stevedore >= 1.20.0
-Requires:         python3-taskflow >= 2.16.0
+Requires:         python3-taskflow >= 4.0.0
 Requires:         python3-webob >= 1.8.1
 Requires:         python3-wsme >= 0.8.0
 Requires:         python3-os-brick >= 1.8.0
-Requires:         python3-alembic >= 0.8.10
-Requires:         python3-os-win >= 3.0.0
+Requires:         python3-alembic >= 0.9.6
+Requires:         python3-os-win >= 4.0.1
 Requires:         python3-castellan >= 0.17.0
 
 %if 0%{?rhosp} == 0 || 0%{?rhel} > 7
-Requires:         python3-pyOpenSSL
+Requires:         python3-pyOpenSSL >= 17.1.0
 %else
 Requires:         python-pyOpenSSL
 %endif # rhosp
 
 Requires:         python3-pysendfile
-Requires:         python3-httplib2
+Requires:         python3-httplib2 >= 0.9.1
 Requires:         python3-migrate >= 0.11.0
-Requires:         python3-paste
-Requires:         python3-paste-deploy
-Requires:         python3-retrying
-Requires:         python3-sqlparse
+Requires:         python3-paste >= 2.0.2
+Requires:         python3-paste-deploy >= 1.5.0
+Requires:         python3-retrying >= 1.2.3
+Requires:         python3-sqlparse >= 0.2.2
 Requires:         python3-pyxattr
 
 
