@@ -88,9 +88,11 @@ BuildRequires:    python3-cryptography >= 2.1
 BuildRequires:    python3-keystoneauth1
 BuildRequires:    python3-keystonemiddleware
 BuildRequires:    python3-mock
+BuildRequires:    python3-openstacksdk >= 0.56.0
 BuildRequires:    python3-oslo-concurrency >= 3.26.0
 BuildRequires:    python3-oslo-context >= 2.19.2
 BuildRequires:    python3-oslo-db >= 4.27.0
+BuildRequires:    python3-oslo-limit >= 1.0.0
 BuildRequires:    python3-sqlalchemy >= 1.0.10
 BuildRequires:    python3-stevedore
 BuildRequires:    python3-webob >= 1.8.1
@@ -142,6 +144,7 @@ Requires:         python3-oslo-config >= 2:8.1.0
 Requires:         python3-oslo-context >= 2.22.0
 Requires:         python3-oslo-db >= 5.0.0
 Requires:         python3-oslo-i18n >= 5.0.0
+Requires:         python3-oslo-limit >= 1.0.0
 Requires:         python3-oslo-log >= 4.3.0
 Requires:         python3-oslo-messaging >= 5.29.0
 Requires:         python3-oslo-middleware >= 3.31.0
