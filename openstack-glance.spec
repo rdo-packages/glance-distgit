@@ -237,7 +237,7 @@ This package contains the Glance test files.
 %endif
 %autosetup -n glance-%{upstream_version} -S git
 
-sed -i '/\/usr\/bin\/env python/d' glance/common/config.py glance/common/crypt.py glance/db/sqlalchemy/migrate_repo/manage.py glance/cmd/status.py
+sed -i '/\/usr\/bin\/env python/d' glance/common/config.py glance/common/crypt.py glance/cmd/status.py
 # Until cleared upstream: https://github.com/openstack/glance/blob/master/setup.cfg#L30
 sed -i '/rootwrap.conf/d' setup.cfg
 
