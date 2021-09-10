@@ -148,7 +148,7 @@ Requires:         python3-oslo-limit >= 1.0.0
 Requires:         python3-oslo-log >= 4.3.0
 Requires:         python3-oslo-messaging >= 5.29.0
 Requires:         python3-oslo-middleware >= 3.31.0
-Requires:         python3-oslo-policy >= 3.6.2
+Requires:         python3-oslo-policy >= 3.7.0
 Requires:         python3-oslo-reports >= 1.18.0
 Requires:         python3-oslo-utils >= 4.7.0
 Requires:         python3-oslo-vmware >= 0.11.1
@@ -176,7 +176,6 @@ Requires:         python-pyOpenSSL
 
 Requires:         python3-pysendfile
 Requires:         python3-httplib2 >= 0.9.1
-Requires:         python3-migrate >= 0.11.0
 Requires:         python3-paste >= 2.0.2
 Requires:         python3-paste-deploy >= 1.5.0
 Requires:         python3-retrying >= 1.2.3
