@@ -1,5 +1,5 @@
 %{!?sources_gpg: %{!?dlrn:%global sources_gpg 1} }
-%global sources_gpg_sign 0x2426b928085a020d8a90d0d879ab7008d0896c8a
+%global sources_gpg_sign 0x4c29ff0e437f3351fd82bdf47c5a3bc787dc7035
 
 %global release_name liberty
 %global service glance
@@ -22,7 +22,7 @@ Name:             openstack-glance
 # Liberty semver reset
 # https://review.openstack.org/#/q/I6a35fa0dda798fad93b804d00a46af80f08d475c,n,z
 Epoch:            1
-Version:          21.0.0
+Version:          21.1.0
 Release:          1%{?dist}
 Summary:          OpenStack Image Service
 
@@ -405,6 +405,9 @@ exit 0
 %endif
 
 %changelog
+* Wed Sep 15 2021 RDO <dev@lists.rdoproject.org> 1:21.1.0-1
+- Update to 21.1.0
+
 * Wed Oct 14 2020 RDO <dev@lists.rdoproject.org> 1:21.0.0-1
 - Update to 21.0.0
 - Enable sources tarball validation using GPG signature.
