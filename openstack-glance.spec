@@ -188,8 +188,6 @@ Requires:         python3-pyxattr
 #test deps: python-mox python-nose python-requests
 #test and optional store:
 #ceph - glance.store.rdb
-#python-boto - glance.store.s3
-Requires:         python3-boto
 
 %description -n   python3-glance
 %{common_desc}
