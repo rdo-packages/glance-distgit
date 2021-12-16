@@ -1,0 +1,34 @@
+From f0189bf64eff4bc2e472612f347b3619431b4116 Mon Sep 17 00:00:00 2001
+From: Dan Smith <dansmith@redhat.com>
+Date: Wed, 4 Aug 2021 08:18:55 -0700
+Subject: [PATCH] Fix failing copy_image flow init
+
+The new networkx requirement apparently causes us to fail the
+test_init_copy_flow_as_non_owner test because a None value can not be
+added to the flow graph. This just mocks out the glance_store call
+that is failing to get the staging store to avoid us choking there
+so we can proceed. We are just testing get_flow so we never use it
+anyway.
+
+Change-Id: I6fcb14ad240105ed0b1b9086c6c6c95034b4dd42
+---
+ glance/tests/unit/async_/flows/test_api_image_import.py | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/glance/tests/unit/async_/flows/test_api_image_import.py b/glance/tests/unit/async_/flows/test_api_image_import.py
+index b0fd098e7..4e30b3058 100644
+--- a/glance/tests/unit/async_/flows/test_api_image_import.py
++++ b/glance/tests/unit/async_/flows/test_api_image_import.py
+@@ -549,7 +549,8 @@ class TestImportCopyImageTask(test_utils.BaseTestCase):
+                                               overwrite=False)
+ 
+     @mock.patch("glance.async_.flows.api_image_import.image_import")
+-    def test_init_copy_flow_as_non_owner(self, mock_import):
++    @mock.patch('glance_store.get_store_from_store_identifier')
++    def test_init_copy_flow_as_non_owner(self, mock_gs, mock_import):
+         img_repo = mock.MagicMock()
+         admin_repo = mock.MagicMock()
+ 
+-- 
+2.33.1
+
