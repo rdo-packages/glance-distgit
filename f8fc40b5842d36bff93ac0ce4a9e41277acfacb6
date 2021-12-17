@@ -1,0 +1,9 @@
+Code-Review+1: User konan-abhi <akekane@redhat.com>
+Code-Review+2: Alfredo Moralejo <amoralej@redhat.com>
+Workflow+1: Alfredo Moralejo <amoralej@redhat.com>
+Verified+2: Zuul CI <zuul@review.rdoproject.org>
+Submitted-by: Zuul CI <zuul@review.rdoproject.org>
+Submitted-at: Fri, 17 Dec 2021 14:44:53 +0000
+Reviewed-on: https://review.rdoproject.org/r/c/openstack/glance-distgit/+/37253
+Project: openstack/glance-distgit
+Branch: refs/heads/wallaby-rdo
