@@ -23,7 +23,7 @@ Name:             openstack-glance
 # https://review.openstack.org/#/q/I6a35fa0dda798fad93b804d00a46af80f08d475c,n,z
 Epoch:            1
 Version:          23.0.0
-Release:          1%{?dist}
+Release:          2%{?dist}
 Summary:          OpenStack Image Service
 
 License:          ASL 2.0
@@ -94,7 +94,7 @@ BuildRequires:    python3-oslo-concurrency >= 3.26.0
 BuildRequires:    python3-oslo-context >= 2.19.2
 BuildRequires:    python3-oslo-db >= 4.27.0
 BuildRequires:    python3-oslo-limit >= 1.0.0
-BuildRequires:    python3-sqlalchemy >= 1.0.10
+BuildRequires:    python3-sqlalchemy >= 1.4.18
 BuildRequires:    python3-stevedore
 BuildRequires:    python3-webob >= 1.8.1
 BuildRequires:    python3-oslotest
@@ -159,7 +159,7 @@ Requires:         python3-pbr >= 3.1.1
 Requires:         python3-prettytable >= 0.7.1
 Requires:         python3-routes >= 2.3.1
 Requires:         python3-six >= 1.11.0
-Requires:         python3-sqlalchemy >= 1.0.10
+Requires:         python3-sqlalchemy >= 1.4.18
 Requires:         python3-stevedore >= 1.20.0
 Requires:         python3-taskflow >= 4.0.0
 Requires:         python3-webob >= 1.8.1
@@ -408,6 +408,9 @@ exit 0
 %endif
 
 %changelog
+* Wed Jan 12 2022 Tobias Urdin <tobias.urdin@binero.com> 1:23.0.0-2
+- Update python3-sqlalchemy requires to >= 1.4.18
+
 * Wed Oct 06 2021 RDO <dev@lists.rdoproject.org> 1:23.0.0-1
 - Update to 23.0.0
 
