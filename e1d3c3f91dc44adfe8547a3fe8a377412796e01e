@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6ab40e88_bdfe3654",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 128
+      },
+      "writtenOn": "2022-01-21T09:36:56Z",
+      "side": 1,
+      "message": "I need to fix ci env to override packages coming from modules in temporary repo.\n",
+      "revId": "e1d3c3f91dc44adfe8547a3fe8a377412796e01e",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7"
+    }
+  ]
+}
