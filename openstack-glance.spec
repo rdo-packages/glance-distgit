@@ -417,3 +417,4 @@ exit 0
 * Thu Sep 16 2021 RDO <dev@lists.rdoproject.org> 1:23.0.0-0.1.0rc1
 - Update to 23.0.0.0rc1
 
+# REMOVEME: error caused by commit https://opendev.org/openstack/glance/commit/b76dd7880cf40f8f2cc9425c54941c5d637401a2
