@@ -16,6 +16,24 @@
       "message": "May you mention this is a revert of https://review.rdoproject.org/r/c/openstack/glance-distgit/+/37253 ?",
       "revId": "2e3d70bdc4d541792144583c8f530111dd5cd04c",
       "serverId": "270e2033-b340-4cff-9539-693957ebf0e7"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "aa9da366_c030e81d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 635
+      },
+      "writtenOn": "2022-01-31T08:55:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d4905a48_d640c2a2",
+      "revId": "2e3d70bdc4d541792144583c8f530111dd5cd04c",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7"
     }
   ]
 }
