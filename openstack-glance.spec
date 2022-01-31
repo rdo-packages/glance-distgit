@@ -29,7 +29,6 @@ Summary:          OpenStack Image Service
 License:          ASL 2.0
 URL:              http://glance.openstack.org
 Source0:          https://tarballs.openstack.org/%{service}/%{service}-%{upstream_version}.tar.gz
-Patch001:         0001-Fix-failing-copy_image-flow-init.patch
 
 #
 
