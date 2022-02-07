@@ -16,6 +16,24 @@
       "message": "Maybe it worth it to mention in commit message that it\u0027s cherry picked from commit 7b7a2f7d5c6268930dc13fded932415ad6134778 [1]\n\n[1] https://review.rdoproject.org/r/c/openstack/glance-distgit/+/38008",
       "revId": "145d6bcb628ea35e1c99a6e87dff5c1939d7efd6",
       "serverId": "270e2033-b340-4cff-9539-693957ebf0e7"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3a62d097_6ed559f5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 128
+      },
+      "writtenOn": "2022-02-07T14:33:05Z",
+      "side": 1,
+      "message": "right, using cherry-pick -x is recommended",
+      "parentUuid": "43e171ef_f7820830",
+      "revId": "145d6bcb628ea35e1c99a6e87dff5c1939d7efd6",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7"
     }
   ]
 }
