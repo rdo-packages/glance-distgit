@@ -16,6 +16,24 @@
       "message": "RDO doesn\u0027t use glance-api-dist.conf when launching the glance-api service, and so I don\u0027t think this will have the desired change.",
       "revId": "353ca22e3e2144652f2d5ed23706868369c6781c",
       "serverId": "270e2033-b340-4cff-9539-693957ebf0e7"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2aa42a91_bd3e96e7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 682
+      },
+      "writtenOn": "2022-07-02T09:22:52Z",
+      "side": 1,
+      "message": "That is strange. I\u0027ll look into that.",
+      "parentUuid": "efd1c983_964cde3e",
+      "revId": "353ca22e3e2144652f2d5ed23706868369c6781c",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7"
     }
   ]
 }
