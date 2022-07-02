@@ -34,6 +34,24 @@
       "parentUuid": "efd1c983_964cde3e",
       "revId": "353ca22e3e2144652f2d5ed23706868369c6781c",
       "serverId": "270e2033-b340-4cff-9539-693957ebf0e7"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "45dcc925_2fc3ed06",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 439
+      },
+      "writtenOn": "2022-07-02T21:12:06Z",
+      "side": 1,
+      "message": "A lot has changed over several cycles, with tripleo\u0027s migration from running services on the host into containers, using kolla\u0027s container framework, and tripleo-ansible managing the systemd services. I think the days of using the systemd service files in the dist RPM are in the distant past. I also think tripleo relies much more heavily on using puppet to actively configure each service, rather than relying on the -dist.conf files. Many of the settings in the -dist.conf are inadequate to run the service, so the file doesn\u0027t play a role in modern deployments (e.g. tripleo).",
+      "parentUuid": "2aa42a91_bd3e96e7",
+      "revId": "353ca22e3e2144652f2d5ed23706868369c6781c",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7"
     }
   ]
 }
