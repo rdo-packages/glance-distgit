@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9b65e4a1_135cf068",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 141
+      },
+      "writtenOn": "2022-07-06T11:22:12Z",
+      "side": 1,
+      "message": "recheck\n\n\nMirror issue:\n2022-07-05 20:23:16.406892 | rdo-centos-stream | 2022-07-05 20:23:16,406 INFO:dlrn-build:Errors during downloading metadata for repository \u0027baseos\u0027:\n2022-07-05 20:23:16.407120 | rdo-centos-stream | 2022-07-05 20:23:16,407 INFO:dlrn-build:  - Downloading successful, but checksum doesn\u0027t match. Calculated: d4e650ef6b39755ab61cc4410cd2d445ae215bb42a8d73737deb6fbcfcfcd9e1120d51a0a2d6ad520b9526aa8dff04b71ba395a6f0ee3d7a759182ad1c2bd719(sha512)  Expected: 839d326a640e52e1e2ccc47dfcf8ea15ceb1254afba21e7aac706fff4def27c6936eb477f16fb3065b3433abfb87ff20b26b39ebec76b85a434588a85e240ac4(sha512)\n2022-07-05 20:23:16.407197 | rdo-centos-stream | 2022-07-05 20:23:16,407 INFO:dlrn-build:Error: Failed to download metadata for repo \u0027baseos\u0027: Cannot download repomd.xml: Cannot download repodata/repomd.xml: All mirrors were tried",
+      "revId": "fb537823f31ac848f3a0ff55d912f7dda8affb06",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7"
+    }
+  ]
+}
