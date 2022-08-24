@@ -100,6 +100,8 @@ BuildRequires:    python3-oslotest
 BuildRequires:    python3-psutil
 BuildRequires:    python3-testresources
 BuildRequires:    python3-retrying
+BuildRequires:    python3-boto3
+BuildRequires:    python3-swiftclient
 
 BuildRequires:    python3-httplib2
 BuildRequires:    python3-paste-deploy
