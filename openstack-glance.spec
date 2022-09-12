@@ -89,10 +89,10 @@ BuildRequires:    python3-keystoneauth1
 BuildRequires:    python3-keystonemiddleware
 BuildRequires:    python3-mock
 BuildRequires:    python3-openstacksdk >= 0.56.0
-BuildRequires:    python3-oslo-concurrency >= 3.26.0
+BuildRequires:    python3-oslo-concurrency >= 4.5.1
 BuildRequires:    python3-oslo-context >= 2.19.2
 BuildRequires:    python3-oslo-db >= 4.27.0
-BuildRequires:    python3-oslo-limit >= 1.4.0
+BuildRequires:    python3-oslo-limit >= 1.6.0
 BuildRequires:    python3-sqlalchemy >= 1.4.18
 BuildRequires:    python3-stevedore
 BuildRequires:    python3-webob >= 1.8.1
