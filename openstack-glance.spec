@@ -1,4 +1,3 @@
-%global milestone .0rc1
 %{!?sources_gpg: %{!?dlrn:%global sources_gpg 1} }
 %global sources_gpg_sign 0xa63ea142678138d1bb15f2e303bdfd64dd164087
 
@@ -24,15 +23,13 @@ Name:             openstack-glance
 # https://review.openstack.org/#/q/I6a35fa0dda798fad93b804d00a46af80f08d475c,n,z
 Epoch:            1
 Version:          25.0.0
-Release:          0.1%{?milestone}%{?dist}
+Release:          1%{?dist}
 Summary:          OpenStack Image Service
 
 License:          ASL 2.0
 URL:              http://glance.openstack.org
 Source0:          https://tarballs.openstack.org/%{service}/%{service}-%{upstream_version}.tar.gz
 
-#
-# patches_base=25.0.0.0rc1
 #
 
 Source001:         openstack-glance-api.service
@@ -412,6 +409,9 @@ exit 0
 %endif
 
 %changelog
+* Wed Oct 05 2022 RDO <dev@lists.rdoproject.org> 1:25.0.0-1
+- Update to 25.0.0
+
 * Fri Sep 16 2022 RDO <dev@lists.rdoproject.org> 1:25.0.0-0.1.0rc1
 - Update to 25.0.0.0rc1
 
