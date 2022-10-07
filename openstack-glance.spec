@@ -94,6 +94,7 @@ BuildRequires:    python3-oslo-concurrency >= 3.26.0
 BuildRequires:    python3-oslo-context >= 2.19.2
 BuildRequires:    python3-oslo-db >= 4.27.0
 BuildRequires:    python3-sqlalchemy >= 1.0.10
+BuildRequires:    python3-sqlalchemy < 1.4.0
 BuildRequires:    python3-stevedore
 BuildRequires:    python3-webob >= 1.8.1
 BuildRequires:    python3-oslotest
@@ -158,6 +159,7 @@ Requires:         python3-prettytable >= 0.7.1
 Requires:         python3-routes >= 2.3.1
 Requires:         python3-six >= 1.11.0
 Requires:         python3-sqlalchemy >= 1.0.10
+Requires:         python3-sqlalchemy < 1.4.0
 Requires:         python3-stevedore >= 1.20.0
 Requires:         python3-taskflow >= 4.0.0
 Requires:         python3-webob >= 1.8.1
