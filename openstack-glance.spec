@@ -1,5 +1,5 @@
 %{!?sources_gpg: %{!?dlrn:%global sources_gpg 1} }
-%global sources_gpg_sign 0x4c29ff0e437f3351fd82bdf47c5a3bc787dc7035
+%global sources_gpg_sign 0xa7475c5f2122fec3f90343223fe3bf5aad1080e4
 
 %global release_name liberty
 %global service glance
@@ -22,7 +22,7 @@ Name:             openstack-glance
 # Liberty semver reset
 # https://review.openstack.org/#/q/I6a35fa0dda798fad93b804d00a46af80f08d475c,n,z
 Epoch:            1
-Version:          22.1.0
+Version:          22.1.1
 Release:          1%{?dist}
 Summary:          OpenStack Image Service
 
@@ -409,6 +409,9 @@ exit 0
 %endif
 
 %changelog
+* Fri Nov 04 2022 RDO <dev@lists.rdoproject.org> 1:22.1.1-1
+- Update to 22.1.1
+
 * Wed Sep 15 2021 RDO <dev@lists.rdoproject.org> 1:22.1.0-1
 - Update to 22.1.0
 
