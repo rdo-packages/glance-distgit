@@ -16,6 +16,29 @@
       "message": "it needs https://review.rdoproject.org/r/c/rdoinfo/+/46573 to fix the issue",
       "revId": "1104880d0d17a509f721b7d77351e8b0197d05e1",
       "serverId": "270e2033-b340-4cff-9539-693957ebf0e7"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6352b4a1_7e902462",
+        "filename": "openstack-glance.spec",
+        "patchSetId": 1
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 635
+      },
+      "writtenOn": "2023-01-11T16:52:17Z",
+      "side": 1,
+      "message": "For now, I disabled language file generation as I haven\u0027t find out yet how to edit the the files in the wheel directory",
+      "range": {
+        "startLine": 193,
+        "startChar": 0,
+        "endLine": 193,
+        "endChar": 3
+      },
+      "revId": "1104880d0d17a509f721b7d77351e8b0197d05e1",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7"
     }
   ]
 }
