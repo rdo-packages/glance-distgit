@@ -46,6 +46,7 @@ Source031:         glance-rootwrap.conf
 Source101:        https://tarballs.openstack.org/%{service}/%{service}-%{upstream_version}.tar.gz.asc
 Source102:        https://releases.openstack.org/_static/%{sources_gpg_sign}.txt
 %endif
+Patch0001:        0001-Compile-catalog-i18n.patch
 
 BuildArch:        noarch
 
@@ -56,63 +57,8 @@ BuildRequires:  /usr/bin/gpgv2
 
 BuildRequires:    git-core
 BuildRequires:    python3-devel
-BuildRequires:    python3-setuptools
-BuildRequires:    python3-pbr
-BuildRequires:    intltool
-# Required for config generation
-BuildRequires:    openstack-macros
-BuildRequires:    python3-alembic
-BuildRequires:    python3-cursive
-BuildRequires:    python3-defusedxml
-BuildRequires:    python3-eventlet
-BuildRequires:    python3-futurist
-BuildRequires:    python3-glance-store >= 1.0.0
-BuildRequires:    python3-oslo-config >= 2:8.1.0
-BuildRequires:    python3-oslo-log
-BuildRequires:    python3-oslo-middleware >= 3.31.0
-BuildRequires:    python3-oslo-policy >= 1.30.0
-BuildRequires:    python3-oslo-utils >= 3.33.0
-BuildRequires:    python3-oslo-upgradecheck >= 0.1.0
-BuildRequires:    python3-osprofiler
-BuildRequires:    python3-requests
-BuildRequires:    python3-routes
-BuildRequires:    python3-oslo-messaging >= 5.29.0
-BuildRequires:    python3-taskflow >= 2.16.0
-BuildRequires:    python3-wsme >= 0.8.0
-BuildRequires:    python3-castellan >= 0.17.0
-# Required for tests
-BuildRequires:    python3-stestr
-BuildRequires:    python3-oslo-reports
-BuildRequires:    python3-ddt
-BuildRequires:    python3-cryptography >= 2.1
-BuildRequires:    python3-keystoneauth1
-BuildRequires:    python3-keystonemiddleware
-BuildRequires:    python3-mock
-BuildRequires:    python3-openstacksdk >= 0.56.0
-BuildRequires:    python3-oslo-concurrency >= 4.5.1
-BuildRequires:    python3-oslo-context >= 2.19.2
-BuildRequires:    python3-oslo-db >= 4.27.0
-BuildRequires:    python3-oslo-limit >= 1.6.0
-BuildRequires:    python3-sqlalchemy >= 1.4.18
-BuildRequires:    python3-stevedore
-BuildRequires:    python3-webob >= 1.8.1
-BuildRequires:    python3-oslotest
-BuildRequires:    python3-psutil
-BuildRequires:    python3-testresources
-BuildRequires:    python3-retrying
-BuildRequires:    python3-boto3
-BuildRequires:    python3-swiftclient
-
-BuildRequires:    python3-httplib2
-BuildRequires:    python3-paste-deploy
+BuildRequires:    pyproject-rpm-macros
 BuildRequires:    qemu-img
-
-
-Requires(pre):    shadow-utils
-Requires:         python3-glance = %{epoch}:%{version}-%{release}
-# Install glanceclient as a dependency for convenience
-Requires:         python3-glanceclient >= 1:2.8.0
-Requires:         qemu-img
 
 %if 0%{?rhel} && 0%{?rhel} < 8
 %{?systemd_requires}
@@ -200,17 +146,7 @@ Summary:          Documentation for OpenStack Image Service
 
 Requires:         %{name} = %{epoch}:%{version}-%{release}
 
-BuildRequires:    python3-sphinx
-BuildRequires:    python3-openstackdocstheme
-BuildRequires:    python3-sphinxcontrib-apidoc
-BuildRequires:    graphviz
-BuildRequires:    python3-boto
-# Required to compile translation files
-BuildRequires:    python3-babel
-
 BuildRequires:    python3-pyxattr
-
-
 
 %description      doc
 %{common_desc}
@@ -239,26 +175,29 @@ This package contains the Glance test files.
 sed -i '/\/usr\/bin\/env python/d' glance/common/config.py glance/common/crypt.py glance/cmd/status.py
 # Until cleared upstream: https://github.com/openstack/glance/blob/master/setup.cfg#L30
 sed -i '/rootwrap.conf/d' setup.cfg
+sed -i '/^xattr.*/d' test-requirements.txt
+sed -i '/^doc8.*/d' test-requirements.txt
+sed -i '/^pysendfile.*/d' test-requirements.txt
+sed -i '/^hacking.*/d' test-requirements.txt
+sed -i '/^whereto.*/d' doc/requirements.txt
+sed -i '/^xattr.*/d' doc/requirements.txt
+sed -i '/^os-api-ref.*/d' doc/requirements.txt
+sed -i '/.*whereto.*/d' tox.ini
 
-# Remove the requirements file so that pbr hooks don't add it
-# to distutils requiers_dist config
-%py_req_cleanup
+%generate_buildrequires
+%pyproject_buildrequires -t -e %{default_toxenv},docs
 
 %build
 PYTHONPATH=. oslo-config-generator --config-dir=etc/oslo-config-generator/
-# Build
-%{py3_build}
-
 # Generate i18n files
-%{__python3} setup.py compile_catalog -d build/lib/%{service}/locale --domain glance
+%{__python3} setup.py compile_catalog -d %{service}/locale --domain glance
+%pyproject_wheel
 
 %install
-%{py3_install}
+%pyproject_install
 
 %if 0%{?with_doc}
-export PYTHONPATH=.
-# FIXME(ykarel) remove warning is error flag until we have Sphinx >= 1.8.2
-sphinx-build -b html doc/source doc/build/html
+%tox -e docs
 %endif
 
 # Fix hidden-file-or-dir warnings
@@ -331,7 +270,7 @@ mv %{buildroot}%{python3_sitelib}/%{service}/locale %{buildroot}%{_datadir}/loca
 rm -rf %{buildroot}%{_prefix}%{_sysconfdir}
 
 %check
-stestr run --black-regex 'glance.tests.unit.common.test_format_inspector.TestFormatInspectors.test_vdi'
+%tox -e %{default_toxenv}
 
 %pre
 getent group glance >/dev/null || groupadd -r glance -g 161
@@ -394,7 +333,7 @@ exit 0
 %files -n python3-glance -f %{service}.lang
 %doc README.rst
 %{python3_sitelib}/glance
-%{python3_sitelib}/glance-*.egg-info
+%{python3_sitelib}/glance-*.dist-info
 %exclude %{python3_sitelib}/glance/tests
 
 %files -n python3-%{service}-tests

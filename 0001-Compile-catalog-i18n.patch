@@ -1,0 +1,71 @@
+From fdc8eb833bc588c640d4c5236fa4992aedb35769 Mon Sep 17 00:00:00 2001
+From: Joel Capitao <jcapitao@redhat.com>
+Date: Mon, 16 Jan 2023 15:57:55 +0100
+Subject: [PATCH] Compile catalog i18n
+
+---
+ glance/locale/de/LC_MESSAGES/glance.mo    | 0
+ glance/locale/en_GB/LC_MESSAGES/glance.mo | 0
+ glance/locale/es/LC_MESSAGES/glance.mo    | 0
+ glance/locale/fr/LC_MESSAGES/glance.mo    | 0
+ glance/locale/it/LC_MESSAGES/glance.mo    | 0
+ glance/locale/ja/LC_MESSAGES/glance.mo    | 0
+ glance/locale/ko_KR/LC_MESSAGES/glance.mo | 0
+ glance/locale/pt_BR/LC_MESSAGES/glance.mo | 0
+ glance/locale/ru/LC_MESSAGES/glance.mo    | 0
+ glance/locale/tr_TR/LC_MESSAGES/glance.mo | 0
+ glance/locale/zh_CN/LC_MESSAGES/glance.mo | 0
+ glance/locale/zh_TW/LC_MESSAGES/glance.mo | 0
+ 12 files changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 glance/locale/de/LC_MESSAGES/glance.mo
+ create mode 100644 glance/locale/en_GB/LC_MESSAGES/glance.mo
+ create mode 100644 glance/locale/es/LC_MESSAGES/glance.mo
+ create mode 100644 glance/locale/fr/LC_MESSAGES/glance.mo
+ create mode 100644 glance/locale/it/LC_MESSAGES/glance.mo
+ create mode 100644 glance/locale/ja/LC_MESSAGES/glance.mo
+ create mode 100644 glance/locale/ko_KR/LC_MESSAGES/glance.mo
+ create mode 100644 glance/locale/pt_BR/LC_MESSAGES/glance.mo
+ create mode 100644 glance/locale/ru/LC_MESSAGES/glance.mo
+ create mode 100644 glance/locale/tr_TR/LC_MESSAGES/glance.mo
+ create mode 100644 glance/locale/zh_CN/LC_MESSAGES/glance.mo
+ create mode 100644 glance/locale/zh_TW/LC_MESSAGES/glance.mo
+
+diff --git a/glance/locale/de/LC_MESSAGES/glance.mo b/glance/locale/de/LC_MESSAGES/glance.mo
+new file mode 100644
+index 000000000..e69de29bb
+diff --git a/glance/locale/en_GB/LC_MESSAGES/glance.mo b/glance/locale/en_GB/LC_MESSAGES/glance.mo
+new file mode 100644
+index 000000000..e69de29bb
+diff --git a/glance/locale/es/LC_MESSAGES/glance.mo b/glance/locale/es/LC_MESSAGES/glance.mo
+new file mode 100644
+index 000000000..e69de29bb
+diff --git a/glance/locale/fr/LC_MESSAGES/glance.mo b/glance/locale/fr/LC_MESSAGES/glance.mo
+new file mode 100644
+index 000000000..e69de29bb
+diff --git a/glance/locale/it/LC_MESSAGES/glance.mo b/glance/locale/it/LC_MESSAGES/glance.mo
+new file mode 100644
+index 000000000..e69de29bb
+diff --git a/glance/locale/ja/LC_MESSAGES/glance.mo b/glance/locale/ja/LC_MESSAGES/glance.mo
+new file mode 100644
+index 000000000..e69de29bb
+diff --git a/glance/locale/ko_KR/LC_MESSAGES/glance.mo b/glance/locale/ko_KR/LC_MESSAGES/glance.mo
+new file mode 100644
+index 000000000..e69de29bb
+diff --git a/glance/locale/pt_BR/LC_MESSAGES/glance.mo b/glance/locale/pt_BR/LC_MESSAGES/glance.mo
+new file mode 100644
+index 000000000..e69de29bb
+diff --git a/glance/locale/ru/LC_MESSAGES/glance.mo b/glance/locale/ru/LC_MESSAGES/glance.mo
+new file mode 100644
+index 000000000..e69de29bb
+diff --git a/glance/locale/tr_TR/LC_MESSAGES/glance.mo b/glance/locale/tr_TR/LC_MESSAGES/glance.mo
+new file mode 100644
+index 000000000..e69de29bb
+diff --git a/glance/locale/zh_CN/LC_MESSAGES/glance.mo b/glance/locale/zh_CN/LC_MESSAGES/glance.mo
+new file mode 100644
+index 000000000..e69de29bb
+diff --git a/glance/locale/zh_TW/LC_MESSAGES/glance.mo b/glance/locale/zh_TW/LC_MESSAGES/glance.mo
+new file mode 100644
+index 000000000..e69de29bb
+-- 
+2.38.1
+
