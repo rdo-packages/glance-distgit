@@ -3,6 +3,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "5a73b6bc_15783379",
+        "filename": "openstack-glance.spec",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 635
+      },
+      "writtenOn": "2023-01-17T11:00:44Z",
+      "side": 1,
+      "message": "It appears that metadata is generated based on git tree, then during the wheel build, only the files that are in metadata (thus committed in git tree) are added in the wheel \u003d\u003e This limits us generating extra files during %build section as we do for i18n files or generating oslo configurations.\n\nOne solution would be to create a patch adding the files empty in order to add them in git tree. Then we generate the files during %build just before %python_wheel, this will overwrite the empty files, and during %python_wheel they will be added.",
+      "range": {
+        "startLine": 49,
+        "startChar": 0,
+        "endLine": 49,
+        "endChar": 49
+      },
+      "revId": "810fc6861ba7bf3ae4c7114ad1fa3ca3849c6023",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "346df7c7_c39dcb18",
         "filename": "openstack-glance.spec",
         "patchSetId": 2
