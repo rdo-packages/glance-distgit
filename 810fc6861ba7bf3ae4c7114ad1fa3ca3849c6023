@@ -45,6 +45,30 @@
       },
       "revId": "810fc6861ba7bf3ae4c7114ad1fa3ca3849c6023",
       "serverId": "270e2033-b340-4cff-9539-693957ebf0e7"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b4992d57_57db9e69",
+        "filename": "openstack-glance.spec",
+        "patchSetId": 2
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 635
+      },
+      "writtenOn": "2023-01-17T11:03:33Z",
+      "side": 1,
+      "message": "so the %default_toxenv value depends on the mock chroot config (or host) we use for the build",
+      "parentUuid": "346df7c7_c39dcb18",
+      "range": {
+        "startLine": 273,
+        "startChar": 10,
+        "endLine": 273,
+        "endChar": 24
+      },
+      "revId": "810fc6861ba7bf3ae4c7114ad1fa3ca3849c6023",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7"
     }
   ]
 }
