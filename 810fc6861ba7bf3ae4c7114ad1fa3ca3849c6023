@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "346df7c7_c39dcb18",
+        "filename": "openstack-glance.spec",
+        "patchSetId": 2
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 635
+      },
+      "writtenOn": "2023-01-17T10:47:39Z",
+      "side": 1,
+      "message": "%default_toxenv py%{python3_version_nodots} [1]\n%python_version_nodots %(RPM_BUILD_ROOT\u003d %{__python} -Esc \"import sys; sys.stdout.write(\u0027{0.major}{0.minor}\u0027.format(sys.version_info))\") [2]\n\n%default_toxenv value depends on the host we build\nmock -r centos-stream-9-x86_64 --clean\nmock -r centos-stream-9-x86_64 --install python3-rpm-macros python3\nmock -r centos-stream-9-x86_64 --chroot rpm --eval \"%{python3_version_nodots}\"\n[...]\n39\n[...]\n\n[1] https://src.fedoraproject.org/rpms/pyproject-rpm-macros/blob/rawhide/f/macros.pyproject#_123\n[2] https://src.fedoraproject.org/rpms/python-rpm-macros/blob/rawhide/f/macros.python#_9",
+      "range": {
+        "startLine": 273,
+        "startChar": 10,
+        "endLine": 273,
+        "endChar": 24
+      },
+      "revId": "810fc6861ba7bf3ae4c7114ad1fa3ca3849c6023",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7"
+    }
+  ]
+}
