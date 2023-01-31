@@ -1,5 +1,5 @@
 %{!?sources_gpg: %{!?dlrn:%global sources_gpg 1} }
-%global sources_gpg_sign 0x4c29ff0e437f3351fd82bdf47c5a3bc787dc7035
+%global sources_gpg_sign 0xa7475c5f2122fec3f90343223fe3bf5aad1080e4
 
 %global release_name liberty
 %global service glance
@@ -22,8 +22,8 @@ Name:             openstack-glance
 # Liberty semver reset
 # https://review.openstack.org/#/q/I6a35fa0dda798fad93b804d00a46af80f08d475c,n,z
 Epoch:            1
-Version:          23.0.0
-Release:          2%{?dist}
+Version:          23.1.0
+Release:          1%{?dist}
 Summary:          OpenStack Image Service
 
 License:          ASL 2.0
@@ -408,6 +408,9 @@ exit 0
 %endif
 
 %changelog
+* Tue Jan 31 2023 RDO <dev@lists.rdoproject.org> 1:23.1.0-1
+- Update to 23.1.0
+
 * Wed Jan 12 2022 Tobias Urdin <tobias.urdin@binero.com> 1:23.0.0-2
 - Update python3-sqlalchemy requires to >= 1.4.18
 
