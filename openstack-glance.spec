@@ -331,7 +331,7 @@ mv %{buildroot}%{python3_sitelib}/%{service}/locale %{buildroot}%{_datadir}/loca
 rm -rf %{buildroot}%{_prefix}%{_sysconfdir}
 
 %check
-stestr run --black-regex 'glance.tests.unit.common.test_format_inspector.TestFormatInspectors.test_vdi'
+stestr run --exclude-regex 'glance.tests.unit.common.test_format_inspector.TestFormatInspectors.test_vdi'
 
 %pre
 getent group glance >/dev/null || groupadd -r glance -g 161
