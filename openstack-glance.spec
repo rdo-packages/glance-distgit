@@ -6,6 +6,12 @@
 %global rhosp 0
 
 %{!?upstream_version: %global upstream_version %{version}%{?milestone}}
+# we are excluding some BRs from automatic generator
+%global excluded_brs doc8 bandit pre-commit hacking flake8-import-order os-api-ref whereto pysendfile
+# Exclude sphinx from BRs if docs are disabled
+%if ! 0%{?with_doc}
+%global excluded_brs %{excluded_brs} sphinx openstackdocstheme
+%endif
 
 %global with_doc 1
 
@@ -26,7 +32,7 @@ Version:          XXX
 Release:          XXX
 Summary:          OpenStack Image Service
 
-License:          ASL 2.0
+License:          Apache-2.0
 URL:              http://glance.openstack.org
 Source0:          https://tarballs.openstack.org/%{service}/%{service}-%{upstream_version}.tar.gz
 
@@ -56,69 +62,20 @@ BuildRequires:  /usr/bin/gpgv2
 
 BuildRequires:    git-core
 BuildRequires:    python3-devel
-BuildRequires:    python3-setuptools
-BuildRequires:    python3-pbr
+BuildRequires:    pyproject-rpm-macros
 BuildRequires:    intltool
-# Required for config generation
 BuildRequires:    openstack-macros
-BuildRequires:    python3-alembic
-BuildRequires:    python3-cursive
-BuildRequires:    python3-defusedxml
-BuildRequires:    python3-eventlet
-BuildRequires:    python3-futurist
-BuildRequires:    python3-glance-store >= 1.0.0
-BuildRequires:    python3-oslo-config >= 2:8.1.0
-BuildRequires:    python3-oslo-log
-BuildRequires:    python3-oslo-middleware >= 3.31.0
-BuildRequires:    python3-oslo-policy >= 1.30.0
-BuildRequires:    python3-oslo-utils >= 3.33.0
-BuildRequires:    python3-oslo-upgradecheck >= 0.1.0
-BuildRequires:    python3-osprofiler
-BuildRequires:    python3-requests
-BuildRequires:    python3-routes
-BuildRequires:    python3-oslo-messaging >= 5.29.0
-BuildRequires:    python3-taskflow >= 2.16.0
-BuildRequires:    python3-wsme >= 0.8.0
-BuildRequires:    python3-castellan >= 0.17.0
-# Required for tests
-BuildRequires:    python3-stestr
-BuildRequires:    python3-oslo-reports
-BuildRequires:    python3-ddt
-BuildRequires:    python3-cryptography >= 2.1
-BuildRequires:    python3-keystoneauth1
-BuildRequires:    python3-keystonemiddleware
-BuildRequires:    python3-mock
-BuildRequires:    python3-openstacksdk >= 0.56.0
-BuildRequires:    python3-oslo-concurrency >= 4.5.1
-BuildRequires:    python3-oslo-context >= 2.19.2
-BuildRequires:    python3-oslo-db >= 4.27.0
-BuildRequires:    python3-oslo-limit >= 1.6.0
-BuildRequires:    python3-sqlalchemy >= 1.4.18
-BuildRequires:    python3-stevedore
-BuildRequires:    python3-webob >= 1.8.1
-BuildRequires:    python3-oslotest
-BuildRequires:    python3-psutil
-BuildRequires:    python3-testresources
-BuildRequires:    python3-retrying
-BuildRequires:    python3-boto3
-BuildRequires:    python3-swiftclient
-
-BuildRequires:    python3-httplib2
-BuildRequires:    python3-paste-deploy
 BuildRequires:    qemu-img
 
 
 Requires(pre):    shadow-utils
 Requires:         python3-glance = %{epoch}:%{version}-%{release}
+Requires:         qemu-img
 # Install glanceclient as a dependency for convenience
 Requires:         python3-glanceclient >= 1:2.8.0
-Requires:         qemu-img
 
-%if 0%{?rhel} && 0%{?rhel} < 8
-%{?systemd_requires}
-%else
-%{?systemd_ordering} # does not exist on EL7
-%endif
+%{?systemd_ordering}
+
 BuildRequires: systemd
 
 %description
@@ -128,66 +85,9 @@ This package contains the API server.
 
 %package -n       python3-glance
 Summary:          Glance Python libraries
-%{?python_provide:%python_provide python3-glance}
 
-Requires:         python3-cursive >= 0.2.1
-Requires:         python3-cryptography >= 2.6.1
-Requires:         python3-debtcollector >= 1.19.0
-Requires:         python3-defusedxml >= 0.6.0
-Requires:         python3-eventlet >= 0.25.1
-Requires:         python3-futurist >= 1.2.0
-Requires:         python3-glance-store >= 2.3.0
-Requires:         python3-iso8601 >= 0.1.11
-Requires:         python3-jsonschema >= 3.2.0
-Requires:         python3-keystoneauth1 >= 3.4.0
-Requires:         python3-keystoneclient >= 3.8.0
-Requires:         python3-keystonemiddleware >= 5.1.0
-Requires:         python3-oslo-concurrency >= 4.5.1
-Requires:         python3-oslo-config >= 2:8.1.0
-Requires:         python3-oslo-context >= 2.22.0
-Requires:         python3-oslo-db >= 5.0.0
-Requires:         python3-oslo-i18n >= 5.0.0
-Requires:         python3-oslo-limit >= 1.6.0
-Requires:         python3-oslo-log >= 4.5.0
-Requires:         python3-oslo-messaging >= 5.29.0
-Requires:         python3-oslo-middleware >= 3.31.0
-Requires:         python3-oslo-policy >= 3.11.0
-Requires:         python3-oslo-reports >= 1.18.0
-Requires:         python3-oslo-utils >= 4.7.0
-Requires:         python3-oslo-vmware >= 0.11.1
-Requires:         python3-oslo-upgradecheck >= 1.3.0
-Requires:         python3-osprofiler >= 1.4.0
-Requires:         python3-pbr >= 3.1.1
-Requires:         python3-prettytable >= 0.7.1
-Requires:         python3-routes >= 2.3.1
-Requires:         python3-sqlalchemy >= 1.3.14
-Requires:         python3-stevedore >= 1.20.0
-Requires:         python3-taskflow >= 4.0.0
-Requires:         python3-webob >= 1.8.1
-Requires:         python3-wsme >= 0.8.0
-Requires:         python3-os-brick >= 1.8.0
-Requires:         python3-alembic >= 0.9.6
-Requires:         python3-os-win >= 4.0.1
-Requires:         python3-castellan >= 0.17.0
-
-%if 0%{?rhosp} == 0 || 0%{?rhel} > 7
-Requires:         python3-pyOpenSSL >= 17.1.0
-%else
-Requires:         python-pyOpenSSL
-%endif # rhosp
-
+# pysendfile does not provide standard py3dist name so maintaining it manually
 Requires:         python3-pysendfile
-Requires:         python3-httplib2 >= 0.9.1
-Requires:         python3-paste >= 2.0.2
-Requires:         python3-paste-deploy >= 1.5.0
-Requires:         python3-retrying >= 1.2.3
-Requires:         python3-sqlparse >= 0.2.2
-Requires:         python3-pyxattr
-
-
-#test deps: python-mox python-nose python-requests
-#test and optional store:
-#ceph - glance.store.rdb
 
 %description -n   python3-glance
 %{common_desc}
@@ -200,16 +100,7 @@ Summary:          Documentation for OpenStack Image Service
 
 Requires:         %{name} = %{epoch}:%{version}-%{release}
 
-BuildRequires:    python3-sphinx
-BuildRequires:    python3-openstackdocstheme
-BuildRequires:    python3-sphinxcontrib-apidoc
 BuildRequires:    graphviz
-BuildRequires:    python3-boto
-# Required to compile translation files
-BuildRequires:    python3-babel
-
-BuildRequires:    python3-pyxattr
-
 
 
 %description      doc
@@ -220,7 +111,6 @@ This package contains documentation files for glance.
 
 %package -n python3-%{service}-tests
 Summary:        Glance tests
-%{?python_provide:%python_provide python3-%{service}-tests}
 Requires:       openstack-%{service} = %{epoch}:%{version}-%{release}
 
 %description -n python3-%{service}-tests
@@ -237,34 +127,54 @@ This package contains the Glance test files.
 %autosetup -n glance-%{upstream_version} -S git
 
 sed -i '/\/usr\/bin\/env python/d' glance/common/config.py glance/common/crypt.py glance/cmd/status.py
-# Until cleared upstream: https://github.com/openstack/glance/blob/master/setup.cfg#L30
-sed -i '/rootwrap.conf/d' setup.cfg
 
-# Remove the requirements file so that pbr hooks don't add it
-# to distutils requiers_dist config
-%py_req_cleanup
+sed -i /^[[:space:]]*-c{env:.*_CONSTRAINTS_FILE.*/d tox.ini
+sed -i "s/^deps = -c{env:.*_CONSTRAINTS_FILE.*/deps =/" tox.ini
+sed -i /^minversion.*/d tox.ini
+sed -i /^requires.*virtualenv.*/d tox.ini
+sed -i /^.*whereto/d tox.ini
+
+sed -i 's/xattr.*/pyxattr/g' test-requirements.txt
+sed -i 's/xattr.*/pyxattr/g' doc/requirements.txt
+
+# Exclude some bad-known BRs
+for pkg in %{excluded_brs}; do
+  for reqfile in doc/requirements.txt test-requirements.txt; do
+    if [ -f $reqfile ]; then
+      sed -i /^${pkg}.*/d $reqfile
+    fi
+  done
+done
+
+# Automatic BR generation
+%generate_buildrequires
+%if 0%{?with_doc}
+  %pyproject_buildrequires -t -e %{default_toxenv},docs
+%else
+  %pyproject_buildrequires -t -e %{default_toxenv}
+%endif
 
 %build
-PYTHONPATH=. oslo-config-generator --config-dir=etc/oslo-config-generator/
 # Build
-%{py3_build}
+%pyproject_wheel
 
-# Generate i18n files
-%{__python3} setup.py compile_catalog -d build/lib/%{service}/locale --domain glance
 
 %install
-%{py3_install}
+%pyproject_install
+
+# Generate i18n files
+%{__python3} setup.py compile_catalog -d %{buildroot}%{python3_sitelib}/%{service}/locale --domain glance
+
+# Generate config file
+PYTHONPATH="%{buildroot}/%{python3_sitelib}" oslo-config-generator --config-dir=etc/oslo-config-generator/
 
 %if 0%{?with_doc}
 export PYTHONPATH=.
-# FIXME(ykarel) remove warning is error flag until we have Sphinx >= 1.8.2
-sphinx-build -b html doc/source doc/build/html
-%endif
-
+%tox -e docs
 # Fix hidden-file-or-dir warnings
-%if 0%{?with_doc}
 rm -fr doc/build/html/.doctrees doc/build/html/.buildinfo
 %endif
+
 rm -f %{buildroot}/usr/share/doc/glance/README.rst
 
 # Setup directories
@@ -331,7 +241,7 @@ mv %{buildroot}%{python3_sitelib}/%{service}/locale %{buildroot}%{_datadir}/loca
 rm -rf %{buildroot}%{_prefix}%{_sysconfdir}
 
 %check
-stestr run
+%tox -e %{default_toxenv}
 
 %pre
 getent group glance >/dev/null || groupadd -r glance -g 161
@@ -394,7 +304,7 @@ exit 0
 %files -n python3-glance -f %{service}.lang
 %doc README.rst
 %{python3_sitelib}/glance
-%{python3_sitelib}/glance-*.egg-info
+%{python3_sitelib}/glance-*.dist-info
 %exclude %{python3_sitelib}/glance/tests
 
 %files -n python3-%{service}-tests
