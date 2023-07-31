@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9f016ad3_2bee2dfb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 635
+      },
+      "writtenOn": "2023-07-31T17:15:36Z",
+      "side": 1,
+      "message": "FTR oslo.vmware requirement was removed long time ago https://review.opendev.org/c/openstack/glance/+/203242",
+      "revId": "f30f0626f0aec73761af9df8741afb27bd3b8d90",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7"
+    }
+  ]
+}
