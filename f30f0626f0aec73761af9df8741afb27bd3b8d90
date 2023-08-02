@@ -1,0 +1,9 @@
+Code-Review+2: Joel Capitao <jcapitao@redhat.com>
+Code-Review+2: Karolina Kula <kkula@redhat.com>
+Workflow+1: Karolina Kula <kkula@redhat.com>
+Verified+2: Zuul CI <zuul@review.rdoproject.org>
+Submitted-by: Zuul CI <zuul@review.rdoproject.org>
+Submitted-at: Wed, 02 Aug 2023 07:38:30 +0000
+Reviewed-on: https://review.rdoproject.org/r/c/openstack/glance-distgit/+/49456
+Project: openstack/glance-distgit
+Branch: refs/heads/rpm-master
