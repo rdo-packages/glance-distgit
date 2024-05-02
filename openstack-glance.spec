@@ -7,7 +7,7 @@
 
 %{!?upstream_version: %global upstream_version %{version}%{?milestone}}
 # we are excluding some BRs from automatic generator
-%global excluded_brs doc8 bandit pre-commit hacking flake8-import-order os-api-ref whereto pysendfile
+%global excluded_brs doc8 bandit pre-commit hacking flake8-import-order os-api-ref whereto
 # Exclude sphinx from BRs if docs are disabled
 %if ! 0%{?with_doc}
 %global excluded_brs %{excluded_brs} sphinx openstackdocstheme
@@ -86,8 +86,6 @@ This package contains the API server.
 %package -n       python3-glance
 Summary:          Glance Python libraries
 
-# pysendfile does not provide standard py3dist name so maintaining it manually
-Requires:         python3-pysendfile
 # pyxattr is optional driver for caching but we maintain it by default for backwards compatibility
 Requires:         python3-pyxattr
 
