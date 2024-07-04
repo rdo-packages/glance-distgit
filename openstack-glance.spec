@@ -1,5 +1,6 @@
 %{!?sources_gpg: %{!?dlrn:%global sources_gpg 1} }
-%global sources_gpg_sign 0x815AFEC729392386480E076DCC0DFE2D21C023C9
+%global sources_gpg_sign 0x815afec729392386480e076dcc0dfe2d21c023c9
+
 
 %global release_name liberty
 %global service glance
@@ -244,7 +245,8 @@ mv %{buildroot}%{python3_sitelib}/%{service}/locale %{buildroot}%{_datadir}/loca
 rm -rf %{buildroot}%{_prefix}%{_sysconfdir}
 
 %check
-%tox -e %{default_toxenv}
+# qed format is not longer available in CS9 qemu-img
+%tox -e %{default_toxenv} -- -- -E 'test_qed_always_unsafe'
 
 %pre
 getent group glance >/dev/null || groupadd -r glance -g 161
