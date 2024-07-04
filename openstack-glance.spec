@@ -333,7 +333,8 @@ mv %{buildroot}%{python3_sitelib}/%{service}/locale %{buildroot}%{_datadir}/loca
 rm -rf %{buildroot}%{_prefix}%{_sysconfdir}
 
 %check
-stestr run
+# qed format is not longer available in CS9 qemu-img
+stestr run -E 'test_qed_always_unsafe'
 
 %pre
 getent group glance >/dev/null || groupadd -r glance -g 161
