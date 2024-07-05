@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "005a7ab6_40850c76",
+        "filename": "openstack-glance.spec",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 635
+      },
+      "writtenOn": "2024-07-05T09:43:07Z",
+      "side": 1,
+      "message": "0x815afec729392386480e076dcc0dfe2d21c023c9",
+      "range": {
+        "startLine": 2,
+        "startChar": 25,
+        "endLine": 2,
+        "endChar": 67
+      },
+      "revId": "6eaf4a0f1e5e044b6521f577ab21a7b25bee37d5",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7"
+    }
+  ]
+}
