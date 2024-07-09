@@ -105,6 +105,7 @@ BuildRequires:    python3-retrying
 BuildRequires:    python3-httplib2
 BuildRequires:    python3-paste-deploy
 BuildRequires:    qemu-img
+BuildRequires:    python3-boto
 
 
 Requires(pre):    shadow-utils
@@ -206,7 +207,6 @@ BuildRequires:    python3-sphinx
 BuildRequires:    python3-openstackdocstheme
 BuildRequires:    python3-sphinxcontrib-apidoc
 BuildRequires:    graphviz
-BuildRequires:    python3-boto
 # Required to compile translation files
 BuildRequires:    python3-babel
 
