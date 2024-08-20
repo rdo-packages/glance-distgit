@@ -16,7 +16,7 @@ provides a standard REST interface for querying information about virtual disk \
 images stored in a variety of back-end stores, including OpenStack Object \
 Storage. Clients can register new virtual disk images with the Image Service, \
 query for information on publicly available disk images, and use the Image \
-Service's client library for streaming virtual disk images.
+Service client library for streaming virtual disk images.
 
 Name:             openstack-glance
 # Liberty semver reset
