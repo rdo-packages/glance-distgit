@@ -1,5 +1,6 @@
+%global milestone .0rc1
 %{!?sources_gpg: %{!?dlrn:%global sources_gpg 1} }
-%global sources_gpg_sign 0x2426b928085a020d8a90d0d879ab7008d0896c8a
+%global sources_gpg_sign 0xf8675126e2411e7748dd46662fc2093e4682645f
 
 %global release_name liberty
 %global service glance
@@ -28,13 +29,17 @@ Name:             openstack-glance
 # Liberty semver reset
 # https://review.openstack.org/#/q/I6a35fa0dda798fad93b804d00a46af80f08d475c,n,z
 Epoch:            1
-Version:          XXX
-Release:          XXX
+Version:          29.0.0
+Release:          0.1%{?milestone}%{?dist}
 Summary:          OpenStack Image Service
 
 License:          Apache-2.0
 URL:              http://glance.openstack.org
 Source0:          https://tarballs.openstack.org/%{service}/%{service}-%{upstream_version}.tar.gz
+
+#
+# patches_base=29.0.0.0rc1
+#
 
 Source001:         openstack-glance-api.service
 Source004:         openstack-glance-scrubber.service
@@ -317,3 +322,6 @@ exit 0
 %endif
 
 %changelog
+* Mon Sep 23 2024 RDO <dev@lists.rdoproject.org> 1:29.0.0-0.1.0rc1
+- Update to 29.0.0.0rc1
+
