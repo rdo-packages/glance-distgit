@@ -126,7 +126,7 @@ This package contains the Glance test files.
 %endif
 %autosetup -n glance-%{upstream_version} -S git
 
-sed -i '/\/usr\/bin\/env python/d' glance/common/config.py glance/common/crypt.py glance/cmd/status.py
+sed -i '/\/usr\/bin\/env python/d' glance/cmd/status.py
 
 sed -i /^[[:space:]]*-c{env:.*_CONSTRAINTS_FILE.*/d tox.ini
 sed -i "s/^deps = -c{env:.*_CONSTRAINTS_FILE.*/deps =/" tox.ini
