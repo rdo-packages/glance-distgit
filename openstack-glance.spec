@@ -71,8 +71,6 @@ BuildRequires:    qemu-img
 Requires(pre):    shadow-utils
 Requires:         python3-glance = %{epoch}:%{version}-%{release}
 Requires:         qemu-img
-# Install glanceclient as a dependency for convenience
-Requires:         python3-glanceclient >= 1:2.8.0
 
 %{?systemd_ordering}
 
