@@ -29,7 +29,7 @@ Name:             openstack-glance
 # https://review.openstack.org/#/q/I6a35fa0dda798fad93b804d00a46af80f08d475c,n,z
 Epoch:            1
 Version:          28.1.0
-Release:          1%{?dist}
+Release:          2%{?dist}
 Summary:          OpenStack Image Service
 
 License:          Apache-2.0
@@ -75,6 +75,7 @@ Requires:         python3-glance = %{epoch}:%{version}-%{release}
 Requires:         qemu-img
 # Install glanceclient as a dependency for convenience
 Requires:         python3-glanceclient >= 1:2.8.0
+Requires:         python3-glance-store >= 4.7.0
 
 %{?systemd_ordering}
 
@@ -321,6 +322,9 @@ exit 0
 %endif
 
 %changelog
+* Tue 11 Feb 2024 Tobias Urdin <tobias.urdin@binero.com> 1:28.1.0-2
+- Add requires python3-glance-store >= 4.7.0
+
 * Tue Jul 09 2024 RDO <dev@lists.rdoproject.org> 1:28.1.0-1
 - Update to 28.1.0
 
