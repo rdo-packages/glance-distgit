@@ -47,6 +47,8 @@ Source026:         glance-swift.conf
 
 Source030:         glance-sudoers
 Source031:         glance-rootwrap.conf
+Source032:         %{service}-wsgi-api
+
 # Required for tarball sources verification
 %if 0%{?sources_gpg} == 1
 Source101:        https://tarballs.openstack.org/%{service}/%{service}-%{upstream_version}.tar.gz.asc
@@ -215,6 +217,9 @@ install -d -m 755 %{buildroot}%{_localstatedir}/log/glance
 
 # Install sudoers
 install -p -D -m 440 %{SOURCE30} %{buildroot}%{_sysconfdir}/sudoers.d/glance
+
+# Install the glance-wsgi compatibility file
+install -m 755 %{SOURCE32} %{buildroot}%{_bindir}/%{service}-wsgi-api
 
 # Symlinks to rootwrap config files
 mkdir -p %{buildroot}%{_sysconfdir}/glance/rootwrap.d
